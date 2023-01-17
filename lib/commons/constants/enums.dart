@@ -1,0 +1,4 @@
+enum Flavor {
+  staging,
+  prod,
+}
