@@ -5,6 +5,9 @@ class ColorPalettes {
   static const Color primaryLight = Color.fromRGBO(93, 210, 169, 1);
   static const Color secondary = Color.fromRGBO(33, 194, 193, 1);
 
+  static const Color background = Color.fromRGBO(229, 229, 229, 1);
+  static const Color backgroundNavbar = Color.fromRGBO(232, 248, 248, 1);
+
   static const Color smokeGray = Color.fromRGBO(208, 214, 221, 1);
   static const Color gray = Color.fromRGBO(242, 242, 242, 1);
   static const Color grayZill = Color.fromRGBO(108, 108, 108, 1);
@@ -13,9 +16,12 @@ class ColorPalettes {
   static const Color dark = Color.fromRGBO(33, 33, 33, 1);
   static const Color darkGray = Color.fromRGBO(35, 41, 51, 1);
   static const Color line = Color.fromRGBO(213, 217, 231, 1);
+  static const Color blackZill = Color.fromRGBO(44, 44, 44, 1);
 
   static const Color black = Color.fromRGBO(0, 0, 0, 1);
   static const Color white = Color.fromRGBO(255, 255, 255, 1);
+
+  static const Color red400 = Color.fromRGBO(218, 71, 63, 1);
 
   static const Color blue400 = Color.fromRGBO(75, 97, 221, 1);
   static const Color cursorPrimary = Color.fromRGBO(70, 73, 166, 1);

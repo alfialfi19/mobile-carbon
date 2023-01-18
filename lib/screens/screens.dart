@@ -1,8 +1,12 @@
+export 'eco_update_screen.dart';
+export 'home_screen.dart';
 export 'main_screen.dart';
 export 'not_found_screen.dart';
 export 'on_boarding_1_screen.dart';
 export 'on_boarding_2_screen.dart';
 export 'on_boarding_3_screen.dart';
 export 'on_boarding_4_screen.dart';
+export 'point_screen.dart';
+export 'profile_screen.dart';
 export 'sign_in_screen.dart';
 export 'splash_screen.dart';

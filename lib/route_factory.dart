@@ -8,6 +8,10 @@ Widget? getPageByName(
   bool nonNullable = false,
 }) {
   switch (name) {
+    case Routes.ecoUpdate:
+      return const EcoUpdateScreen();
+    case Routes.home:
+      return const HomeScreen();
     case Routes.main:
       return const MainScreen();
     case Routes.notFound:
@@ -20,6 +24,10 @@ Widget? getPageByName(
       return const OnBoarding3Screen();
     case Routes.onBoarding4:
       return const OnBoarding4Screen();
+    case Routes.point:
+      return const PointScreen();
+    case Routes.profile:
+      return const ProfileScreen();
     case Routes.signIn:
       return const SignInScreen();
     case Routes.splash:
