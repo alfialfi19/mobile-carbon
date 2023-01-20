@@ -27,16 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            stops: [
-              0.5,
-              0.9
-            ],
-            colors: [
-              ColorPalettes.primary,
-              ColorPalettes.primaryLight,
-            ]),
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          stops: [0.5, 0.9],
+          colors: [
+            ColorPalettes.primary,
+            ColorPalettes.primaryLight,
+          ],
+        ),
       ),
       child: Image.asset(
         Images.splashLogo,

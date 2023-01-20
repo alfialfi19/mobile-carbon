@@ -10,13 +10,23 @@ class ColorPalettes {
 
   static const Color smokeGray = Color.fromRGBO(208, 214, 221, 1);
   static const Color gray = Color.fromRGBO(242, 242, 242, 1);
-  static const Color grayZill = Color.fromRGBO(108, 108, 108, 1);
+
   static const Color grayTextField = Color.fromRGBO(244, 244, 244, 1);
   static const Color gray100 = Color.fromRGBO(208, 214, 221, 1);
   static const Color dark = Color.fromRGBO(33, 33, 33, 1);
   static const Color darkGray = Color.fromRGBO(35, 41, 51, 1);
   static const Color line = Color.fromRGBO(213, 217, 231, 1);
+
+  static const Color grayZill = Color.fromRGBO(108, 108, 108, 1);
   static const Color blackZill = Color.fromRGBO(44, 44, 44, 1);
+  static const Color placeholderZill = Color.fromRGBO(186, 185, 183, 1);
+
+  static const Color purpleGradient1 = Color.fromRGBO(90, 152, 255, 1);
+  static const Color purpleGradient2 = Color.fromRGBO(255, 135, 221, 1);
+  static const Color redGradient1 = Color.fromRGBO(250, 112, 154, 1);
+  static const Color redGradient2 = Color.fromRGBO(253, 196, 87, 1);
+  static const Color blueGradient1 = Color.fromRGBO(143, 158, 227, 1);
+  static const Color blueGradient2 = Color.fromRGBO(123, 213, 217, 1);
 
   static const Color black = Color.fromRGBO(0, 0, 0, 1);
   static const Color white = Color.fromRGBO(255, 255, 255, 1);
