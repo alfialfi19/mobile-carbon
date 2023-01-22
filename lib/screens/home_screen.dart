@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorPalettes.background,
+      backgroundColor: ColorPalettes.backgroundLight,
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 30.0,
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: ColorPalettes.primary,
                                     borderRadius: BorderRadius.circular(6.0),
                                     border: Border.all(
-                                      color: ColorPalettes.background,
+                                      color: ColorPalettes.backgroundLight,
                                     ),
                                   ),
                                 ),
@@ -225,7 +225,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ColorPalettes.redGradient2,
                             ],
                           ),
-                          action: () {},
+                          action: () => Navigator.pushNamed(
+                            context,
+                            Routes.detailEcoActivity,
+                          ),
                         ),
                         PointOwned(
                           iconHeader: CarbonIcons.carbon,
@@ -240,7 +243,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ColorPalettes.blueGradient2,
                             ],
                           ),
-                          action: () {},
+                          action: () => Navigator.pushNamed(
+                            context,
+                            Routes.detailTotalArticle,
+                          ),
                         ),
                       ],
                     ),

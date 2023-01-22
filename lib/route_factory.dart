@@ -10,6 +10,10 @@ Widget? getPageByName(
   switch (name) {
     case Routes.detailCarbonEmission:
       return const DetailCarbonEmissionScreen();
+    case Routes.detailEcoActivity:
+      return const DetailEcoActivityScreen();
+    case Routes.detailTotalArticle:
+      return const DetailTotalArticleScreen();
     case Routes.ecoUpdate:
       return const EcoUpdateScreen();
     case Routes.home:

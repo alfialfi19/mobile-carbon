@@ -3,7 +3,20 @@ import 'package:flutter/material.dart';
 import '../../commons/commons.dart';
 
 class HistoryCarbonEmission extends StatelessWidget {
-  const HistoryCarbonEmission({Key? key}) : super(key: key);
+  final String? label;
+  final String? caption;
+  final String? pointValue;
+  final Widget? leadingIcon;
+  final Color? leadingBackgroundColor;
+
+  const HistoryCarbonEmission({
+    Key? key,
+    this.label,
+    this.caption,
+    this.pointValue,
+    this.leadingIcon,
+    this.leadingBackgroundColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,42 +28,48 @@ class HistoryCarbonEmission extends StatelessWidget {
             padding: const EdgeInsets.all(9.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6.0),
-              color: Colors.orange.withOpacity(0.1),
+              color: leadingBackgroundColor ?? Colors.orange.withOpacity(0.1),
             ),
-            child: Image.asset(
-              CarbonIcons.food,
-              height: 24.0,
-              width: 24.0,
-            ),
+            child: leadingIcon ??
+                Image.asset(
+                  CarbonIcons.food,
+                  height: 24.0,
+                  width: 24.0,
+                ),
           ),
           const SizedBox(
             width: 12.0,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Daging Ayam",
-                style: Theme.of(context).textTheme.caption?.copyWith(
-                      color: ColorPalettes.dark,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              Text(
-                "5,65 kg",
-                style: Theme.of(context).textTheme.overline?.copyWith(
-                      color: ColorPalettes.placeholderZill,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ],
+          Expanded(
+            flex: 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label ?? "-",
+                  style: Theme.of(context).textTheme.caption?.copyWith(
+                        color: ColorPalettes.dark,
+                        fontWeight: FontWeight.w700,
+                      ),
+                  overflow: TextOverflow.visible,
+                ),
+                if (caption != null)
+                  Text(
+                    caption ?? "-",
+                    style: Theme.of(context).textTheme.overline?.copyWith(
+                          color: ColorPalettes.placeholderZill,
+                          fontWeight: FontWeight.w400,
+                        ),
+                  ),
+              ],
+            ),
           ),
           Expanded(
             child: Container(
               width: double.maxFinite,
               alignment: Alignment.centerRight,
               child: Text(
-                "20 poin",
+                pointValue ?? "- poin",
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
                       color: ColorPalettes.primary,
                       fontWeight: FontWeight.w700,

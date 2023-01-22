@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_carbon/commons/commons.dart';
+import 'package:mobile_carbon/widgets/widgets.dart';
 
-import '../widgets/widgets.dart';
+import '../commons/commons.dart';
 
-class DetailCarbonEmissionScreen extends StatefulWidget {
-  const DetailCarbonEmissionScreen({Key? key}) : super(key: key);
+class DetailEcoActivityScreen extends StatefulWidget {
+  const DetailEcoActivityScreen({Key? key}) : super(key: key);
 
   @override
-  State<DetailCarbonEmissionScreen> createState() =>
-      _DetailCarbonEmissionScreenState();
+  State<DetailEcoActivityScreen> createState() =>
+      _DetailEcoActivityScreenState();
 }
 
-class _DetailCarbonEmissionScreenState
-    extends State<DetailCarbonEmissionScreen> {
+class _DetailEcoActivityScreenState extends State<DetailEcoActivityScreen> {
   final _scrollController = ScrollController();
 
   @override
@@ -22,7 +21,7 @@ class _DetailCarbonEmissionScreenState
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Emisi Karbon",
+          "Eco-Activity",
           style: Theme.of(context).textTheme.subtitle1?.copyWith(
                 fontSize: 18.0,
                 color: ColorPalettes.dark,
@@ -65,8 +64,8 @@ class _DetailCarbonEmissionScreenState
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
                             colors: [
-                              ColorPalettes.purpleGradient1,
-                              ColorPalettes.purpleGradient2,
+                              ColorPalettes.redGradient1,
+                              ColorPalettes.redGradient2,
                             ],
                           ),
                         ),
@@ -74,7 +73,7 @@ class _DetailCarbonEmissionScreenState
                           iconHeader: CarbonIcons.article,
                           caption: "Jumlah tanaman pengguna",
                           captionColor: ColorPalettes.dark,
-                          pointValue: "29 buah",
+                          pointValue: "15 buah",
                           pointColor: ColorPalettes.dark,
                           backgroundColor: ColorPalettes.white,
                         ),
@@ -82,7 +81,7 @@ class _DetailCarbonEmissionScreenState
                           iconHeader: CarbonIcons.pointActive,
                           caption: "Peringkat saya saat ini",
                           captionColor: ColorPalettes.dark,
-                          pointValue: "17",
+                          pointValue: "19",
                           pointColor: ColorPalettes.dark,
                           backgroundColor: ColorPalettes.white,
                         ),
@@ -93,7 +92,7 @@ class _DetailCarbonEmissionScreenState
                     height: 50.0,
                   ),
                   Text(
-                    "Riwayat Emisi Karbon",
+                    "Riwayat Eco-Activity",
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
                           color: ColorPalettes.dark,
                           fontWeight: FontWeight.w700,
@@ -105,7 +104,7 @@ class _DetailCarbonEmissionScreenState
                   Container(
                     margin: const EdgeInsets.only(bottom: 12.0),
                     child: Text(
-                      "19 Januari 2023",
+                      "Hari Ini",
                       style: Theme.of(context).textTheme.subtitle2?.copyWith(
                             color: ColorPalettes.placeholderZill,
                             fontWeight: FontWeight.w700,
@@ -113,48 +112,42 @@ class _DetailCarbonEmissionScreenState
                     ),
                   ),
                   HistoryCarbonEmission(
-                    label: "Daging Ayam",
-                    caption: "5,65 kg",
+                    label: "Mawar Merah",
                     pointValue: "20 poin",
                     leadingIcon: Image.asset(
-                      CarbonIcons.food,
+                      CarbonIcons.flower,
                       height: 24.0,
                       width: 24.0,
                     ),
                     leadingBackgroundColor:
-                        ColorPalettes.orange.withOpacity(0.1),
+                        ColorPalettes.green.withOpacity(0.1),
                   ),
                   HistoryCarbonEmission(
-                    label: "Diesel",
-                    caption: "12,29 kg",
-                    pointValue: "75 poin",
+                    label: "Kaktus Mini Astrophytum",
+                    pointValue: "20 poin",
                     leadingIcon: Image.asset(
-                      CarbonIcons.tv,
+                      CarbonIcons.flower,
                       height: 24.0,
                       width: 24.0,
                     ),
                     leadingBackgroundColor:
-                        ColorPalettes.blue.withOpacity(0.15),
+                        ColorPalettes.green.withOpacity(0.1),
                   ),
                   HistoryCarbonEmission(
-                    label: "Sampah Organik",
-                    caption: "89,12 kg",
-                    pointValue: "126 poin",
+                    label: "Pohon Mangga",
+                    pointValue: "20 poin",
                     leadingIcon: Image.asset(
-                      CarbonIcons.trash,
+                      CarbonIcons.flower,
                       height: 24.0,
                       width: 24.0,
                     ),
                     leadingBackgroundColor:
-                        ColorPalettes.green.withOpacity(0.15),
-                  ),
-                  const SizedBox(
-                    height: 30.0,
+                        ColorPalettes.green.withOpacity(0.1),
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 12.0),
                     child: Text(
-                      "22 Desember 2022",
+                      "15 April 2022",
                       style: Theme.of(context).textTheme.subtitle2?.copyWith(
                             color: ColorPalettes.placeholderZill,
                             fontWeight: FontWeight.w700,
@@ -162,64 +155,48 @@ class _DetailCarbonEmissionScreenState
                     ),
                   ),
                   HistoryCarbonEmission(
-                    label: "Diesel",
-                    caption: "12,29 kg",
-                    pointValue: "75 poin",
-                    leadingIcon: Image.asset(
-                      CarbonIcons.tv,
-                      height: 24.0,
-                      width: 24.0,
-                    ),
-                    leadingBackgroundColor:
-                        ColorPalettes.blue.withOpacity(0.15),
-                  ),
-                  HistoryCarbonEmission(
-                    label: "Daging Ayam",
-                    caption: "5,65 kg",
+                    label: "Mawar Merah",
                     pointValue: "20 poin",
                     leadingIcon: Image.asset(
-                      CarbonIcons.food,
+                      CarbonIcons.flower,
                       height: 24.0,
                       width: 24.0,
                     ),
                     leadingBackgroundColor:
-                        ColorPalettes.orange.withOpacity(0.1),
+                        ColorPalettes.green.withOpacity(0.1),
                   ),
                   HistoryCarbonEmission(
-                    label: "Sampah Organik",
-                    caption: "89,12 kg",
-                    pointValue: "126 poin",
+                    label: "Anggrek Dendronium",
+                    pointValue: "15 poin",
                     leadingIcon: Image.asset(
-                      CarbonIcons.trash,
+                      CarbonIcons.flower,
                       height: 24.0,
                       width: 24.0,
                     ),
                     leadingBackgroundColor:
-                        ColorPalettes.green.withOpacity(0.15),
+                        ColorPalettes.green.withOpacity(0.1),
                   ),
                   HistoryCarbonEmission(
-                    label: "Diesel",
-                    caption: "12,29 kg",
-                    pointValue: "75 poin",
+                    label: "Pohon Mangga",
+                    pointValue: "20 poin",
                     leadingIcon: Image.asset(
-                      CarbonIcons.tv,
+                      CarbonIcons.flower,
                       height: 24.0,
                       width: 24.0,
                     ),
                     leadingBackgroundColor:
-                        ColorPalettes.blue.withOpacity(0.15),
+                        ColorPalettes.green.withOpacity(0.1),
                   ),
                   HistoryCarbonEmission(
-                    label: "Sampah Organik",
-                    caption: "89,12 kg",
-                    pointValue: "126 poin",
+                    label: "Pohon Mangrove",
+                    pointValue: "25 poin",
                     leadingIcon: Image.asset(
-                      CarbonIcons.trash,
+                      CarbonIcons.flower,
                       height: 24.0,
                       width: 24.0,
                     ),
                     leadingBackgroundColor:
-                        ColorPalettes.green.withOpacity(0.15),
+                        ColorPalettes.green.withOpacity(0.1),
                   ),
                 ],
               ),

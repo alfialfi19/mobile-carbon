@@ -1,5 +1,7 @@
 class Routes {
   static const detailCarbonEmission = "detail-carbon-emission";
+  static const detailEcoActivity = "detail-eco-activity";
+  static const detailTotalArticle = "detail-total-article";
   static const ecoUpdate = "eco-update";
   static const home = "home";
   static const main = "main";
