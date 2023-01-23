@@ -205,4 +205,11 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 }

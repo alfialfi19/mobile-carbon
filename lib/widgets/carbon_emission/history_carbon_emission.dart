@@ -65,6 +65,7 @@ class HistoryCarbonEmission extends StatelessWidget {
             ),
           ),
           Expanded(
+            flex: 2,
             child: Container(
               width: double.maxFinite,
               alignment: Alignment.centerRight,
