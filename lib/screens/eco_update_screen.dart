@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
@@ -208,9 +209,27 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
           const SizedBox(
             height: 20.0,
           ),
-          RelatedArticleItem(),
-          RelatedArticleItem(),
-          RelatedArticleItem(),
+          RelatedArticleItem(
+            title: "Cara Budidaya Tanaman Hias Di Dalam Media Pot",
+            author: "Taylor Akabane",
+            createdAt: "11 April 2022",
+            action: () => Navigator.pushNamed(
+              context,
+              Routes.detailArticle,
+            ),
+          ),
+          RelatedArticleItem(
+            imageUrl: Images.dummyPlant,
+            title: "Cara Budidaya Pohon Mangga",
+            author: "Boruto Uzumaki",
+            createdAt: "10 Januari 2022",
+          ),
+          RelatedArticleItem(
+            imageUrl: Images.dummyPlant,
+            title: "Cara Melestarikan Tanaman Enceng Gondok",
+            author: "Akaba",
+            createdAt: "12 Desember 2021",
+          ),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+export 'detail_article_screen.dart';
 export 'detail_carbon_emission_screen.dart';
 export 'detail_eco_activity_screen.dart';
 export 'detail_total_article__screen.dart';

@@ -4,6 +4,7 @@ class Images {
   static const String dummyHome = "$imagesDir/img_dummy_home.png";
   static const String dummyPlant = "$imagesDir/img_dummy_plant.png";
   static const String dummyPlant2 = "$imagesDir/img_dummy_plant_2.png";
+  static const String dummyPlant3 = "$imagesDir/img_dummy_plant_3.png";
   static const String dummyProfile = "$imagesDir/img_dummy_profile.png";
   static const String splashLogo = "$imagesDir/img_splash.png";
   static const String googleLogo = "$imagesDir/img_google.png";
