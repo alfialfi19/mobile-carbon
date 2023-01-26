@@ -5,6 +5,7 @@ class CarbonIcons {
   static const String biogas = "$iconsDir/ic-biogas.png";
   static const String carbon = "$iconsDir/ic-carbon.png";
   static const String coin = "$iconsDir/ic-coin.png";
+  static const String comment = "$iconsDir/ic-comment.png";
   static const String ecoUpdateActive = "$iconsDir/ic-eco-update-active.png";
   static const String ecoUpdateInactive =
       "$iconsDir/ic-eco-update-inactive.png";

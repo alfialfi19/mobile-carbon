@@ -154,42 +154,9 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
                     const SizedBox(
                       height: 12.0,
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 8.0),
-                          height: 24.0,
-                          width: 24.0,
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(
-                              Images.dummyProfile,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Serean Waiyene",
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: ColorPalettes.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          height: 5.0,
-                          width: 5.0,
-                          decoration: BoxDecoration(
-                            color: ColorPalettes.white,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                        ),
-                        Text(
-                          "11 April 2022",
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: ColorPalettes.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                        ),
-                      ],
+                    AuthorItem(
+                      author: "Serena Waiyene",
+                      dateCreated: "11 April 2022",
                     ),
                   ],
                 ),

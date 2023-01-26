@@ -9,6 +9,7 @@ class ColorPalettes {
   static const Color backgroundLight = Color.fromRGBO(247, 247, 247, 1);
   static const Color backgroundNavbar = Color.fromRGBO(232, 248, 248, 1);
 
+  static const Color smoke = Color.fromRGBO(226, 226, 226, 1);
   static const Color smokeGray = Color.fromRGBO(208, 214, 221, 1);
   static const Color gray = Color.fromRGBO(242, 242, 242, 1);
   static const Color grayDivider = Color.fromRGBO(217, 217, 217, 1);
@@ -17,6 +18,7 @@ class ColorPalettes {
   static const Color gray100 = Color.fromRGBO(208, 214, 221, 1);
   static const Color dark = Color.fromRGBO(33, 33, 33, 1);
   static const Color darkGray = Color.fromRGBO(35, 41, 51, 1);
+  static const Color dots = Color.fromRGBO(60, 58, 54, 1);
   static const Color line = Color.fromRGBO(213, 217, 231, 1);
 
   static const Color grayZill = Color.fromRGBO(108, 108, 108, 1);
@@ -27,6 +29,9 @@ class ColorPalettes {
   static const Color blue = Color.fromRGBO(180, 175, 245, 1);
   static const Color green = Color.fromRGBO(116, 235, 213, 1);
   static const Color red = Color.fromRGBO(255, 115, 148, 1);
+
+  static const Color slate = Color.fromRGBO(119, 119, 119, 1);
+  static const Color cloud = Color.fromRGBO(242, 244, 247, 1);
 
   static const Color purpleGradient1 = Color.fromRGBO(90, 152, 255, 1);
   static const Color purpleGradient2 = Color.fromRGBO(255, 135, 221, 1);

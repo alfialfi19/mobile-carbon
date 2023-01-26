@@ -12,6 +12,8 @@ Widget? getPageByName(
       return const DetailArticleScreen();
     case Routes.detailCarbonEmission:
       return const DetailCarbonEmissionScreen();
+    case Routes.detailComment:
+      return const DetailCommentScreen();
     case Routes.detailEcoActivity:
       return const DetailEcoActivityScreen();
     case Routes.detailTotalArticle:
