@@ -690,13 +690,37 @@ class DetailCommentScreen extends StatelessWidget {
     );
 
     if (data != null) {
-      if (data == 1) {
-        print("===> pressed 1");
-      } else if (data == 2) {
-        print("===> pressed 2");
+      if (data == 1 || data == 2) {
+        _showAddComment.call(context);
       } else if (data == 3) {
-        print("===> pressed 3");
+        _showDeleteArticle.call(context);
       } else {}
+    }
+  }
+
+  Future<void> _showAddComment(BuildContext context) async {
+    final data = await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: defaultBottomSheetShape,
+      builder: (context) => PostCommentBottomSheet(),
+    );
+
+    if (data != null) {
+      // do something
+    }
+  }
+
+  Future<void> _showDeleteArticle(BuildContext context) async {
+    final data = await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: defaultBottomSheetShape,
+      builder: (context) => DeleteArticleBottomSheet(),
+    );
+
+    if (data != null) {
+      // do something
     }
   }
 }

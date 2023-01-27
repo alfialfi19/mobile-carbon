@@ -61,12 +61,14 @@ class BottomSheetTitleHeader extends StatelessWidget {
   final String titleText;
   final String? closeDialogText;
   final Color closeDialogColor;
+  final EdgeInsets? paddingText;
   final VoidCallback? closeDialogCallback;
 
   const BottomSheetTitleHeader({
     required this.titleText,
     this.closeDialogText,
     this.closeDialogColor = ColorPalettes.blue400,
+    this.paddingText,
     this.closeDialogCallback,
     Key? key,
   }) : super(key: key);
@@ -74,11 +76,17 @@ class BottomSheetTitleHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorPalettes.cloud,
+      color: ColorPalettes.backgroundLight,
       child: ListTile(
-        title: Text(
-          titleText,
-          style: Theme.of(context).textTheme.headline3,
+        title: Container(
+          padding: paddingText ??
+              const EdgeInsets.symmetric(
+                horizontal: 40.0,
+              ),
+          child: Text(
+            titleText,
+            style: Theme.of(context).textTheme.headline3,
+          ),
         ),
         trailing: closeDialogText == null
             ? null

@@ -3,6 +3,7 @@ export 'bottom_sheet/bottom_sheet.dart';
 export 'bottom_sheet_container.dart';
 export 'bottom_sheet_field.dart';
 export 'carbon_emission/carbon_emission.dart';
+export 'carbon_rounded_button.dart';
 export 'eco_update/eco_update.dart';
 export 'home/home.dart';
 export 'navigation_bar.dart';

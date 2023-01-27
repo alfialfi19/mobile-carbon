@@ -11,7 +11,7 @@ class CommentActionBottomSheet extends StatelessWidget {
     return Wrap(
       children: [
         BottomSheetContainer(
-          color: ColorPalettes.cloud,
+          color: ColorPalettes.backgroundLight,
           header: BottomSheetTitleHeader(
             titleText: "",
           ),
@@ -32,7 +32,7 @@ class _CommentActionForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 40.0,
       ),
       child: ListView(
@@ -41,51 +41,56 @@ class _CommentActionForm extends StatelessWidget {
         children: [
           InkWell(
             onTap: () => Navigator.of(context).pop(1),
-            child: Text(
-              'Beri Komentar',
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: ColorPalettes.black,
-                    fontWeight: FontWeight.w500,
-                    height: 1.5,
-                  ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                'Beri Komentar',
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: ColorPalettes.black,
+                      fontWeight: FontWeight.w500,
+                      height: 1.5,
+                    ),
+              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: 12.0,
-            ),
-            height: 1.5,
-            width: double.maxFinite,
-            color: ColorPalettes.line,
           ),
           InkWell(
             onTap: () => Navigator.of(context).pop(2),
-            child: Text(
-              'Ubah',
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: ColorPalettes.black,
-                    fontWeight: FontWeight.w500,
-                    height: 1.5,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: ColorPalettes.line,
+                    width: 1.5,
                   ),
+                  top: BorderSide(
+                    color: ColorPalettes.line,
+                    width: 1.5,
+                  ),
+                ),
+              ),
+              child: Text(
+                'Ubah',
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: ColorPalettes.black,
+                      fontWeight: FontWeight.w500,
+                      height: 1.5,
+                    ),
+              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: 12.0,
-            ),
-            height: 1.5,
-            width: double.maxFinite,
-            color: ColorPalettes.line,
           ),
           InkWell(
             onTap: () => Navigator.of(context).pop(3),
-            child: Text(
-              'Hapus Komentar',
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: ColorPalettes.red,
-                    fontWeight: FontWeight.w500,
-                    height: 1.5,
-                  ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                'Hapus Komentar',
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: ColorPalettes.red,
+                      fontWeight: FontWeight.w500,
+                      height: 1.5,
+                    ),
+              ),
             ),
           ),
         ],

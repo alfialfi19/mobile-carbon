@@ -29,6 +29,7 @@ class ColorPalettes {
   static const Color blue = Color.fromRGBO(180, 175, 245, 1);
   static const Color green = Color.fromRGBO(116, 235, 213, 1);
   static const Color red = Color.fromRGBO(255, 115, 148, 1);
+  static const Color redConfirmation = Color.fromRGBO(255, 53, 96, 1);
 
   static const Color slate = Color.fromRGBO(119, 119, 119, 1);
   static const Color cloud = Color.fromRGBO(242, 244, 247, 1);

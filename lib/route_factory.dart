@@ -8,6 +8,8 @@ Widget? getPageByName(
   bool nonNullable = false,
 }) {
   switch (name) {
+    case Routes.addArticle:
+      return const AddArticleScreen();
     case Routes.detailArticle:
       return const DetailArticleScreen();
     case Routes.detailCarbonEmission:

@@ -8,6 +8,7 @@ class Images {
   static const String dummyProfile = "$imagesDir/img_dummy_profile.png";
   static const String splashLogo = "$imagesDir/img_splash.png";
   static const String googleLogo = "$imagesDir/img_google.png";
+  static const String humans = "$imagesDir/img_humans.png";
   static const String onboardHeader = "$imagesDir/img_onboard_header.png";
   static const String onboard1 = "$imagesDir/img_onboard_1.png";
   static const String onboard2 = "$imagesDir/img_onboard_2.png";
