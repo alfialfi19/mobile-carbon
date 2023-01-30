@@ -8,6 +8,7 @@ class Routes {
   static const ecoUpdate = "eco-update";
   static const home = "home";
   static const main = "main";
+  static const myArticle = "my-article";
   static const notFound = "not-found";
   static const onBoarding1 = "on-boarding-1";
   static const onBoarding2 = "on-boarding-2";

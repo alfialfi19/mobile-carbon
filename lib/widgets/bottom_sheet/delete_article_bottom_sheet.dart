@@ -78,7 +78,7 @@ class _DeleteArticleForm extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          Container(
+          SizedBox(
             width: double.maxFinite,
             child: Row(
               mainAxisSize: MainAxisSize.min,

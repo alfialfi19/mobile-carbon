@@ -101,41 +101,11 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
             horizontal: 30.0,
           ),
           label: "Lihat Artikelku",
-
-          /// TODO: Navigate ke Artikelku
-          /// TODO: Buat halaman Artikelku
-          /// TODO: Navigate dari Artikelku ke Add Artikel
-          /// TODO:
-          /// /// TODO:
-          /// /// TODO:
-          /// /// TODO:
           action: () => Navigator.pushNamed(
             context,
-            Routes.addArticle,
+            Routes.myArticle,
           ),
         ),
-        // floatingActionButton: Container(
-        //   padding: const EdgeInsets.symmetric(
-        //     vertical: 12.0,
-        //     horizontal: 12.0,
-        //   ),
-        //   decoration: BoxDecoration(
-        //     color: ColorPalettes.primary,
-        //     borderRadius: BorderRadius.circular(100.0),
-        //     border: Border.all(
-        //       color: ColorPalettes.primary,
-        //     ),
-        //   ),
-        //   child: Text(
-        //     "Lihat Artikelku",
-        //     style: Theme.of(context).textTheme.subtitle2?.copyWith(
-        //           color: ColorPalettes.white,
-        //           fontWeight: FontWeight.w700,
-        //           height: 1.5,
-        //         ),
-        //     textAlign: TextAlign.center,
-        //   ),
-        // ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: Padding(
           padding: const EdgeInsets.symmetric(

@@ -26,6 +26,8 @@ Widget? getPageByName(
       return const HomeScreen();
     case Routes.main:
       return const MainScreen();
+    case Routes.myArticle:
+      return const MyArticleScreen();
     case Routes.notFound:
       return const NotFoundScreen();
     case Routes.onBoarding1:

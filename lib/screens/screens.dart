@@ -7,6 +7,7 @@ export 'detail_total_article__screen.dart';
 export 'eco_update_screen.dart';
 export 'home_screen.dart';
 export 'main_screen.dart';
+export 'my_article_screen.dart';
 export 'not_found_screen.dart';
 export 'on_boarding_1_screen.dart';
 export 'on_boarding_2_screen.dart';
