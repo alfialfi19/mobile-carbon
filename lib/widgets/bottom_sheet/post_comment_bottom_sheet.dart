@@ -48,26 +48,17 @@ class _PostCommentFormState extends State<_PostCommentForm> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          TextField(
+          TextFieldInput(
+            padding: const EdgeInsets.symmetric(
+              vertical: 6.0,
+            ),
+            labelText: "Komentar",
+            hintText: "Masukkan komentar",
+            maxLength: null,
+            minLines: 5,
             controller: commentController,
-            maxLines: null,
-            maxLength: 200,
-            decoration: InputDecoration(
-              hintText: 'Masukkan komentar',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  8.0,
-                ),
-              ),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: ColorPalettes.line,
-                  width: 2.0,
-                ),
-              ),
-              focusColor: ColorPalettes.primary,
-              filled: true,
-              fillColor: ColorPalettes.backgroundLight,
+            callback: (value) => print(
+              "==> comment: $value",
             ),
           ),
           const SizedBox(

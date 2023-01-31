@@ -70,10 +70,21 @@ class _AddArticleScreenState extends State<AddArticleScreen> {
             const SizedBox(
               height: 24.0,
             ),
+            AttachmentInput(
+                formzError: "errorText",
+                callback: (attachmentIds) =>
+                    // BlocProvider.of<CreateReimbursementBloc>(context).add(
+                    //   AttachmentIdsChanged(attachmentIds),
+                    // ),
+                    print("===> this is attachmentIds: $attachmentIds")),
+            const SizedBox(
+              height: 24.0,
+            ),
             TextFieldInput(
               labelText: "Deskripsi Tanaman",
               hintText: "Masukkan deskripsi tanaman",
               maxLength: null,
+              minLines: 5,
               controller: plantDescriptionController,
               callback: (value) => print(
                 "==> plant description: $value",

@@ -12,4 +12,9 @@ final repositoryProviders = [
       locator<PrefHelper>(),
     ),
   ),
+  RepositoryProvider<MediaRepository>(
+    create: (context) => MediaRepository(
+      locator<MediaApi>(),
+    ),
+  ),
 ];

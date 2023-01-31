@@ -23,6 +23,9 @@ void setupLocator() {
             prefHelper: locator<PrefHelper>(),
           ),
         )
+        ..registerLazySingleton(
+          () => MediaApi(locator<BaseDioClient>().dio),
+        )
       // ..registerLazySingleton(
       //       () => XxxxxApi(locator<BaseDioClient>().dio),
       // )

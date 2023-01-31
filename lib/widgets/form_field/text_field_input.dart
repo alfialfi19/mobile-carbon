@@ -9,7 +9,9 @@ class TextFieldInput extends StatefulWidget {
   final String? labelText;
   final String? hintText;
   final int? maxLength;
+  final int minLines;
   final String? errorMessage;
+  final EdgeInsets? padding;
 
   final TextInputAction? inputAction;
   final TextEditingController controller;
@@ -23,8 +25,10 @@ class TextFieldInput extends StatefulWidget {
     this.labelText,
     this.hintText,
     this.maxLength = 200,
+    this.minLines = 1,
     this.errorMessage,
     this.isAutoFocus = false,
+    this.padding,
     Key? key,
   }) : super(key: key);
 
@@ -56,19 +60,20 @@ class _TextFieldInputState extends State<TextFieldInput>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        15.0,
-        6.0,
-        0.0,
-        6.0,
-      ),
+      padding: widget.padding ??
+          const EdgeInsets.fromLTRB(
+            15.0,
+            6.0,
+            0.0,
+            6.0,
+          ),
       child: TextFormField(
         autofocus: widget.isAutoFocus,
         controller: widget.controller,
         focusNode: _textFieldFocusNode,
         keyboardType: TextInputType.multiline,
         maxLength: widget.maxLength,
-        minLines: 1,
+        minLines: widget.minLines,
         maxLines: null,
         style: Theme.of(context).textTheme.bodyText1!.copyWith(
               color: ColorPalettes.dark,

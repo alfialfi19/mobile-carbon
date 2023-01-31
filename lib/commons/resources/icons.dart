@@ -18,6 +18,7 @@ class CarbonIcons {
   static const String pointInactive = "$iconsDir/ic-point-inactive.png";
   static const String profileActive = "$iconsDir/ic-profile-active.png";
   static const String profileInactive = "$iconsDir/ic-profile-inactive.png";
+  static const String reset = "$iconsDir/ic-reset.png";
   static const String trash = "$iconsDir/ic-trash.png";
   static const String tv = "$iconsDir/ic-tv.png";
   static const String worm = "$iconsDir/ic-worm.png";
