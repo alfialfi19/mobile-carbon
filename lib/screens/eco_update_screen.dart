@@ -130,50 +130,10 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: ListView(
         children: [
-          Stack(
-            children: [
-              Container(
-                height: 330,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.0),
-                  image: DecorationImage(
-                    image: const AssetImage(
-                      Images.dummyPlant,
-                    ),
-                    fit: BoxFit.fill,
-                    colorFilter: ColorFilter.mode(
-                      ColorPalettes.black.withOpacity(0.4),
-                      BlendMode.luminosity,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 10.0,
-                left: 20.0,
-                right: 20.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Pengaruh Emisi Karbon Terhadap Tanaman Hidroponik",
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                            fontSize: 18.0,
-                            color: ColorPalettes.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
-                    AuthorItem(
-                      author: "Serena Waiyene",
-                      dateCreated: "11 April 2022",
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          const MainArticleItem(
+            articleLabel: "Pengaruh Emisi Karbon Terhadap Tanaman Hidroponik",
+            authorName: "Serena Waiyene",
+            dateCreated: "11 April 2022",
           ),
           const SizedBox(
             height: 40.0,

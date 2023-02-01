@@ -261,6 +261,44 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w700,
                         ),
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              CarbonIcons.carbonFootprint,
+                            ),
+                            Text(
+                              "Jejak Karbon",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              CarbonIcons.donation,
+                            ),
+                            Text(
+                              "Donasi",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 52.0,
                   ),
@@ -272,14 +310,161 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                   ),
                   const SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(20.0),
+                    margin: const EdgeInsets.only(right: 16.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24.0),
+                      gradient: const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          ColorPalettes.greenGradient2,
+                          ColorPalettes.greenGradient1,
+                        ],
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0,
+                                vertical: 4.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100.0),
+                                color: ColorPalettes.white.withOpacity(0.2),
+                              ),
+                              child: Text(
+                                "4 hari lagi",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .overline
+                                    ?.copyWith(
+                                      color: ColorPalettes.backgroundZill,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 27.0,
+                            ),
+                            Text(
+                              "Eco-Newbie",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  ?.copyWith(
+                                    color: ColorPalettes.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
+                            const SizedBox(
+                              height: 9.0,
+                            ),
+                            Row(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        right: 6.0,
+                                      ),
+                                      height: 16.0,
+                                      width: 16.0,
+                                      child: const CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                          Images.dummyProfile,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        right: 6.0,
+                                        left: 8.0,
+                                      ),
+                                      height: 16.0,
+                                      width: 16.0,
+                                      child: const CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                          Images.dummyProfile,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        right: 6.0,
+                                        left: 16.0,
+                                      ),
+                                      height: 16.0,
+                                      width: 16.0,
+                                      child: const CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                          Images.dummyProfile,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "100 peserta",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      ?.copyWith(
+                                        color: ColorPalettes.white,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Image.asset(
+                          CarbonIcons.personGroup,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
                     height: 52.0,
                   ),
-                  Text(
-                    "Rekomendasi Artikel",
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: ColorPalettes.dark,
-                          fontWeight: FontWeight.w700,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Rekomendasi Artikel",
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: ColorPalettes.dark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Lihat Semua",
+                          style: Theme.of(context).textTheme.caption?.copyWith(
+                                color: ColorPalettes.primary,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  const MainArticleItem(
+                    articleLabel:
+                        "Pengaruh Emisi Karbon Terhadap Tanaman Hidroponik",
+                    authorName: "Serena Gomez",
+                    dateCreated: "12 Februari 2023",
                   ),
                 ],
               ),
