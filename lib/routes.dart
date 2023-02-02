@@ -1,5 +1,6 @@
 class Routes {
   static const addArticle = "add-article";
+  static const badge = "badge";
   static const detailArticle = "detail-article";
   static const detailCarbonEmission = "detail-carbon-emission";
   static const detailComment = "detail-comment";

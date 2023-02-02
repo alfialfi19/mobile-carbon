@@ -716,7 +716,14 @@ class DetailCommentScreen extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       shape: defaultBottomSheetShape,
-      builder: (context) => DeleteArticleBottomSheet(),
+      builder: (context) => DeleteArticleBottomSheet(
+        label: "Hapus Artikel",
+        caption:
+            "Apakah Anda ingin menghapus artikel? Artikel yang telah dihapus "
+            "tidak dapat dikembalikan lagi.",
+        negativeCallback: () => Navigator.pop(context),
+        positiveLabel: "Hapus",
+      ),
     );
 
     if (data != null) {

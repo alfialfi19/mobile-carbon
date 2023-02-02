@@ -4,7 +4,22 @@ import '../../commons/commons.dart';
 import '../widgets.dart';
 
 class DeleteArticleBottomSheet extends StatelessWidget {
-  const DeleteArticleBottomSheet({Key? key}) : super(key: key);
+  final String label;
+  final String caption;
+  final String? negativeLabel;
+  final VoidCallback? negativeCallback;
+  final String? positiveLabel;
+  final VoidCallback? positiveCallback;
+
+  const DeleteArticleBottomSheet({
+    Key? key,
+    required this.label,
+    required this.caption,
+    this.negativeLabel,
+    this.negativeCallback,
+    this.positiveLabel,
+    this.positiveCallback,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +33,14 @@ class DeleteArticleBottomSheet extends StatelessWidget {
           content: Container(
             color: ColorPalettes.backgroundLight,
             width: double.maxFinite,
-            child: _DeleteArticleForm(),
+            child: _DeleteArticleForm(
+              label: label,
+              caption: caption,
+              negativeLabel: negativeLabel,
+              negativeCallback: negativeCallback,
+              positiveLabel: positiveLabel,
+              positiveCallback: positiveCallback,
+            ),
           ),
         ),
       ],
@@ -27,7 +49,22 @@ class DeleteArticleBottomSheet extends StatelessWidget {
 }
 
 class _DeleteArticleForm extends StatelessWidget {
-  const _DeleteArticleForm({Key? key}) : super(key: key);
+  final String label;
+  final String caption;
+  final String? negativeLabel;
+  final VoidCallback? negativeCallback;
+  final String? positiveLabel;
+  final VoidCallback? positiveCallback;
+
+  const _DeleteArticleForm({
+    Key? key,
+    required this.label,
+    required this.caption,
+    this.negativeLabel,
+    this.negativeCallback,
+    this.positiveLabel,
+    this.positiveCallback,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +91,7 @@ class _DeleteArticleForm extends StatelessWidget {
               bottom: 4.0,
             ),
             child: Text(
-              "Hapus Artikel",
+              label,
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: ColorPalettes.dark,
                     fontWeight: FontWeight.w700,
@@ -68,8 +105,7 @@ class _DeleteArticleForm extends StatelessWidget {
               bottom: 46.0,
             ),
             child: Text(
-              "Apakah Anda ingin menghapus artikel? Artikel yang telah dihapus "
-              "tidak dapat dikembalikan lagi.",
+              caption,
               style: Theme.of(context).textTheme.caption?.copyWith(
                     color: ColorPalettes.grayZill,
                     fontWeight: FontWeight.w400,
@@ -85,24 +121,25 @@ class _DeleteArticleForm extends StatelessWidget {
               children: [
                 Expanded(
                   child: CarbonRoundedButton(
-                    label: "Batal",
+                    label: negativeLabel ?? "Batal",
                     labelColor: ColorPalettes.dark,
                     backgroundColor: ColorPalettes.backgroundLight,
                     borderColor: ColorPalettes.line,
-                    action: () => print("==> Cancel delete article"),
+                    action: () => negativeCallback?.call(),
                   ),
                 ),
                 const SizedBox(
                   width: 4.0,
                 ),
-                Expanded(
-                  child: CarbonRoundedButton(
-                    label: "Hapus",
-                    backgroundColor: ColorPalettes.redConfirmation,
-                    borderColor: ColorPalettes.redConfirmation,
-                    action: () => print("==> Approve delete article"),
+                if (positiveLabel != null)
+                  Expanded(
+                    child: CarbonRoundedButton(
+                      label: positiveLabel!,
+                      backgroundColor: ColorPalettes.redConfirmation,
+                      borderColor: ColorPalettes.redConfirmation,
+                      action: () => positiveCallback?.call(),
+                    ),
                   ),
-                ),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 export 'add_article_screen.dart';
+export 'badge_screen.dart';
 export 'detail_article_screen.dart';
 export 'detail_carbon_emission_screen.dart';
 export 'detail_comment_screen.dart';

@@ -2,6 +2,8 @@ class CarbonIcons {
   static const String iconsDir = 'assets/icons';
 
   static const String article = "$iconsDir/ic-article.png";
+  static const String badge = "$iconsDir/ic-badge.png";
+  static const String badgeElite = "$iconsDir/ic-badge-elite.png";
   static const String biogas = "$iconsDir/ic-biogas.png";
   static const String carbon = "$iconsDir/ic-carbon.png";
   static const String carbonFootprint = "$iconsDir/ic-carbon-footprint.png";

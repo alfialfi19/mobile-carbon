@@ -10,6 +10,8 @@ Widget? getPageByName(
   switch (name) {
     case Routes.addArticle:
       return const AddArticleScreen();
+    case Routes.badge:
+      return const BadgeScreen();
     case Routes.detailArticle:
       return const DetailArticleScreen();
     case Routes.detailCarbonEmission:

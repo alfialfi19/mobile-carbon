@@ -11,6 +11,7 @@ export 'home/home.dart';
 export 'info_toast.dart';
 export 'navigation_bar.dart';
 export 'on_boarding/on_boarding.dart';
+export 'point/point.dart';
 export 'pull_to_refresh.dart';
 export 'rounded_button.dart';
 export 'top_toast.dart';
