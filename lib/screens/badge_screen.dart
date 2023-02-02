@@ -124,8 +124,14 @@ class BadgeScreen extends StatelessWidget {
                 physics: const ClampingScrollPhysics(),
                 children: const [
                   BadgeLevelItemGradient(),
+                  SizedBox(
+                    width: 12.0,
+                  ),
                   BadgeLevelItemFlat(
                     badgeLabel: "Eco-elite",
+                  ),
+                  SizedBox(
+                    width: 12.0,
                   ),
                   BadgeLevelItemFlat(
                     badgeLabel: "Eco-legend",
