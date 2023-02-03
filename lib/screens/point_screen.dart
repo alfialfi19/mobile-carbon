@@ -62,14 +62,6 @@ class _PointScreenState extends State<PointScreen> {
             indicatorColor: Colors.transparent,
           ),
         ),
-        // floatingActionButton: CarbonRoundedButton(
-        //   padding: const EdgeInsets.symmetric(
-        //     vertical: 12.0,
-        //     horizontal: 30.0,
-        //   ),
-        //   label: "Tukar Poin",
-        //   action: () => print("===> tukar Poin"),
-        // ),
         floatingActionButton: Container(
           width: double.maxFinite,
           margin: const EdgeInsets.symmetric(

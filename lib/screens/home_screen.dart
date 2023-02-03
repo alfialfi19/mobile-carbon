@@ -101,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Stack(
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.notification,
+                                ),
                                 icon: const Icon(
                                   Icons.notifications_rounded,
                                 ),

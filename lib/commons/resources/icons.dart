@@ -14,6 +14,7 @@ class CarbonIcons {
   static const String ecoUpdateInactive =
       "$iconsDir/ic-eco-update-inactive.png";
   static const String electric = "$iconsDir/ic-electric.png";
+  static const String failed = "$iconsDir/ic-failed.png";
   static const String flower = "$iconsDir/ic-flower.png";
   static const String food = "$iconsDir/ic-food.png";
   static const String homeActive = "$iconsDir/ic-home-active.png";
@@ -24,6 +25,7 @@ class CarbonIcons {
   static const String profileActive = "$iconsDir/ic-profile-active.png";
   static const String profileInactive = "$iconsDir/ic-profile-inactive.png";
   static const String reset = "$iconsDir/ic-reset.png";
+  static const String success = "$iconsDir/ic-success.png";
   static const String trash = "$iconsDir/ic-trash.png";
   static const String tv = "$iconsDir/ic-tv.png";
   static const String worm = "$iconsDir/ic-worm.png";

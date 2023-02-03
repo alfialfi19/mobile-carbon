@@ -32,6 +32,8 @@ Widget? getPageByName(
       return const MyArticleScreen();
     case Routes.notFound:
       return const NotFoundScreen();
+    case Routes.notification:
+      return const NotificationScreen();
     case Routes.onBoarding1:
       return const OnBoarding1Screen();
     case Routes.onBoarding2:

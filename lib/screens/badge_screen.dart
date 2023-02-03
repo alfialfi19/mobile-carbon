@@ -118,7 +118,7 @@ class BadgeScreen extends StatelessWidget {
               height: 12.0,
             ),
             SizedBox(
-              height: 120.0,
+              height: 140.0,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 physics: const ClampingScrollPhysics(),

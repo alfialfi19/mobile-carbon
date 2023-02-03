@@ -8,6 +8,10 @@ class BadgeLevelItemGradient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 128.0,
+      margin: const EdgeInsets.symmetric(
+        vertical: 10.0,
+      ),
       padding: const EdgeInsets.fromLTRB(
         30.0,
         0.0,
@@ -24,6 +28,16 @@ class BadgeLevelItemGradient extends StatelessWidget {
             ColorPalettes.badgeGradient1,
           ],
         ),
+        boxShadow: const [
+          BoxShadow(
+            color: ColorPalettes.grayDivider,
+            blurRadius: 8,
+            offset: Offset(
+              2,
+              2,
+            ),
+          ),
+        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

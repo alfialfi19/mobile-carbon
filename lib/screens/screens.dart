@@ -10,6 +10,7 @@ export 'home_screen.dart';
 export 'main_screen.dart';
 export 'my_article_screen.dart';
 export 'not_found_screen.dart';
+export 'notification_screen.dart';
 export 'on_boarding_1_screen.dart';
 export 'on_boarding_2_screen.dart';
 export 'on_boarding_3_screen.dart';

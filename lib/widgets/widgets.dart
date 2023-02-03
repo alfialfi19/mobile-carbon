@@ -10,6 +10,7 @@ export 'form_field/form_field.dart';
 export 'home/home.dart';
 export 'info_toast.dart';
 export 'navigation_bar.dart';
+export 'notification/notification.dart';
 export 'on_boarding/on_boarding.dart';
 export 'point/point.dart';
 export 'pull_to_refresh.dart';
