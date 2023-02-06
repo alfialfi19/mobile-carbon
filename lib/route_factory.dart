@@ -24,6 +24,8 @@ Widget? getPageByName(
       return const DetailTotalArticleScreen();
     case Routes.ecoUpdate:
       return const EcoUpdateScreen();
+    case Routes.editProfile:
+      return const EditProfileScreen();
     case Routes.home:
       return const HomeScreen();
     case Routes.main:

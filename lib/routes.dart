@@ -7,6 +7,7 @@ class Routes {
   static const detailEcoActivity = "detail-eco-activity";
   static const detailTotalArticle = "detail-total-article";
   static const ecoUpdate = "eco-update";
+  static const editProfile = "edit-profile";
   static const home = "home";
   static const main = "main";
   static const myArticle = "my-article";

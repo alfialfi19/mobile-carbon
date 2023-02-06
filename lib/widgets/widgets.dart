@@ -13,6 +13,7 @@ export 'navigation_bar.dart';
 export 'notification/notification.dart';
 export 'on_boarding/on_boarding.dart';
 export 'point/point.dart';
+export 'profile/profile.dart';
 export 'pull_to_refresh.dart';
 export 'rounded_button.dart';
 export 'top_toast.dart';
