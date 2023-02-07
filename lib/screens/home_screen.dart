@@ -284,20 +284,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              CarbonIcons.donation,
-                            ),
-                            Text(
-                              "Donasi",
-                              style:
-                                  Theme.of(context).textTheme.caption?.copyWith(
-                                        color: ColorPalettes.dark,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                            ),
-                          ],
+                        child: InkWell(
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            Routes.donation,
+                          ),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                CarbonIcons.donation,
+                              ),
+                              Text(
+                                "Donasi",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    ?.copyWith(
+                                      color: ColorPalettes.dark,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

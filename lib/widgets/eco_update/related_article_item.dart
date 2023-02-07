@@ -8,6 +8,7 @@ class RelatedArticleItem extends StatelessWidget {
   final String? author;
   final String? createdAt;
   final VoidCallback? action;
+  final EdgeInsets? margin;
 
   const RelatedArticleItem({
     Key? key,
@@ -16,6 +17,7 @@ class RelatedArticleItem extends StatelessWidget {
     this.author,
     this.createdAt,
     this.action,
+    this.margin,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class RelatedArticleItem extends StatelessWidget {
     return InkWell(
       onTap: () => action?.call(),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 20.0),
+        margin: margin ?? const EdgeInsets.only(bottom: 20.0),
         child: Row(
           children: [
             Container(

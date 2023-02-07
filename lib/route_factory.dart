@@ -22,6 +22,8 @@ Widget? getPageByName(
       return const DetailEcoActivityScreen();
     case Routes.detailTotalArticle:
       return const DetailTotalArticleScreen();
+    case Routes.donation:
+      return const DonationScreen();
     case Routes.ecoUpdate:
       return const EcoUpdateScreen();
     case Routes.editProfile:

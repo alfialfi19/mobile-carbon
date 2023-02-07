@@ -1,6 +1,7 @@
 class Images {
   static const String imagesDir = 'assets/images';
 
+  static const String dummyDonation = "$imagesDir/img_dummy_donation.png";
   static const String dummyHome = "$imagesDir/img_dummy_home.png";
   static const String dummyPlant = "$imagesDir/img_dummy_plant.png";
   static const String dummyPlant2 = "$imagesDir/img_dummy_plant_2.png";
