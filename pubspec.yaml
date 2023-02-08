@@ -34,6 +34,7 @@ dependencies:
   #  requires SDK version >=2.17.1 <3.0.0
   #  pdfx: ^2.2.0  # PDF viewer and renderer using native API
   path_provider: ^2.0.11
+  percent_indicator: ^4.2.2
   shimmer: ^2.0.0
 
 dev_dependencies:

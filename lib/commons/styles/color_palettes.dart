@@ -49,6 +49,7 @@ class ColorPalettes {
   static const Color greenGradient2 = Color.fromRGBO(39, 187, 173, 1);
   static const Color ecoGradient1 = Color.fromRGBO(16, 178, 177, 1);
   static const Color ecoGradient2 = Color.fromRGBO(16, 178, 177, 0);
+  static const Color ecoGradient3 = Color.fromRGBO(112, 214, 161, 1);
   static const Color badgeGradient1 = Color.fromRGBO(37, 186, 174, 1);
   static const Color badgeGradient2 = Color.fromRGBO(109, 213, 161, 1);
 

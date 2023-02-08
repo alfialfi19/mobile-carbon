@@ -40,20 +40,29 @@ class DetailPointComponent extends StatelessWidget {
           const SizedBox(
             height: 32.0,
           ),
-          Text(
-            caption,
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  color: captionColor ?? ColorPalettes.white,
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-          RichText(
-            text: TextSpan(
-              text: pointValue.toString(),
-              style: Theme.of(context).textTheme.headline6?.copyWith(
-                    color: pointColor ?? ColorPalettes.white,
-                    fontWeight: FontWeight.w700,
+          Expanded(
+            child: Text(
+              caption,
+              style: Theme.of(context).textTheme.caption?.copyWith(
+                    color: captionColor ?? ColorPalettes.white,
+                    fontWeight: FontWeight.w400,
+                    overflow: TextOverflow.ellipsis,
                   ),
+            ),
+          ),
+          const SizedBox(
+            height: 2.0,
+          ),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                text: pointValue.toString(),
+                style: Theme.of(context).textTheme.headline6?.copyWith(
+                      color: pointColor ?? ColorPalettes.white,
+                      fontWeight: FontWeight.w700,
+                      overflow: TextOverflow.visible,
+                    ),
+              ),
             ),
           ),
         ],

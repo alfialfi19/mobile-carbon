@@ -267,20 +267,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              CarbonIcons.carbonFootprint,
-                            ),
-                            Text(
-                              "Jejak Karbon",
-                              style:
-                                  Theme.of(context).textTheme.caption?.copyWith(
-                                        color: ColorPalettes.dark,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                            ),
-                          ],
+                        child: InkWell(
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            Routes.carbonFootprint,
+                          ),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                CarbonIcons.carbonFootprint,
+                              ),
+                              Text(
+                                "Jejak Karbon",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    ?.copyWith(
+                                      color: ColorPalettes.dark,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Expanded(
