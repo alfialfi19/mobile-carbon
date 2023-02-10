@@ -4,6 +4,7 @@ export 'bottom_sheet_container.dart';
 export 'bottom_sheet_field.dart';
 export 'carbon_emission/carbon_emission.dart';
 export 'carbon_rounded_button.dart';
+export 'category_item.dart';
 export 'eco_update/eco_update.dart';
 export 'error_toast.dart';
 export 'form_field/form_field.dart';

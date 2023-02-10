@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -37,6 +38,29 @@ class _CarbonFootprintScreenState extends State<CarbonFootprintScreen> {
           ),
         ),
         elevation: 0.0,
+      ),
+      floatingActionButton: InkWell(
+        onTap: () => Navigator.pushNamed(
+          context,
+          Routes.calculateCarbonStep1,
+        ),
+        child: Container(
+          height: 54.0,
+          width: 54.0,
+          margin: const EdgeInsets.only(
+            right: 10.0,
+            bottom: 30.0,
+          ),
+          decoration: BoxDecoration(
+            color: ColorPalettes.primary,
+            borderRadius: BorderRadius.circular(100.0),
+          ),
+          child: const Icon(
+            Icons.add,
+            size: 32.0,
+            color: ColorPalettes.white,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(

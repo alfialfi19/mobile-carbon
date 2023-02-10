@@ -8,12 +8,16 @@ class CategoryInput extends StatefulWidget {
   final String? item;
   final List<String> categoryItem;
   final OnChangedCategory callback;
+  final String? label;
+  final double? width;
 
   const CategoryInput({
     Key? key,
     this.item,
     required this.categoryItem,
     required this.callback,
+    this.label = "Kategori",
+    this.width,
   }) : super(key: key);
 
   @override
@@ -38,7 +42,8 @@ class _CategoryInputState extends State<CategoryInput> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
       child: SizedBox(
-        height: 53.0,
+        height: 55.0,
+        width: widget.width,
         child: DropdownButtonFormField<String>(
           // value: _balances.length == 1 ? _balances.single : null,
           // onChanged: _onValueChanged,
@@ -48,12 +53,12 @@ class _CategoryInputState extends State<CategoryInput> {
           items: _constructMenuItems(),
           decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            labelText: "Kategori",
+            labelText: widget.label,
             labelStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: ColorPalettes.dark,
                   fontWeight: FontWeight.w700,
                 ),
-            hintText: "Kategori",
+            hintText: widget.label,
             // helperText: _selectedBalanceCategory != null
             //     ? LocaleKeys.request_reimbursement_category_balance_helper
             //     .tr(args: [

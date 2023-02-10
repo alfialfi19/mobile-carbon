@@ -12,6 +12,12 @@ Widget? getPageByName(
       return const AddArticleScreen();
     case Routes.badge:
       return const BadgeScreen();
+    case Routes.calculateCarbonStep1:
+      return const CalculateCarbonStep1Screen();
+    case Routes.calculateCarbonStep2:
+      return const CalculateCarbonStep2Screen();
+    case Routes.calculateCarbonStep3:
+      return const CalculateCarbonStep3Screen();
     case Routes.carbonFootprint:
       return const CarbonFootprintScreen();
     case Routes.detailArticle:

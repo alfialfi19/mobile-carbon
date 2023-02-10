@@ -1,6 +1,9 @@
 class Routes {
   static const addArticle = "add-article";
   static const badge = "badge";
+  static const calculateCarbonStep1 = "calculate-carbon-step-1";
+  static const calculateCarbonStep2 = "calculate-carbon-step-2";
+  static const calculateCarbonStep3 = "calculate-carbon-step-3";
   static const carbonFootprint = "carbon-footprint";
   static const detailArticle = "detail-article";
   static const detailCarbonEmission = "detail-carbon-emission";
