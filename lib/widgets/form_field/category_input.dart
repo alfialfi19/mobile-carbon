@@ -44,16 +44,18 @@ class _CategoryInputState extends State<CategoryInput> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.label ?? "-",
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  color: ColorPalettes.dark,
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
+          if (widget.label != null) ...[
+            Text(
+              widget.label ?? "-",
+              style: Theme.of(context).textTheme.caption?.copyWith(
+                    color: ColorPalettes.dark,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+          ],
           SizedBox(
             height: 55.0,
             width: widget.width,

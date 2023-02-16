@@ -170,15 +170,16 @@ class _FilePickerFormFieldState extends FormFieldState<List<File>> {
     final result = <Widget>[];
     for (var index = 0; index < fileThumbnails.length; index++) {
       final thumbnail = Stack(
-        // alignment: Alignment.topRight,
+        alignment: Alignment.topRight,
         children: [
           fileThumbnails[index].thumbnail,
           if (fileThumbnails[index].showClearButton)
-            Positioned(
-              right: 0.0,
-              top: 0.0,
-              child: GestureDetector(
-                onTap: () => _removeFileAtIndex(index),
+            GestureDetector(
+              onTap: () => _removeFileAtIndex(index),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 10.0,
+                ),
                 child: Container(
                   padding: const EdgeInsets.all(7.4),
                   decoration: BoxDecoration(

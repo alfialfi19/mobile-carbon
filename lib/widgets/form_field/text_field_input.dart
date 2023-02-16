@@ -79,16 +79,18 @@ class _TextFieldInputState extends State<TextFieldInput>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.labelText ?? "-",
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  color: ColorPalettes.dark,
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
+          if (widget.labelText != null) ...[
+            Text(
+              widget.labelText ?? "-",
+              style: Theme.of(context).textTheme.caption?.copyWith(
+                    color: ColorPalettes.dark,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+          ],
           SizedBox(
             width: widget.width,
             child: TextFormField(
