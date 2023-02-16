@@ -138,7 +138,18 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
         vertical: 8.0,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            "Gambar",
+            style: Theme.of(context).textTheme.caption?.copyWith(
+                  color: ColorPalettes.dark,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+          const SizedBox(
+            height: 16.9,
+          ),
           if (widget.mediaSet != null && _isLoadingCurrentFile)
             Container(
               height: 80,
@@ -159,28 +170,28 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
               allowMultiple: true,
               onAttachmentAdded: _onAttachmentAdded,
               onAttachmentRemoved: _onAttachmentRemoved,
-              placeholderHeight: 160.0,
+              placeholderHeight: 100.0,
               allowedExtensions: _fileExtensions,
               decoration: const InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: ColorPalettes.white),
+                  borderSide: BorderSide(color: ColorPalettes.backgroundLight),
                 ),
               ),
               formzError: widget.formzError,
             ),
-          const SizedBox(
-            height: 4.0,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Files must be in JPG, JPEG, PNG, or PDF with a maximum size of ${_maxSize.toStringAsFixed(0)}MB. You can upload up to ${_maxFile.toStringAsFixed(0)} files at once.",
-              style: Theme.of(context).textTheme.overline!.copyWith(
-                    color: ColorPalettes.grayZill,
-                  ),
-            ),
-          ),
+          // const SizedBox(
+          //   height: 4.0,
+          // ),
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: Text(
+          //     "Files must be in JPG, JPEG, PNG, or PDF with a maximum size of ${_maxSize.toStringAsFixed(0)}MB. You can upload up to ${_maxFile.toStringAsFixed(0)} files at once.",
+          //     style: Theme.of(context).textTheme.overline!.copyWith(
+          //           color: ColorPalettes.grayZill,
+          //         ),
+          //   ),
+          // ),
         ],
       ),
     );

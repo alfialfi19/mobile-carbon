@@ -71,7 +71,7 @@ class _AddArticleScreenState extends State<AddArticleScreen> {
               height: 24.0,
             ),
             AttachmentInput(
-                formzError: "errorText",
+                // formzError: "errorText",
                 callback: (attachmentIds) =>
                     // BlocProvider.of<CreateReimbursementBloc>(context).add(
                     //   AttachmentIdsChanged(attachmentIds),

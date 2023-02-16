@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -158,7 +157,7 @@ class _FilePickerFormFieldState extends FormFieldState<List<File>> {
 
     return SizedBox(
       key: selectorKey,
-      width: totalAddedFile == 0 ? maxWidth : 136.0,
+      width: 120.0,
       child: AttachmentSelector(
         primaryPlaceholder: "Add file",
         isErrorState: errorMessage.isNotBlank,
@@ -171,16 +170,26 @@ class _FilePickerFormFieldState extends FormFieldState<List<File>> {
     final result = <Widget>[];
     for (var index = 0; index < fileThumbnails.length; index++) {
       final thumbnail = Stack(
-        alignment: Alignment.topRight,
+        // alignment: Alignment.topRight,
         children: [
           fileThumbnails[index].thumbnail,
           if (fileThumbnails[index].showClearButton)
-            GestureDetector(
-              onTap: () => _removeFileAtIndex(index),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, right: 20.0),
-                child: SvgPicture.asset(
-                  CarbonIcons.reset,
+            Positioned(
+              right: 0.0,
+              top: 0.0,
+              child: GestureDetector(
+                onTap: () => _removeFileAtIndex(index),
+                child: Container(
+                  padding: const EdgeInsets.all(7.4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100.0),
+                    color: ColorPalettes.redConfirmation,
+                  ),
+                  child: const Icon(
+                    Icons.close,
+                    color: ColorPalettes.white,
+                    size: 20.0,
+                  ),
                 ),
               ),
             ),

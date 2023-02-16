@@ -113,7 +113,7 @@ class _AttachmentThumbnailState extends State<AttachmentThumbnail> {
         File(widget.filePath),
         fit: BoxFit.cover,
         height: 160.0,
-        width: 120.0,
+        width: 110.0,
       );
     }
 

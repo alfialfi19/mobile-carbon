@@ -76,61 +76,71 @@ class _TextFieldInputState extends State<TextFieldInput>
             0.0,
             6.0,
           ),
-      child: SizedBox(
-        width: widget.width,
-        child: TextFormField(
-          autofocus: widget.isAutoFocus,
-          controller: widget.controller,
-          focusNode: _textFieldFocusNode,
-          keyboardType: widget.keyboardType,
-          maxLength: widget.maxLength,
-          minLines: widget.minLines,
-          maxLines: null,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: ColorPalettes.dark,
-              ),
-          decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                8.0,
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: ColorPalettes.line,
-              ),
-              borderRadius: BorderRadius.circular(
-                8.0,
-              ),
-            ),
-            hintText: widget.hintText,
-            hintStyle: const TextStyle(height: 1.2),
-            labelText: widget.labelText,
-            labelStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  height: 1.2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.labelText ?? "-",
+            style: Theme.of(context).textTheme.caption?.copyWith(
+                  color: ColorPalettes.dark,
+                  fontWeight: FontWeight.w700,
                 ),
-            // helperText: widget.required ? null : LocaleKeys.optional.tr(),
-            // helperStyle: Theme.of(context).textTheme.overline?.copyWith(
-            //       color: ColorPalettes.gray600,
-            //     ),
-            // errorText: widget.errorMessage,
-            counterStyle: Theme.of(context).textTheme.overline?.copyWith(
-                  color: ColorPalettes.placeholderZill,
-                ),
-            contentPadding: widget.contentPadding ??
-                const EdgeInsets.only(
-                  right: 16.0,
-                  top: 10.0,
-                  bottom: 12.0,
-                  left: 16.0,
-                ),
-            prefixIcon: widget.prefix ?? const SizedBox(),
           ),
-          onChanged: (value) => _onValuesChanged(context, value),
-          textInputAction: widget.inputAction ?? TextInputAction.done,
-        ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          SizedBox(
+            width: widget.width,
+            child: TextFormField(
+              autofocus: widget.isAutoFocus,
+              controller: widget.controller,
+              focusNode: _textFieldFocusNode,
+              keyboardType: widget.keyboardType,
+              maxLength: widget.maxLength,
+              minLines: widget.minLines,
+              maxLines: null,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    color: ColorPalettes.dark,
+                  ),
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    8.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: ColorPalettes.line,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    8.0,
+                  ),
+                ),
+                hintText: widget.hintText,
+                hintStyle: const TextStyle(height: 1.2),
+                // helperText: widget.required ? null : LocaleKeys.optional.tr(),
+                // helperStyle: Theme.of(context).textTheme.overline?.copyWith(
+                //       color: ColorPalettes.gray600,
+                //     ),
+                // errorText: widget.errorMessage,
+                counterStyle: Theme.of(context).textTheme.overline?.copyWith(
+                      color: ColorPalettes.placeholderZill,
+                    ),
+                contentPadding: widget.contentPadding ??
+                    const EdgeInsets.only(
+                      right: 16.0,
+                      top: 10.0,
+                      bottom: 12.0,
+                      left: 16.0,
+                    ),
+                prefixIcon: widget.prefix,
+              ),
+              onChanged: (value) => _onValuesChanged(context, value),
+              textInputAction: widget.inputAction ?? TextInputAction.done,
+            ),
+          ),
+        ],
       ),
     );
   }

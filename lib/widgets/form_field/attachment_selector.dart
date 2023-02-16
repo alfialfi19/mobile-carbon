@@ -1,4 +1,3 @@
-import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 
 import '../../commons/commons.dart';
@@ -19,10 +18,11 @@ class AttachmentSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 16.0),
-      decoration: DottedDecoration(
-        shape: Shape.box,
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: isErrorState ? ColorPalettes.red400 : ColorPalettes.grayZill,
+        border: Border.all(
+          color: isErrorState ? ColorPalettes.red400 : ColorPalettes.line,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -34,20 +34,20 @@ class AttachmentSelector extends StatelessWidget {
           // ),
           const Icon(
             Icons.add,
-            size: 24.0,
+            size: 42.0,
             color: ColorPalettes.grayZill,
           ),
-          const SizedBox(height: 8.0),
-          Text(
-            primaryPlaceholder,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.overline!.copyWith(
-                  color: isErrorState
-                      ? ColorPalettes.red400
-                      : ColorPalettes.blue400,
-                  fontSize: 14,
-                ),
-          ),
+          // const SizedBox(height: 8.0),
+          // Text(
+          //   primaryPlaceholder,
+          //   textAlign: TextAlign.center,
+          //   style: Theme.of(context).textTheme.overline!.copyWith(
+          //         color: isErrorState
+          //             ? ColorPalettes.red400
+          //             : ColorPalettes.blue400,
+          //         fontSize: 14,
+          //       ),
+          // ),
           if (secondaryPlaceholder != null)
             Text(
               secondaryPlaceholder!,

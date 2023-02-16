@@ -41,66 +41,75 @@ class _CategoryInputState extends State<CategoryInput> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
-      child: SizedBox(
-        height: 55.0,
-        width: widget.width,
-        child: DropdownButtonFormField<String>(
-          // value: _balances.length == 1 ? _balances.single : null,
-          // onChanged: _onValueChanged,
-          // items: _constructMenuItems(),
-          value: null,
-          onChanged: _onValueChanged,
-          items: _constructMenuItems(),
-          decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            labelText: widget.label,
-            labelStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.label ?? "-",
+            style: Theme.of(context).textTheme.caption?.copyWith(
                   color: ColorPalettes.dark,
                   fontWeight: FontWeight.w700,
                 ),
-            hintText: widget.label,
-            // helperText: _selectedBalanceCategory != null
-            //     ? LocaleKeys.request_reimbursement_category_balance_helper
-            //     .tr(args: [
-            //   _selectedBalanceCategory!.name,
-            //   formatCurrency(_selectedBalanceCategory!.balance),
-            // ])
-            //     : null,
-            helperStyle: Theme.of(context)
-                .textTheme
-                .overline!
-                .copyWith(color: ColorPalettes.slate),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: ColorPalettes.line,
-              ),
-              borderRadius: BorderRadius.circular(
-                8.0,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: ColorPalettes.line,
-              ),
-              borderRadius: BorderRadius.circular(
-                8.0,
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: ColorPalettes.line,
-              ),
-              borderRadius: BorderRadius.circular(
-                8.0,
-              ),
-            ),
-            // errorText: errorText,
           ),
-          icon: const Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: Icon(Icons.arrow_drop_down),
+          const SizedBox(
+            height: 8.0,
           ),
-        ),
+          SizedBox(
+            height: 55.0,
+            width: widget.width,
+            child: DropdownButtonFormField<String>(
+              // value: _balances.length == 1 ? _balances.single : null,
+              // onChanged: _onValueChanged,
+              // items: _constructMenuItems(),
+              value: null,
+              onChanged: _onValueChanged,
+              items: _constructMenuItems(),
+              decoration: InputDecoration(
+                hintText: widget.label,
+                // helperText: _selectedBalanceCategory != null
+                //     ? LocaleKeys.request_reimbursement_category_balance_helper
+                //     .tr(args: [
+                //   _selectedBalanceCategory!.name,
+                //   formatCurrency(_selectedBalanceCategory!.balance),
+                // ])
+                //     : null,
+                helperStyle: Theme.of(context)
+                    .textTheme
+                    .overline!
+                    .copyWith(color: ColorPalettes.slate),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: ColorPalettes.line,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    8.0,
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: ColorPalettes.line,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    8.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: ColorPalettes.line,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    8.0,
+                  ),
+                ),
+                // errorText: errorText,
+              ),
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: Icon(Icons.arrow_drop_down),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
