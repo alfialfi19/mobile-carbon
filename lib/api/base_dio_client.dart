@@ -20,17 +20,20 @@ class BaseDioClient {
       _dio.options.baseUrl = baseUrlProd;
     }
 
-    if (flavor == Flavor.prod) {
-      _dio.interceptors.add(_interceptor);
-    } else {
-      _dio.interceptors
-        ..add(_interceptor)
-        ..add(LogInterceptor(requestBody: true, responseBody: true));
-    }
+    // if (flavor == Flavor.prod) {
+    //   _dio.interceptors.add(_interceptor);
+    // } else {
+    //   _dio.interceptors
+    //     ..add(_interceptor)
+    //     ..add(LogInterceptor(requestBody: true, responseBody: true));
+    // }
+    _dio.interceptors
+      ..add(_interceptor)
+      ..add(LogInterceptor(requestBody: true, responseBody: true));
   }
 
   Map<String, dynamic> _header(String token) {
-    return {'Authorization': 'Bearer $token'};
+    return {'Authorization': token};
   }
 
   Interceptor get _interceptor => QueuedInterceptorsWrapper(

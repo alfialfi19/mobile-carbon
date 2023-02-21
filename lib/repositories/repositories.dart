@@ -1,2 +1,2 @@
+export 'auth_repository.dart';
 export 'media_repository.dart';
-export 'sign_in_repository.dart';

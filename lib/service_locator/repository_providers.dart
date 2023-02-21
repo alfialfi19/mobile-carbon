@@ -6,9 +6,9 @@ import '../commons/commons.dart';
 import 'service_locator.dart';
 
 final repositoryProviders = [
-  RepositoryProvider<SignInRepository>(
-    create: (context) => SignInRepository(
-      locator<SignInApi>(),
+  RepositoryProvider<AuthRepository>(
+    create: (context) => AuthRepository(
+      locator<AuthApi>(),
       locator<PrefHelper>(),
     ),
   ),

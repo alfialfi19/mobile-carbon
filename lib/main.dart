@@ -6,7 +6,7 @@ import 'package:mobile_carbon/my_app.dart';
 import 'commons/commons.dart';
 
 Future<void> main() async {
-  appFlavor = Flavor.staging;
+  appFlavor = Flavor.prod;
 
   mainDelegate();
 
