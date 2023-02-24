@@ -16,10 +16,23 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
+    _checkSession(context);
     Timer(
       const Duration(seconds: 1),
       () => Navigator.pushReplacementNamed(context, Routes.onBoarding1),
     );
+  }
+
+  void _checkSession(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    String? token = await PrefHelper().getAccessToken();
+
+    if (token != null) {
+      if (!mounted) return;
+
+      Navigator.pushReplacementNamed(context, Routes.main);
+    }
   }
 
   @override

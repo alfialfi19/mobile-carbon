@@ -14,11 +14,12 @@ class BaseDioClient {
     required this.flavor,
     this.prefHelper,
   }) : _dio = Dio() {
-    if (flavor == Flavor.staging) {
-      _dio.options.baseUrl = baseUrlDev;
-    } else {
-      _dio.options.baseUrl = baseUrlProd;
-    }
+    // if (flavor == Flavor.staging) {
+    //   _dio.options.baseUrl = baseUrlDev;
+    // } else {
+    //   _dio.options.baseUrl = baseUrlProd;
+    // }
+    _dio.options.baseUrl = baseUrlProd;
 
     // if (flavor == Flavor.prod) {
     //   _dio.interceptors.add(_interceptor);

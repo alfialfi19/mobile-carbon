@@ -10,11 +10,11 @@ class GlobalService {
 
   // initialize variables in here
   GlobalService._internal() {
-    flavor = Flavor.staging;
+    flavor = Flavor.prod;
   }
 
   /// Using for environment flavour
-  Flavor flavor = Flavor.staging;
+  Flavor flavor = Flavor.prod;
 
   // getter for usageFlavor variable
   Flavor get usageFlavor => flavor;

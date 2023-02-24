@@ -20,6 +20,11 @@ class AuthRepository {
       password: password,
     );
 
+    if (response.token != null) {
+      // Set token to prefHelper after get response
+      _prefHelper.setAccessToken(response.token!);
+    }
+
     return response;
   }
 

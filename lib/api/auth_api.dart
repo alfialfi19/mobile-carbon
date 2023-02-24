@@ -3,7 +3,7 @@ import 'package:mobile_carbon/models/models.dart';
 
 class AuthApi {
   static const signInPath = '/auth/login';
-  static const accountDetailPath = '/auth/account';
+  static const accountDetailPath = '/account/detail';
 
   final Dio _dio;
 
