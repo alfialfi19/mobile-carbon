@@ -30,6 +30,9 @@ void setupLocator() {
       () => AuthApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(
+      () => DonationApi(locator<BaseDioClient>().dio),
+    )
+    ..registerLazySingleton(
       () => MediaApi(locator<BaseDioClient>().dio),
     );
 }

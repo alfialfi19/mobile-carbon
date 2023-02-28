@@ -1,17 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_carbon/blocs/donation/donation_bloc.dart';
+import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
 import '../routes.dart';
 
-class DonationScreen extends StatefulWidget {
+class DonationScreen extends StatelessWidget {
   const DonationScreen({Key? key}) : super(key: key);
 
   @override
-  State<DonationScreen> createState() => _DonationScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DonationBloc>(
+          create: (context) {
+            final repository =
+                RepositoryProvider.of<DonationRepository>(context);
+
+            return DonationBloc(repository)
+              ..add(
+                LoadDonationList(
+                  1,
+                  "Terupdate",
+                  "",
+                ),
+              );
+          },
+        ),
+      ],
+      child: const DonationContent(),
+    );
+  }
 }
 
-class _DonationScreenState extends State<DonationScreen> {
+class DonationContent extends StatefulWidget {
+  const DonationContent({Key? key}) : super(key: key);
+
+  @override
+  State<DonationContent> createState() => _DonationContentState();
+}
+
+class _DonationContentState extends State<DonationContent> {
   final _scrollController = ScrollController();
   TextEditingController searchController = TextEditingController();
 
@@ -73,7 +104,7 @@ class _DonationScreenState extends State<DonationScreen> {
         ),
         child: PullToRefresh(
           controller: _scrollController,
-          onRefresh: () => _refresh(),
+          onRefresh: _refresh,
           slivers: [
             SliverToBoxAdapter(
               child: Column(
@@ -186,30 +217,80 @@ class _DonationScreenState extends State<DonationScreen> {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  ListView.separated(
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: _mockTitle.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return RelatedArticleItem(
-                        margin: const EdgeInsets.only(bottom: 0.0),
-                        title: _mockTitle[index],
-                        author: _mockAuthor[index],
-                        createdAt: _mockCreatedAt[index],
-                        action: () => Navigator.pushNamed(
-                          context,
-                          Routes.detailArticle,
+                  BlocBuilder<DonationBloc, DonationState>(
+                    builder: (context, state) {
+                      if (state is ListDonationError) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0,
+                            vertical: 20.0,
+                          ),
+                          alignment: Alignment.center,
+                          child: ListView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  bottom: 20.0,
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                    "Oops, terjadi kesalahan. Silahkan coba lagi nanti."),
+                              ),
+                              CarbonRoundedButton(
+                                label: 'Coba lagi',
+                                action: _refresh,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      if (state is ListDonationEmpty) {
+                        return const Center(
+                          child: Text("Tidak ada data"),
+                        );
+                      }
+
+                      if (state is ListDonationLoaded) {
+                        var listData = state.donationList;
+
+                        return ListView.separated(
+                          physics: const ClampingScrollPhysics(),
+                          itemCount: listData.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return RelatedArticleItem(
+                              margin: const EdgeInsets.only(bottom: 0.0),
+                              title: listData[index].title,
+                              author: listData[index].writerName,
+                              imageUrl: listData[index].file?.first,
+                              createdAt: DateUtil.sanitizeDateTime(
+                                  listData[index].createdAt!),
+                              action: () => Navigator.pushNamed(
+                                context,
+                                Routes.detailArticle,
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => Container(
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 16.0,
+                            ),
+                            child: const Divider(
+                              color: ColorPalettes.line,
+                            ),
+                          ),
+                        );
+                      }
+
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: ColorPalettes.primary,
                         ),
                       );
                     },
-                    separatorBuilder: (context, index) => Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 16.0,
-                      ),
-                      child: const Divider(
-                        color: ColorPalettes.line,
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -227,6 +308,12 @@ class _DonationScreenState extends State<DonationScreen> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(const Duration(seconds: 2));
+    BlocProvider.of<DonationBloc>(context).add(
+      LoadDonationList(
+        1,
+        "Terupdate",
+        "",
+      ),
+    );
   }
 }

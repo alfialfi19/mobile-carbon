@@ -34,9 +34,11 @@ class RelatedArticleItem extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6.0),
               ),
-              child: Image.asset(
-                imageUrl ?? Images.dummyPlant2,
-              ),
+              child: imageUrl != null
+                  ? Image.network(imageUrl!)
+                  : Image.asset(
+                      Images.dummyPlant2,
+                    ),
             ),
             const SizedBox(
               width: 12.0,
@@ -60,13 +62,14 @@ class RelatedArticleItem extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Text(
                           author ?? "-",
                           style: Theme.of(context).textTheme.overline?.copyWith(
                                 color: ColorPalettes.grayZill,
                                 fontWeight: FontWeight.w400,
                               ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Container(
@@ -79,7 +82,7 @@ class RelatedArticleItem extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Text(
                           createdAt ?? "-",
                           style: Theme.of(context).textTheme.overline?.copyWith(

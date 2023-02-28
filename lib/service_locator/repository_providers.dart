@@ -17,6 +17,11 @@ final repositoryProviders = [
       locator<PrefHelper>(),
     ),
   ),
+  RepositoryProvider<DonationRepository>(
+    create: (context) => DonationRepository(
+      locator<DonationApi>(),
+    ),
+  ),
   RepositoryProvider<MediaRepository>(
     create: (context) => MediaRepository(
       locator<MediaApi>(),
