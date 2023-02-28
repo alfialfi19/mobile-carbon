@@ -5,9 +5,9 @@ import '../commons/commons.dart';
 
 final locator = GetIt.instance;
 
-void unSetupLocator() {
-  locator.unregister<PrefHelper>();
-}
+// void unSetupLocator() {
+//   locator.unregister<PrefHelper>();
+// }
 
 void setupLocator() {
   // local
@@ -24,9 +24,12 @@ void setupLocator() {
       ),
     )
     ..registerLazySingleton(
-      () => MediaApi(locator<BaseDioClient>().dio),
+      () => ArticleApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(
       () => AuthApi(locator<BaseDioClient>().dio),
+    )
+    ..registerLazySingleton(
+      () => MediaApi(locator<BaseDioClient>().dio),
     );
 }

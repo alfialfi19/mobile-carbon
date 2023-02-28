@@ -110,6 +110,7 @@ class DetailArticleScreen extends StatelessWidget {
                     ),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Cara Budidaya Tanaman Hias Di Dalam Media Pot",
@@ -142,14 +143,105 @@ class DetailArticleScreen extends StatelessWidget {
                             ),
                         textAlign: TextAlign.justify,
                       ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
                       Text(
-                        'Bagi Anda yang memiliki hobi bercocok tanam namun tinggal di daerah perkotaan, sering kali mengalami hambatan ketika ingin menyalurkan hobi Anda tersebut. Kendala yang dirasakan tidak lain adalah ketersediaan lahan yang sangat terbatas untuk dapat dimanfaatkan sebagai media bercocok tanam.',
+                        "Tempat Kegiatan",
                         style: Theme.of(context).textTheme.caption?.copyWith(
-                              color: ColorPalettes.black,
-                              fontWeight: FontWeight.w400,
-                              height: 1.5,
+                              color: ColorPalettes.dark,
+                              fontWeight: FontWeight.w700,
                             ),
-                        textAlign: TextAlign.justify,
+                      ),
+                      const SizedBox(
+                        height: 6.0,
+                      ),
+                      Text(
+                        "Lorem ipsum",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.grayZill,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "Waktu Kegiatan",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.dark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 6.0,
+                      ),
+                      Text(
+                        "20 Januari 1104",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.grayZill,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "Kontak",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.dark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 6.0,
+                      ),
+                      Text(
+                        "Lorem ipsum",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.grayZill,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "Batas Waktu Donasi",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.dark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 6.0,
+                      ),
+                      Text(
+                        "Lorem ipsum",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.grayZill,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "Link Donasi",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.dark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 6.0,
+                      ),
+                      Text(
+                        "Lorem ipsum",
+                        style: Theme.of(context).textTheme.caption?.copyWith(
+                              color: ColorPalettes.primary,
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                     ],
                   ),

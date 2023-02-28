@@ -17,6 +17,20 @@ extension NullableStringExtension on String? {
 }
 
 extension StringExtension on String {
+  String toCategoryName() {
+    if (this == "1") {
+      return "Tanamanku";
+    } else if (this == "2") {
+      return "Manggot";
+    } else if (this == "3") {
+      return "Biogas";
+    } else if (this == "4") {
+      return "Listrik Ramah Lingkungan";
+    } else {
+      return "Others";
+    }
+  }
+
   String removeSpaces() => replaceAll(RegExp(r'\s+'), '');
 
   /// Chunk this String into some parts of [perLength] each.

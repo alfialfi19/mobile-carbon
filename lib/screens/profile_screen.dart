@@ -1,17 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
+import '../blocs/blocs.dart';
 import '../commons/commons.dart';
+import '../repositories/repositories.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) {
+            final repository = RepositoryProvider.of<AuthRepository>(context);
+
+            return AuthBloc(repository)
+              ..add(
+                LoadDetailAccount(),
+              );
+          },
+        ),
+      ],
+      child: const ProfileContent(),
+    );
+  }
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileContent extends StatefulWidget {
+  const ProfileContent({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileContent> createState() => _ProfileContentState();
+}
+
+class _ProfileContentState extends State<ProfileContent> {
   final _scrollController = ScrollController();
 
   @override
@@ -39,111 +65,171 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: PullToRefresh(
           controller: _scrollController,
-          onRefresh: () => _refresh(),
+          onRefresh: _refresh,
           slivers: [
             SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: double.maxFinite,
-                    margin: const EdgeInsets.only(
-                      bottom: 40.0,
-                    ),
-                    alignment: Alignment.center,
-                    child: Stack(
-                      children: [
-                        const SizedBox(
-                          height: 100.0,
-                          width: 100.0,
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(
-                              Images.dummyProfileBig,
-                            ),
+                  BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      if (state is DetailAccountError) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0,
+                            vertical: 20.0,
                           ),
-                        ),
-                        Positioned(
-                          bottom: 0.0,
-                          right: 0.0,
-                          child: Container(
-                            height: 36.0,
-                            width: 36.0,
-                            decoration: BoxDecoration(
-                              color: ColorPalettes.primary,
-                              borderRadius: BorderRadius.circular(100.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: const Icon(
-                              Icons.camera_alt_rounded,
-                              color: ColorPalettes.white,
-                              size: 20.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Informasi Pribadi",
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                              color: ColorPalettes.dark,
-                              fontWeight: FontWeight.w700,
-                            ),
-                      ),
-                      InkWell(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          Routes.editProfile,
-                        ),
-                        child: Text(
-                          "Ubah",
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: ColorPalettes.primary,
-                                fontWeight: FontWeight.w700,
+                          alignment: Alignment.center,
+                          child: ListView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  bottom: 20.0,
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                    "Oops, terjadi kesalahan. Silahkan coba lagi nanti."),
                               ),
+                              CarbonRoundedButton(
+                                label: 'Coba lagi',
+                                action: _refresh,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      if (state is DetailAccountLoaded) {
+                        var data = state.accountDetail;
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: double.maxFinite,
+                              margin: const EdgeInsets.only(
+                                bottom: 40.0,
+                              ),
+                              alignment: Alignment.center,
+                              child: Stack(
+                                children: [
+                                  SizedBox(
+                                    height: 100.0,
+                                    width: 100.0,
+                                    child: data.file != null
+                                        ? CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                              data.file!,
+                                            ),
+                                          )
+                                        : const CircleAvatar(
+                                            backgroundImage: AssetImage(
+                                              Images.dummyProfileBig,
+                                            ),
+                                          ),
+                                  ),
+                                  Positioned(
+                                    bottom: 0.0,
+                                    right: 0.0,
+                                    child: Container(
+                                      height: 36.0,
+                                      width: 36.0,
+                                      decoration: BoxDecoration(
+                                        color: ColorPalettes.primary,
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: const Icon(
+                                        Icons.camera_alt_rounded,
+                                        color: ColorPalettes.white,
+                                        size: 20.0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Informasi Pribadi",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
+                                InkWell(
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    Routes.editProfile,
+                                  ),
+                                  child: Text(
+                                    "Ubah",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        ?.copyWith(
+                                          color: ColorPalettes.primary,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 20.0,
+                              ),
+                              child: const Divider(
+                                color: ColorPalettes.line,
+                              ),
+                            ),
+                            PersonalInformationItem(
+                              label: "Nama",
+                              value: data.fullName,
+                            ),
+                            PersonalInformationItem(
+                              label: "Email",
+                              value: data.email,
+                            ),
+                            PersonalInformationItem(
+                              label: "Nomor Telepon",
+                              value: data.phone,
+                            ),
+                            PersonalInformationItem(
+                              label: "Alamat",
+                              value: data.address,
+                            ),
+                            const SizedBox(
+                              height: 70.0,
+                            ),
+                            SizedBox(
+                              width: double.maxFinite,
+                              child: CarbonRoundedButton(
+                                label: "Keluar",
+                                labelColor: ColorPalettes.white,
+                                backgroundColor: ColorPalettes.redConfirmation,
+                                borderColor: ColorPalettes.redConfirmation,
+                                action: () => _showConfirmation(context),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: ColorPalettes.primary,
                         ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 20.0,
-                    ),
-                    child: const Divider(
-                      color: ColorPalettes.line,
-                    ),
-                  ),
-                  PersonalInformationItem(
-                    label: "Nama",
-                    value: "Keyra Allisya Keenan",
-                  ),
-                  PersonalInformationItem(
-                    label: "Email",
-                    value: "keyraa@gmail.com",
-                  ),
-                  PersonalInformationItem(
-                    label: "Nomor Telepon",
-                    value: "08756142843",
-                  ),
-                  PersonalInformationItem(
-                    label: "Alamat",
-                    value: "Jalan Pusaka No. 07, Kabupaten Malang",
-                  ),
-                  const SizedBox(
-                    height: 70.0,
-                  ),
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: CarbonRoundedButton(
-                      label: "Keluar",
-                      labelColor: ColorPalettes.white,
-                      backgroundColor: ColorPalettes.redConfirmation,
-                      borderColor: ColorPalettes.redConfirmation,
-                      action: () => _showConfirmation(context),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -185,6 +271,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(const Duration(seconds: 2));
+    BlocProvider.of<AuthBloc>(context).add(
+      LoadDetailAccount(),
+    );
   }
 }

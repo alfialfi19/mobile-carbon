@@ -6,6 +6,11 @@ import '../commons/commons.dart';
 import 'service_locator.dart';
 
 final repositoryProviders = [
+  RepositoryProvider<ArticleRepository>(
+    create: (context) => ArticleRepository(
+      locator<ArticleApi>(),
+    ),
+  ),
   RepositoryProvider<AuthRepository>(
     create: (context) => AuthRepository(
       locator<AuthApi>(),
