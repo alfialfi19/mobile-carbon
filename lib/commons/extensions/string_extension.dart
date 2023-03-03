@@ -31,6 +31,18 @@ extension StringExtension on String {
     }
   }
 
+  String toTypeNameFromRankIndex() {
+    if (this == "0") {
+      return "Emisi";
+    } else if (this == "1") {
+      return "Eco";
+    } else if (this == "2") {
+      return "Artikel";
+    } else {
+      return "Others";
+    }
+  }
+
   String removeSpaces() => replaceAll(RegExp(r'\s+'), '');
 
   /// Chunk this String into some parts of [perLength] each.

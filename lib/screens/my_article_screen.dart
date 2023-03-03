@@ -164,13 +164,11 @@ class _MyArticleScreenState extends State<MyArticleScreen> {
           ),
         ),
         RelatedArticleItem(
-          imageUrl: Images.dummyPlant,
           title: "Cara Budidaya Pohon Mangga",
           author: "Boruto Uzumaki",
           createdAt: "10 Januari 2022",
         ),
         RelatedArticleItem(
-          imageUrl: Images.dummyPlant,
           title: "Cara Melestarikan Tanaman Enceng Gondok",
           author: "Akaba",
           createdAt: "12 Desember 2021",
@@ -181,7 +179,6 @@ class _MyArticleScreenState extends State<MyArticleScreen> {
           createdAt: "11 April 2022",
         ),
         RelatedArticleItem(
-          imageUrl: Images.dummyPlant,
           title: "Cara Budidaya Pohon Mangga",
           author: "Boruto Uzumaki",
           createdAt: "10 Januari 2022",
@@ -192,19 +189,16 @@ class _MyArticleScreenState extends State<MyArticleScreen> {
           createdAt: "11 April 2022",
         ),
         RelatedArticleItem(
-          imageUrl: Images.dummyPlant,
           title: "Cara Budidaya Pohon Mangga",
           author: "Boruto Uzumaki",
           createdAt: "10 Januari 2022",
         ),
         RelatedArticleItem(
-          imageUrl: Images.dummyPlant,
           title: "Cara Melestarikan Tanaman Enceng Gondok",
           author: "Akaba",
           createdAt: "12 Desember 2021",
         ),
         RelatedArticleItem(
-          imageUrl: Images.dummyPlant,
           title: "Cara Melestarikan Tanaman Enceng Gondok",
           author: "Akaba",
           createdAt: "12 Desember 2021",

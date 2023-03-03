@@ -46,33 +46,6 @@ class _DonationContentState extends State<DonationContent> {
   final _scrollController = ScrollController();
   TextEditingController searchController = TextEditingController();
 
-  List<String> _mockTitle = [
-    "Kegiatan Penanaman Pohon Bakau di Pantai Balekambang",
-    "Kegiatan Penanaman Pohon Mangrove di Surabaya",
-    "Kegiatan Penanaman Pohon Bakau di Pantai Bawean Gresik",
-    "Kegiatan Penanaman Pohon Mangrove di Sidoarjo",
-    "Kegiatan Penanaman Pohon Mangrove di Gunung Anyar",
-    "Kegiatan Penanaman Pohon Mangrove di Mojokerto",
-  ];
-
-  List<String> _mockAuthor = [
-    "Taylor Akabane",
-    "Boruto Uzumaki",
-    "Sasuke Uchiha",
-    "Boruto Uzumaki",
-    "Haruno Sakura",
-    "Taylor Akabane",
-  ];
-
-  List<String> _mockCreatedAt = [
-    "10 Januari 2022",
-    "7 April 2023",
-    "10 Januari 2022",
-    "7 April 2023",
-    "10 Januari 2022",
-    "7 April 2023",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,6 +89,14 @@ class _DonationContentState extends State<DonationContent> {
                           color: ColorPalettes.dark,
                           fontWeight: FontWeight.w400,
                         ),
+                    onSubmitted: (value) =>
+                        BlocProvider.of<DonationBloc>(context).add(
+                      LoadDonationList(
+                        1,
+                        "Terupdate",
+                        value,
+                      ),
+                    ),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 24.0,
@@ -220,37 +201,13 @@ class _DonationContentState extends State<DonationContent> {
                   BlocBuilder<DonationBloc, DonationState>(
                     builder: (context, state) {
                       if (state is ListDonationError) {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 30.0,
-                            vertical: 20.0,
-                          ),
-                          alignment: Alignment.center,
-                          child: ListView(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  bottom: 20.0,
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                    "Oops, terjadi kesalahan. Silahkan coba lagi nanti."),
-                              ),
-                              CarbonRoundedButton(
-                                label: 'Coba lagi',
-                                action: _refresh,
-                              ),
-                            ],
-                          ),
+                        return CarbonErrorState(
+                          onRefresh: _refresh,
                         );
                       }
 
                       if (state is ListDonationEmpty) {
-                        return const Center(
-                          child: Text("Tidak ada data"),
-                        );
+                        return const CarbonEmptyState();
                       }
 
                       if (state is ListDonationLoaded) {
@@ -271,6 +228,9 @@ class _DonationContentState extends State<DonationContent> {
                               action: () => Navigator.pushNamed(
                                 context,
                                 Routes.detailArticle,
+                                arguments: DataArgument(
+                                  id: listData[index].id ?? "0",
+                                ),
                               ),
                             );
                           },
@@ -285,11 +245,7 @@ class _DonationContentState extends State<DonationContent> {
                         );
                       }
 
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: ColorPalettes.primary,
-                        ),
-                      );
+                      return const CarbonLoadingState();
                     },
                   ),
                 ],

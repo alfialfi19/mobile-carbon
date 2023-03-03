@@ -32,7 +32,7 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
       );
 
       if (response.isEmpty) {
-        emit(ListDonationEmpty());
+        return emit(ListDonationEmpty());
       }
 
       emit(ListDonationLoaded(response));

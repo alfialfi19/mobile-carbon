@@ -5,3 +5,4 @@ export 'donation_detail.dart';
 export 'generic_error_response.dart';
 export 'media_set.dart';
 export 'responses/responses.dart';
+export 'summary_rank.dart';

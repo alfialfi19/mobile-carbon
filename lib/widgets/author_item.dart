@@ -28,11 +28,17 @@ class AuthorItem extends StatelessWidget {
           margin: const EdgeInsets.only(right: 8.0),
           height: 24.0,
           width: 24.0,
-          child: CircleAvatar(
-            backgroundImage: AssetImage(
-              imageUrl ?? Images.dummyProfile,
-            ),
-          ),
+          child: imageUrl != null
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    imageUrl!,
+                  ),
+                )
+              : const CircleAvatar(
+                  backgroundImage: AssetImage(
+                    Images.dummyProfile,
+                  ),
+                ),
         ),
         Text(
           author ?? "-",

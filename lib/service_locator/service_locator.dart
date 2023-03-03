@@ -34,5 +34,8 @@ void setupLocator() {
     )
     ..registerLazySingleton(
       () => MediaApi(locator<BaseDioClient>().dio),
+    )
+    ..registerLazySingleton(
+      () => SummaryApi(locator<BaseDioClient>().dio),
     );
 }

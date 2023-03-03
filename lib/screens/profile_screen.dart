@@ -89,8 +89,16 @@ class _ProfileContentState extends State<ProfileContent> {
                                   bottom: 20.0,
                                 ),
                                 alignment: Alignment.center,
-                                child: const Text(
-                                    "Oops, terjadi kesalahan. Silahkan coba lagi nanti."),
+                                child: Text(
+                                  "Oops, terjadi kesalahan. Silahkan coba lagi nanti.",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      ?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
                               ),
                               CarbonRoundedButton(
                                 label: 'Coba lagi',

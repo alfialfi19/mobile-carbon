@@ -31,7 +31,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       );
 
       if (response.isEmpty) {
-        emit(ListArticleEmpty());
+        return emit(ListArticleEmpty());
       }
 
       emit(ListArticleLoaded(response));

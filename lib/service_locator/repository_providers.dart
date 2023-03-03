@@ -27,4 +27,9 @@ final repositoryProviders = [
       locator<MediaApi>(),
     ),
   ),
+  RepositoryProvider<SummaryRepository>(
+    create: (context) => SummaryRepository(
+      locator<SummaryApi>(),
+    ),
+  ),
 ];
