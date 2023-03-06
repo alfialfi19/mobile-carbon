@@ -61,16 +61,13 @@ class RelatedArticleItem extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          author ?? "-",
-                          style: Theme.of(context).textTheme.overline?.copyWith(
-                                color: ColorPalettes.grayZill,
-                                fontWeight: FontWeight.w400,
-                              ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        author ?? "-",
+                        style: Theme.of(context).textTheme.overline?.copyWith(
+                              color: ColorPalettes.grayZill,
+                              fontWeight: FontWeight.w400,
+                            ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),

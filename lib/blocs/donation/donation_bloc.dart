@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/commons/commons.dart';
 
@@ -59,6 +60,15 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
       final errorResponse = error.toGenericError();
 
       return emit(DetailDonationError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: '409',
+        statusCode: 409,
+      );
+
+      return emit(const DetailDonationError(errorResponse));
     }
   }
 }

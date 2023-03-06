@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/commons/commons.dart';
 
@@ -58,6 +59,15 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       final errorResponse = error.toGenericError();
 
       return emit(DetailArticleError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: '409',
+        statusCode: 409,
+      );
+
+      return emit(const DetailArticleError(errorResponse));
     }
   }
 }

@@ -8,6 +8,7 @@ class MainArticleItem extends StatelessWidget {
   final String? articleLabel;
   final String? articleCategory;
   final String? authorName;
+  final String? authorImg;
   final String? dateCreated;
 
   const MainArticleItem({
@@ -16,6 +17,7 @@ class MainArticleItem extends StatelessWidget {
     this.articleLabel,
     this.articleCategory,
     this.authorName,
+    this.authorImg,
     this.dateCreated,
   }) : super(key: key);
 
@@ -91,6 +93,7 @@ class MainArticleItem extends StatelessWidget {
             ),
             AuthorItem(
               author: authorName ?? "-",
+              imageUrl: authorImg,
               dateCreated: dateCreated ?? "-",
             ),
           ],

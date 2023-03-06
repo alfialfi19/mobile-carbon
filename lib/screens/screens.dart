@@ -7,6 +7,7 @@ export 'carbon_footprint_screen.dart';
 export 'detail_article_screen.dart';
 export 'detail_carbon_emission_screen.dart';
 export 'detail_comment_screen.dart';
+export 'detail_donation_screen.dart';
 export 'detail_eco_activity_screen.dart';
 export 'detail_total_article__screen.dart';
 export 'donation_screen.dart';

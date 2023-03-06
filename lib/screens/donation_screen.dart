@@ -227,7 +227,7 @@ class _DonationContentState extends State<DonationContent> {
                                   listData[index].createdAt!),
                               action: () => Navigator.pushNamed(
                                 context,
-                                Routes.detailArticle,
+                                Routes.detailDonation,
                                 arguments: DataArgument(
                                   id: listData[index].id ?? "0",
                                 ),

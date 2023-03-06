@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_carbon/blocs/blocs.dart';
+import 'package:mobile_carbon/blocs/donation/donation_bloc.dart';
 import 'package:mobile_carbon/routes.dart';
 
 import '../commons/commons.dart';
 import '../repositories/repositories.dart';
 import '../widgets/widgets.dart';
 
-class DetailArticleScreen extends StatelessWidget {
-  const DetailArticleScreen({Key? key}) : super(key: key);
+class DetailDonationScreen extends StatelessWidget {
+  const DetailDonationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +19,28 @@ class DetailArticleScreen extends StatelessWidget {
         BlocProvider(
           create: (context) {
             final repository =
-                RepositoryProvider.of<ArticleRepository>(context);
+                RepositoryProvider.of<DonationRepository>(context);
 
-            return ArticleBloc(repository)
+            return DonationBloc(repository)
               ..add(
-                LoadArticleDetail(
+                LoadDonationDetail(
                   int.parse(argument.id),
                 ),
               );
           },
         ),
       ],
-      child: DetailArticleContent(
+      child: DetailDonationContent(
         id: argument.id,
       ),
     );
   }
 }
 
-class DetailArticleContent extends StatelessWidget {
+class DetailDonationContent extends StatelessWidget {
   final String id;
 
-  const DetailArticleContent({
+  const DetailDonationContent({
     required this.id,
     Key? key,
   }) : super(key: key);
@@ -73,9 +73,9 @@ class DetailArticleContent extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocBuilder<ArticleBloc, ArticleState>(
+      body: BlocBuilder<DonationBloc, DonationState>(
         builder: (context, state) {
-          if (state is DetailArticleError) {
+          if (state is DetailDonationError) {
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
@@ -105,8 +105,8 @@ class DetailArticleContent extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: CarbonErrorState(
-                    onRefresh: () => BlocProvider.of<ArticleBloc>(context).add(
-                      LoadArticleDetail(
+                    onRefresh: () => BlocProvider.of<DonationBloc>(context).add(
+                      LoadDonationDetail(
                         int.parse(id),
                       ),
                     ),
@@ -116,8 +116,8 @@ class DetailArticleContent extends StatelessWidget {
             );
           }
 
-          if (state is DetailArticleLoaded) {
-            var data = state.article;
+          if (state is DetailDonationLoaded) {
+            var data = state.donationDetail;
 
             return CustomScrollView(
               slivers: [
@@ -244,6 +244,114 @@ class DetailArticleContent extends StatelessWidget {
                             ),
                             const SizedBox(
                               height: 20.0,
+                            ),
+                            Text(
+                              "Tempat Kegiatan",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 6.0,
+                            ),
+                            Text(
+                              data.location ?? "-",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.grayZill,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              "Waktu Kegiatan",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 6.0,
+                            ),
+                            Text(
+                              DateUtil.sanitizeDateTime(
+                                  data.activityAt ?? "Unknown"),
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.grayZill,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              "Kontak",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 6.0,
+                            ),
+                            Text(
+                              data.contact ?? "-",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.grayZill,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              "Batas Waktu Donasi",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 6.0,
+                            ),
+                            Text(
+                              DateUtil.sanitizeDateTime(data.deadlineAt ?? "-"),
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.grayZill,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              "Link Donasi",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.dark,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                            ),
+                            const SizedBox(
+                              height: 6.0,
+                            ),
+                            Text(
+                              data.url ?? "-",
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: ColorPalettes.primary,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                             ),
                           ],
                         ),

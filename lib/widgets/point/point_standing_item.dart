@@ -38,11 +38,17 @@ class PointStandingItem extends StatelessWidget {
               margin: const EdgeInsets.only(
                 right: 8.0,
               ),
-              child: CircleAvatar(
-                backgroundImage: AssetImage(
-                  imageUrl ?? Images.dummyProfile,
-                ),
-              ),
+              child: imageUrl != null
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        imageUrl!,
+                      ),
+                    )
+                  : const CircleAvatar(
+                      backgroundImage: AssetImage(
+                        Images.dummyProfile,
+                      ),
+                    ),
             ),
             Text(
               standingName ?? "-",

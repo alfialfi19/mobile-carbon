@@ -1,19 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
+import '../blocs/blocs.dart';
 import '../commons/commons.dart';
+import '../repositories/repositories.dart';
 
-class EcoUpdateScreen extends StatefulWidget {
+class EcoUpdateScreen extends StatelessWidget {
   const EcoUpdateScreen({Key? key}) : super(key: key);
 
   @override
-  State<EcoUpdateScreen> createState() => _EcoUpdateScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ArticleBloc>(
+          create: (context) {
+            final repository =
+                RepositoryProvider.of<ArticleRepository>(context);
+
+            return ArticleBloc(repository)
+              ..add(
+                LoadArticle(
+                  1,
+                  1,
+                  null,
+                  null,
+                ),
+              );
+          },
+        ),
+      ],
+      child: const EcoUpdateContent(),
+    );
+  }
 }
 
-class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
+class EcoUpdateContent extends StatefulWidget {
+  const EcoUpdateContent({Key? key}) : super(key: key);
+
+  @override
+  State<EcoUpdateContent> createState() => _EcoUpdateContentState();
+}
+
+class _EcoUpdateContentState extends State<EcoUpdateContent> {
   TextEditingController searchController = TextEditingController();
   final _scrollController = ScrollController();
+  int _selectedTab = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +69,9 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
                     color: ColorPalettes.dark,
                     fontWeight: FontWeight.w400,
                   ),
+              onSubmitted: (value) => BlocProvider.of<ArticleBloc>(context).add(
+                LoadArticle(1, _selectedTab + 1, value, null),
+              ),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 24.0,
@@ -80,6 +116,14 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
                 Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
+            onTap: (index) {
+              _selectedTab = index;
+              searchController.clear();
+
+              BlocProvider.of<ArticleBloc>(context).add(
+                LoadArticle(1, _selectedTab + 1, null, null),
+              );
+            },
             tabs: const [
               Tab(
                 text: 'Tanamanku',
@@ -107,98 +151,21 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
+        body: const Padding(
+          padding: EdgeInsets.symmetric(
             horizontal: 30.0,
             vertical: 20.0,
           ),
           child: TabBarView(
             children: [
-              _buildTab1Widget(context),
-              _buildTab2Widget(context),
-              _buildTab3Widget(context),
-              _buildTab4Widget(context),
+              EcoTabContent(),
+              EcoTabContent(),
+              EcoTabContent(),
+              EcoTabContent(),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTab1Widget(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: ListView(
-        children: [
-          const MainArticleItem(
-            articleLabel: "Pengaruh Emisi Karbon Terhadap Tanaman Hidroponik",
-            authorName: "Serena Waiyene",
-            dateCreated: "11 April 2022",
-          ),
-          const SizedBox(
-            height: 40.0,
-          ),
-          Text(
-            "Artikel Terkait",
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: ColorPalettes.dark,
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          RelatedArticleItem(
-            title: "Cara Budidaya Tanaman Hias Di Dalam Media Pot",
-            author: "Taylor Akabane",
-            createdAt: "11 April 2022",
-            action: () => Navigator.pushNamed(
-              context,
-              Routes.detailArticle,
-            ),
-          ),
-          RelatedArticleItem(
-            title: "Cara Budidaya Pohon Mangga",
-            author: "Boruto Uzumaki",
-            createdAt: "10 Januari 2022",
-          ),
-          RelatedArticleItem(
-            title: "Cara Melestarikan Tanaman Enceng Gondok",
-            author: "Akaba",
-            createdAt: "12 Desember 2021",
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTab2Widget(BuildContext context) {
-    return ListView(
-      children: [
-        Text("This is tab 2"),
-        Text("Test test 2"),
-        Text("Lorem ipsum til damet 2"),
-      ],
-    );
-  }
-
-  Widget _buildTab3Widget(BuildContext context) {
-    return ListView(
-      children: [
-        Text("This is tab 3"),
-        Text("Test test 3"),
-        Text("Lorem ipsum til damet 3"),
-      ],
-    );
-  }
-
-  Widget _buildTab4Widget(BuildContext context) {
-    return ListView(
-      children: [
-        Text("This is tab 4"),
-        Text("Test test 4"),
-        Text("Lorem ipsum til damet 4"),
-      ],
     );
   }
 
@@ -212,4 +179,94 @@ class _EcoUpdateScreenState extends State<EcoUpdateScreen> {
   Future<void> _refresh() async {
     await Future.delayed(const Duration(seconds: 2));
   }
+}
+
+class EcoTabContent extends StatefulWidget {
+  const EcoTabContent({Key? key}) : super(key: key);
+
+  @override
+  State<EcoTabContent> createState() => _EcoTabContentState();
+}
+
+class _EcoTabContentState extends State<EcoTabContent>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return BlocBuilder<ArticleBloc, ArticleState>(
+      builder: (context, state) {
+        if (state is ListArticleError) {
+          return const CarbonErrorState();
+        }
+
+        if (state is ListArticleEmpty) {
+          return const CarbonEmptyState();
+        }
+
+        if (state is ListArticleLoaded) {
+          var data = state.articleList;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: ListView(
+              children: [
+                MainArticleItem(
+                  imageUrl: data.first.file?.first,
+                  articleLabel: data.first.title ?? "",
+                  authorName: data.first.writerName ?? "-",
+                  authorImg: data.first.writerImg,
+                  dateCreated:
+                      DateUtil.sanitizeDateTime(data.first.createdAt ?? "-"),
+                ),
+                const SizedBox(
+                  height: 40.0,
+                ),
+                Text(
+                  "Artikel Terkait",
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: ColorPalettes.dark,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Container();
+                    }
+
+                    return RelatedArticleItem(
+                      title: data[index].title,
+                      author: data[index].writerName,
+                      imageUrl: data[index].file?.first,
+                      createdAt: DateUtil.sanitizeDateTime(
+                          data[index].createdAt ?? "-"),
+                      action: () => Navigator.pushNamed(
+                        context,
+                        Routes.detailArticle,
+                        arguments: DataArgument(
+                          id: data[index].id ?? "0",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        }
+
+        return const CarbonLoadingState();
+      },
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
