@@ -33,6 +33,9 @@ void setupLocator() {
       () => DonationApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(
+      () => EmisiLogApi(locator<BaseDioClient>().dio),
+    )
+    ..registerLazySingleton(
       () => MediaApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(

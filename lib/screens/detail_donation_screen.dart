@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/blocs/donation/donation_bloc.dart';
-import 'package:mobile_carbon/routes.dart';
 
 import '../commons/commons.dart';
 import '../repositories/repositories.dart';
@@ -48,31 +47,6 @@ class DetailDonationContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: InkWell(
-        onTap: () => Navigator.pushNamed(
-          context,
-          Routes.detailComment,
-        ),
-        child: Container(
-          height: 54.0,
-          width: 54.0,
-          margin: const EdgeInsets.only(
-            left: 20.0,
-            top: 10.0,
-          ),
-          decoration: BoxDecoration(
-            color: ColorPalettes.primary,
-            borderRadius: BorderRadius.circular(100.0),
-          ),
-          child: SizedBox(
-            height: 32.0,
-            width: 32.0,
-            child: Image.asset(
-              CarbonIcons.comment,
-            ),
-          ),
-        ),
-      ),
       body: BlocBuilder<DonationBloc, DonationState>(
         builder: (context, state) {
           if (state is DetailDonationError) {

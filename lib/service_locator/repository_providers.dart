@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/api/api.dart';
+import 'package:mobile_carbon/repositories/emisi_log_repository.dart';
 import 'package:mobile_carbon/repositories/repositories.dart';
 
 import '../commons/commons.dart';
@@ -20,6 +21,11 @@ final repositoryProviders = [
   RepositoryProvider<DonationRepository>(
     create: (context) => DonationRepository(
       locator<DonationApi>(),
+    ),
+  ),
+  RepositoryProvider<EmisiLogRepository>(
+    create: (context) => EmisiLogRepository(
+      locator<EmisiLogApi>(),
     ),
   ),
   RepositoryProvider<MediaRepository>(

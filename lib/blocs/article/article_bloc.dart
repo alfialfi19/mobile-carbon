@@ -40,6 +40,15 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       final errorResponse = error.toGenericError();
 
       return emit(ListArticleError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: '409',
+        statusCode: 409,
+      );
+
+      return emit(const ListArticleError(errorResponse));
     }
   }
 
