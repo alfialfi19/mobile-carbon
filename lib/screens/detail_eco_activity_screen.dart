@@ -1,17 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
+import '../blocs/blocs.dart';
 import '../commons/commons.dart';
+import '../repositories/repositories.dart';
 
-class DetailEcoActivityScreen extends StatefulWidget {
+class DetailEcoActivityScreen extends StatelessWidget {
   const DetailEcoActivityScreen({Key? key}) : super(key: key);
 
   @override
-  State<DetailEcoActivityScreen> createState() =>
-      _DetailEcoActivityScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            final repository =
+                RepositoryProvider.of<SummaryRepository>(context);
+
+            return SummaryHistoryBloc(repository)
+              ..add(
+                LoadSummaryHistory(
+                  1,
+                  "Eco",
+                ),
+              );
+          },
+        ),
+        // BlocProvider(
+        //   create: (context) {
+        //     final repository =
+        //         RepositoryProvider.of<EcoActivityRepository>(context);
+        //
+        //     return EmisiLogBloc(repository)
+        //       ..add(
+        //         LoadEmisiLog(
+        //           1,
+        //         ),
+        //       );
+        //   },
+        // ),
+      ],
+      child: const DetailEcoActivityContent(),
+    );
+  }
 }
 
-class _DetailEcoActivityScreenState extends State<DetailEcoActivityScreen> {
+class DetailEcoActivityContent extends StatefulWidget {
+  const DetailEcoActivityContent({Key? key}) : super(key: key);
+
+  @override
+  State<DetailEcoActivityContent> createState() =>
+      _DetailEcoActivityContentState();
+}
+
+class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
   final _scrollController = ScrollController();
 
   @override
@@ -44,49 +87,65 @@ class _DetailEcoActivityScreenState extends State<DetailEcoActivityScreen> {
         ),
         child: PullToRefresh(
           controller: _scrollController,
-          onRefresh: () => _refresh(),
+          onRefresh: _refresh,
           slivers: [
             SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 150.0,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const ClampingScrollPhysics(),
-                      children: const [
-                        DetailPointComponent(
-                          iconHeader: CarbonIcons.coin,
-                          caption: "Perolehan poin bulan ini",
-                          pointValue: "20 poin",
-                          colorGradient: LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            colors: [
-                              ColorPalettes.redGradient1,
-                              ColorPalettes.redGradient2,
+                  BlocBuilder<SummaryHistoryBloc, SummaryHistoryState>(
+                    builder: (context, state) {
+                      if (state is SummaryHistoryError) {
+                        return CarbonErrorState(
+                          onRefresh: _refresh,
+                        );
+                      }
+
+                      if (state is SummaryHistoryLoaded) {
+                        var data = state.summaryHistory;
+
+                        return SizedBox(
+                          height: 150.0,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const ClampingScrollPhysics(),
+                            children: [
+                              DetailPointComponent(
+                                iconHeaderAsset: CarbonIcons.coin,
+                                caption: "Perolehan poin bulan ini",
+                                pointValue: "${data.totalPoint ?? '-'} poin",
+                                colorGradient: const LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    ColorPalettes.redGradient1,
+                                    ColorPalettes.redGradient2,
+                                  ],
+                                ),
+                              ),
+                              DetailPointComponent(
+                                iconHeaderAsset: CarbonIcons.article,
+                                caption: "Jumlah tanaman pengguna",
+                                captionColor: ColorPalettes.dark,
+                                pointValue: "${data.result ?? '-'} buah",
+                                pointColor: ColorPalettes.dark,
+                                backgroundColor: ColorPalettes.white,
+                              ),
+                              DetailPointComponent(
+                                iconHeaderAsset: CarbonIcons.pointActive,
+                                caption: "Peringkat saya saat ini",
+                                captionColor: ColorPalettes.dark,
+                                pointValue: data.rank ?? "-",
+                                pointColor: ColorPalettes.dark,
+                                backgroundColor: ColorPalettes.white,
+                              ),
                             ],
                           ),
-                        ),
-                        DetailPointComponent(
-                          iconHeader: CarbonIcons.article,
-                          caption: "Jumlah tanaman pengguna",
-                          captionColor: ColorPalettes.dark,
-                          pointValue: "15 buah",
-                          pointColor: ColorPalettes.dark,
-                          backgroundColor: ColorPalettes.white,
-                        ),
-                        DetailPointComponent(
-                          iconHeader: CarbonIcons.pointActive,
-                          caption: "Peringkat saya saat ini",
-                          captionColor: ColorPalettes.dark,
-                          pointValue: "19",
-                          pointColor: ColorPalettes.dark,
-                          backgroundColor: ColorPalettes.white,
-                        ),
-                      ],
-                    ),
+                        );
+                      }
+
+                      return const CarbonLoadingState();
+                    },
                   ),
                   const SizedBox(
                     height: 50.0,
@@ -214,6 +273,8 @@ class _DetailEcoActivityScreenState extends State<DetailEcoActivityScreen> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(const Duration(seconds: 2));
+    BlocProvider.of<SummaryHistoryBloc>(context).add(
+      LoadSummaryHistory(1, "Eco"),
+    );
   }
 }

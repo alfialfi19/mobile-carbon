@@ -3,18 +3,21 @@ import 'package:flutter/material.dart';
 import '../../commons/commons.dart';
 
 class DetailPointComponent extends StatelessWidget {
-  final String iconHeader;
+  final String iconHeaderAsset;
+  final String? iconHeaderUrl;
   final String caption;
   final Color? captionColor;
   final String pointValue;
   final Color? pointColor;
   final Color? backgroundColor;
   final LinearGradient? colorGradient;
+
   const DetailPointComponent({
     Key? key,
-    required this.iconHeader,
     required this.caption,
     required this.pointValue,
+    this.iconHeaderAsset = CarbonIcons.food2,
+    this.iconHeaderUrl,
     this.captionColor,
     this.pointColor,
     this.backgroundColor,
@@ -34,9 +37,13 @@ class DetailPointComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            iconHeader,
-          ),
+          iconHeaderUrl != null
+              ? Image.network(
+                  iconHeaderUrl!,
+                )
+              : Image.asset(
+                  iconHeaderAsset,
+                ),
           const SizedBox(
             height: 32.0,
           ),

@@ -1,17 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
+import '../blocs/blocs.dart';
 import '../commons/commons.dart';
+import '../repositories/repositories.dart';
 
-class DetailTotalArticleScreen extends StatefulWidget {
+class DetailTotalArticleScreen extends StatelessWidget {
   const DetailTotalArticleScreen({Key? key}) : super(key: key);
 
   @override
-  State<DetailTotalArticleScreen> createState() =>
-      _DetailTotalArticleScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            final repository =
+                RepositoryProvider.of<SummaryRepository>(context);
+
+            return SummaryHistoryBloc(repository)
+              ..add(
+                LoadSummaryHistory(
+                  1,
+                  "Artikel",
+                ),
+              );
+          },
+        ),
+        // BlocProvider(
+        //   create: (context) {
+        //     final repository =
+        //     RepositoryProvider.of<ArticleRepository>(context);
+        //
+        //     return ArticleBloc(repository)
+        //       ..add(
+        //         LoadArticle(
+        //           1,
+        //         ),
+        //       );
+        //   },
+        // ),
+      ],
+      child: const DetailTotalArticleContent(),
+    );
+  }
 }
 
-class _DetailTotalArticleScreenState extends State<DetailTotalArticleScreen> {
+class DetailTotalArticleContent extends StatefulWidget {
+  const DetailTotalArticleContent({Key? key}) : super(key: key);
+
+  @override
+  State<DetailTotalArticleContent> createState() =>
+      _DetailTotalArticleContentState();
+}
+
+class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
   final _scrollController = ScrollController();
 
   @override
@@ -44,49 +87,65 @@ class _DetailTotalArticleScreenState extends State<DetailTotalArticleScreen> {
         ),
         child: PullToRefresh(
           controller: _scrollController,
-          onRefresh: () => _refresh(),
+          onRefresh: _refresh,
           slivers: [
             SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 150.0,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const ClampingScrollPhysics(),
-                      children: const [
-                        DetailPointComponent(
-                          iconHeader: CarbonIcons.coin,
-                          caption: "Perolehan poin bulan ini",
-                          pointValue: "20 poin",
-                          colorGradient: LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            colors: [
-                              ColorPalettes.blueGradient1,
-                              ColorPalettes.blueGradient2,
+                  BlocBuilder<SummaryHistoryBloc, SummaryHistoryState>(
+                    builder: (context, state) {
+                      if (state is SummaryHistoryError) {
+                        return CarbonErrorState(
+                          onRefresh: _refresh,
+                        );
+                      }
+
+                      if (state is SummaryHistoryLoaded) {
+                        var data = state.summaryHistory;
+
+                        return SizedBox(
+                          height: 150.0,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const ClampingScrollPhysics(),
+                            children: [
+                              DetailPointComponent(
+                                iconHeaderAsset: CarbonIcons.coin,
+                                caption: "Perolehan poin bulan ini",
+                                pointValue: "${data.totalPoint ?? '-'} poin",
+                                colorGradient: const LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    ColorPalettes.blueGradient1,
+                                    ColorPalettes.blueGradient2,
+                                  ],
+                                ),
+                              ),
+                              DetailPointComponent(
+                                iconHeaderAsset: CarbonIcons.article,
+                                caption: "Jumlah artikel pengguna",
+                                captionColor: ColorPalettes.dark,
+                                pointValue: "${data.result ?? '-'} buah",
+                                pointColor: ColorPalettes.dark,
+                                backgroundColor: ColorPalettes.white,
+                              ),
+                              DetailPointComponent(
+                                iconHeaderAsset: CarbonIcons.pointActive,
+                                caption: "Peringkat saya saat ini",
+                                captionColor: ColorPalettes.dark,
+                                pointValue: data.rank ?? "-",
+                                pointColor: ColorPalettes.dark,
+                                backgroundColor: ColorPalettes.white,
+                              ),
                             ],
                           ),
-                        ),
-                        DetailPointComponent(
-                          iconHeader: CarbonIcons.article,
-                          caption: "Jumlah artikel pengguna",
-                          captionColor: ColorPalettes.dark,
-                          pointValue: "172 buah",
-                          pointColor: ColorPalettes.dark,
-                          backgroundColor: ColorPalettes.white,
-                        ),
-                        DetailPointComponent(
-                          iconHeader: CarbonIcons.pointActive,
-                          caption: "Peringkat saya saat ini",
-                          captionColor: ColorPalettes.dark,
-                          pointValue: "9",
-                          pointColor: ColorPalettes.dark,
-                          backgroundColor: ColorPalettes.white,
-                        ),
-                      ],
-                    ),
+                        );
+                      }
+
+                      return const CarbonLoadingState();
+                    },
                   ),
                   const SizedBox(
                     height: 50.0,
@@ -211,6 +270,8 @@ class _DetailTotalArticleScreenState extends State<DetailTotalArticleScreen> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(const Duration(seconds: 2));
+    BlocProvider.of<SummaryHistoryBloc>(context).add(
+      LoadSummaryHistory(1, "Artikel"),
+    );
   }
 }
