@@ -18,6 +18,11 @@ final repositoryProviders = [
       locator<PrefHelper>(),
     ),
   ),
+  RepositoryProvider<CommentRepository>(
+    create: (context) => CommentRepository(
+      locator<CommentApi>(),
+    ),
+  ),
   RepositoryProvider<DonationRepository>(
     create: (context) => DonationRepository(
       locator<DonationApi>(),

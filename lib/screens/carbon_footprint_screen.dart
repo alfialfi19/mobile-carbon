@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_carbon/blocs/summary_emisi_log/summary_emisi_log_bloc.dart';
 import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../blocs/blocs.dart';
 import '../commons/commons.dart';
 
 class CarbonFootprintScreen extends StatelessWidget {
@@ -23,6 +23,19 @@ class CarbonFootprintScreen extends StatelessWidget {
             return SummaryEmisiLogBloc(repository)
               ..add(
                 LoadSummaryEmisiLog(),
+              );
+          },
+        ),
+        BlocProvider(
+          create: (context) {
+            final repository =
+                RepositoryProvider.of<EmisiLogRepository>(context);
+
+            return EmisiLogBloc(repository)
+              ..add(
+                LoadEmisiLog(
+                  1,
+                ),
               );
           },
         ),
@@ -111,7 +124,7 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                           builder: (context, state) {
                         if (state is SummaryEmisiLogError) {
                           return CarbonErrorState(
-                            onRefresh: _refresh,
+                            onRefresh: _refreshSummaryEmisiLog,
                           );
                         }
 
@@ -265,91 +278,167 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                       const SizedBox(
                         height: 20.0,
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 12.0),
-                        child: Text(
-                          "Hari Ini",
-                          style:
-                              Theme.of(context).textTheme.subtitle2?.copyWith(
-                                    color: ColorPalettes.placeholderZill,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                        ),
+                      BlocBuilder<EmisiLogBloc, EmisiLogState>(
+                        builder: (context, state) {
+                          if (state is EmisiLogError) {
+                            return CarbonErrorState(
+                              onRefresh: _refreshEmisiLog,
+                            );
+                          }
+
+                          if (state is EmisiLogLoaded) {
+                            var data = state.emisiLogList;
+                            String tempDate = DateUtil.sanitizeDateTime(
+                                data.first.createdAt ?? "-");
+
+                            return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                bool displayDate = true;
+
+                                if (index != 0) {
+                                  if (DateUtil.sanitizeDateTime(
+                                          data[index].createdAt ?? "-") ==
+                                      tempDate) {
+                                    displayDate = false;
+                                  } else {
+                                    tempDate = DateUtil.sanitizeDateTime(
+                                        data[index].createdAt ?? "-");
+                                  }
+                                }
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (displayDate)
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 12.0),
+                                        child: Text(
+                                          tempDate,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                color: ColorPalettes
+                                                    .placeholderZill,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                        ),
+                                      ),
+                                    HistoryCarbonEmission(
+                                      label:
+                                          "${data[index].categoryName} ${data[index].categorySubName}",
+                                      caption:
+                                          "${data[index].val} ${data[index].unit} -- ${data[index].createdAt}",
+                                      pointValue:
+                                          "${data[index].totalPoint} poin",
+                                      leadingIcon: Image.asset(
+                                        EmisiUtil.getEmisiIcon(
+                                            data[index].categoryName ?? "-"),
+                                        height: 24.0,
+                                        width: 24.0,
+                                      ),
+                                      leadingBackgroundColor:
+                                          EmisiUtil.getEmisiBackgroundColor(
+                                              data[index].categoryName ?? "-"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+
+                          return const CarbonLoadingState();
+                        },
                       ),
-                      HistoryCarbonEmission(
-                        label: "Daging Ayam",
-                        caption: "5,65 kg",
-                        pointValue: "20 poin",
-                        leadingIcon: Image.asset(
-                          CarbonIcons.food,
-                          height: 24.0,
-                          width: 24.0,
-                        ),
-                        leadingBackgroundColor:
-                            ColorPalettes.orange.withOpacity(0.1),
-                      ),
-                      HistoryCarbonEmission(
-                        label: "Diesel",
-                        caption: "12,29 kg",
-                        pointValue: "75 poin",
-                        leadingIcon: Image.asset(
-                          CarbonIcons.tv,
-                          height: 24.0,
-                          width: 24.0,
-                        ),
-                        leadingBackgroundColor:
-                            ColorPalettes.blue.withOpacity(0.15),
-                      ),
-                      HistoryCarbonEmission(
-                        label: "Sampah Organik",
-                        caption: "89,12 kg",
-                        pointValue: "126 poin",
-                        leadingIcon: Image.asset(
-                          CarbonIcons.trash,
-                          height: 24.0,
-                          width: 24.0,
-                        ),
-                        leadingBackgroundColor:
-                            ColorPalettes.green.withOpacity(0.15),
-                      ),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 12.0),
-                        child: Text(
-                          "22 Desember 2022",
-                          style:
-                              Theme.of(context).textTheme.subtitle2?.copyWith(
-                                    color: ColorPalettes.placeholderZill,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                        ),
-                      ),
-                      HistoryCarbonEmission(
-                        label: "Diesel",
-                        caption: "12,29 kg",
-                        pointValue: "75 poin",
-                        leadingIcon: Image.asset(
-                          CarbonIcons.tv,
-                          height: 24.0,
-                          width: 24.0,
-                        ),
-                        leadingBackgroundColor:
-                            ColorPalettes.blue.withOpacity(0.15),
-                      ),
-                      HistoryCarbonEmission(
-                        label: "Daging Ayam",
-                        caption: "5,65 kg",
-                        pointValue: "20 poin",
-                        leadingIcon: Image.asset(
-                          CarbonIcons.food,
-                          height: 24.0,
-                          width: 24.0,
-                        ),
-                        leadingBackgroundColor:
-                            ColorPalettes.orange.withOpacity(0.1),
-                      ),
+                      // Container(
+                      //   margin: const EdgeInsets.only(bottom: 12.0),
+                      //   child: Text(
+                      //     "Hari Ini",
+                      //     style:
+                      //         Theme.of(context).textTheme.subtitle2?.copyWith(
+                      //               color: ColorPalettes.placeholderZill,
+                      //               fontWeight: FontWeight.w700,
+                      //             ),
+                      //   ),
+                      // ),
+                      // HistoryCarbonEmission(
+                      //   label: "Daging Ayam",
+                      //   caption: "5,65 kg",
+                      //   pointValue: "20 poin",
+                      //   leadingIcon: Image.asset(
+                      //     CarbonIcons.food,
+                      //     height: 24.0,
+                      //     width: 24.0,
+                      //   ),
+                      //   leadingBackgroundColor:
+                      //       ColorPalettes.orange.withOpacity(0.1),
+                      // ),
+                      // HistoryCarbonEmission(
+                      //   label: "Diesel",
+                      //   caption: "12,29 kg",
+                      //   pointValue: "75 poin",
+                      //   leadingIcon: Image.asset(
+                      //     CarbonIcons.tv,
+                      //     height: 24.0,
+                      //     width: 24.0,
+                      //   ),
+                      //   leadingBackgroundColor:
+                      //       ColorPalettes.blue.withOpacity(0.15),
+                      // ),
+                      // HistoryCarbonEmission(
+                      //   label: "Sampah Organik",
+                      //   caption: "89,12 kg",
+                      //   pointValue: "126 poin",
+                      //   leadingIcon: Image.asset(
+                      //     CarbonIcons.trash,
+                      //     height: 24.0,
+                      //     width: 24.0,
+                      //   ),
+                      //   leadingBackgroundColor:
+                      //       ColorPalettes.green.withOpacity(0.15),
+                      // ),
+                      // const SizedBox(
+                      //   height: 30.0,
+                      // ),
+                      // Container(
+                      //   margin: const EdgeInsets.only(bottom: 12.0),
+                      //   child: Text(
+                      //     "22 Desember 2022",
+                      //     style:
+                      //         Theme.of(context).textTheme.subtitle2?.copyWith(
+                      //               color: ColorPalettes.placeholderZill,
+                      //               fontWeight: FontWeight.w700,
+                      //             ),
+                      //   ),
+                      // ),
+                      // HistoryCarbonEmission(
+                      //   label: "Diesel",
+                      //   caption: "12,29 kg",
+                      //   pointValue: "75 poin",
+                      //   leadingIcon: Image.asset(
+                      //     CarbonIcons.tv,
+                      //     height: 24.0,
+                      //     width: 24.0,
+                      //   ),
+                      //   leadingBackgroundColor:
+                      //       ColorPalettes.blue.withOpacity(0.15),
+                      // ),
+                      // HistoryCarbonEmission(
+                      //   label: "Daging Ayam",
+                      //   caption: "5,65 kg",
+                      //   pointValue: "20 poin",
+                      //   leadingIcon: Image.asset(
+                      //     CarbonIcons.food,
+                      //     height: 24.0,
+                      //     width: 24.0,
+                      //   ),
+                      //   leadingBackgroundColor:
+                      //       ColorPalettes.orange.withOpacity(0.1),
+                      // ),
                     ],
                   ),
                 ],
@@ -368,8 +457,19 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
   }
 
   Future<void> _refresh() async {
+    _refreshSummaryEmisiLog();
+    _refreshEmisiLog();
+  }
+
+  Future<void> _refreshSummaryEmisiLog() async {
     BlocProvider.of<SummaryEmisiLogBloc>(context).add(
       LoadSummaryEmisiLog(),
+    );
+  }
+
+  Future<void> _refreshEmisiLog() async {
+    BlocProvider.of<EmisiLogBloc>(context).add(
+      LoadEmisiLog(1),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/commons/commons.dart';
+import 'package:mobile_carbon/routes.dart';
 
 import '../blocs/blocs.dart';
 import '../repositories/repositories.dart';
@@ -81,6 +82,29 @@ class _DetailCarbonEmissionContentState
           ),
         ),
       ),
+      floatingActionButton: InkWell(
+        onTap: () => Navigator.pushNamed(
+          context,
+          Routes.calculateCarbonStep1,
+        ),
+        child: Container(
+          height: 54.0,
+          width: 54.0,
+          margin: const EdgeInsets.only(
+            right: 10.0,
+            bottom: 30.0,
+          ),
+          decoration: BoxDecoration(
+            color: ColorPalettes.primary,
+            borderRadius: BorderRadius.circular(100.0),
+          ),
+          child: const Icon(
+            Icons.add,
+            size: 32.0,
+            color: ColorPalettes.white,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 30.0,
@@ -126,11 +150,15 @@ class _DetailCarbonEmissionContentState
                               ),
                               DetailPointComponent(
                                 iconHeaderAsset: CarbonIcons.article,
-                                caption: "Jumlah tanaman pengguna",
+                                caption: "Jumlah emisi karbon",
                                 captionColor: ColorPalettes.dark,
-                                pointValue: "${data.result ?? '-'} buah",
+                                pointValue: "${data.result ?? '-'} kg",
                                 pointColor: ColorPalettes.dark,
                                 backgroundColor: ColorPalettes.white,
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.carbonFootprint,
+                                ),
                               ),
                               DetailPointComponent(
                                 iconHeaderAsset: CarbonIcons.pointActive,

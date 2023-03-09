@@ -177,6 +177,7 @@ class _PointContentState extends State<PointContent> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: const TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
             PointTabContent(),
             PointTabContent(),

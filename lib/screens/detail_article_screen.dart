@@ -52,6 +52,13 @@ class DetailArticleContent extends StatelessWidget {
         onTap: () => Navigator.pushNamed(
           context,
           Routes.detailComment,
+
+          /// TODO: still hardcode
+          /// /// TODO: still hardcode
+          /// /// TODO: still hardcode
+          /// /// TODO: still hardcode
+          /// /// TODO: still hardcode
+          arguments: DataArgument(id: "7"),
         ),
         child: Container(
           height: 54.0,

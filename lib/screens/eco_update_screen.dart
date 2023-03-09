@@ -157,6 +157,7 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
             vertical: 20.0,
           ),
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
               EcoTabContent(),
               EcoTabContent(),
