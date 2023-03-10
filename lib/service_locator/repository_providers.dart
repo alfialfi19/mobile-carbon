@@ -33,6 +33,11 @@ final repositoryProviders = [
       locator<EmisiLogApi>(),
     ),
   ),
+  RepositoryProvider<EcoActivityRepository>(
+    create: (context) => EcoActivityRepository(
+      locator<EcoActivityApi>(),
+    ),
+  ),
   RepositoryProvider<MediaRepository>(
     create: (context) => MediaRepository(
       locator<MediaApi>(),

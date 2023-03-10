@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_carbon/blocs/eco_activity/eco_activity_bloc.dart';
 import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
-import '../blocs/blocs.dart';
 import '../commons/commons.dart';
 import '../repositories/repositories.dart';
 
@@ -14,17 +14,16 @@ class EcoUpdateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ArticleBloc>(
+        BlocProvider<EcoActivityBloc>(
           create: (context) {
             final repository =
-                RepositoryProvider.of<ArticleRepository>(context);
+                RepositoryProvider.of<EcoActivityRepository>(context);
 
-            return ArticleBloc(repository)
+            return EcoActivityBloc(repository)
               ..add(
-                LoadArticle(
+                LoadEcoActivity(
                   1,
                   1,
-                  null,
                   null,
                 ),
               );
@@ -69,8 +68,9 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
                     color: ColorPalettes.dark,
                     fontWeight: FontWeight.w400,
                   ),
-              onSubmitted: (value) => BlocProvider.of<ArticleBloc>(context).add(
-                LoadArticle(1, _selectedTab + 1, value, null),
+              onSubmitted: (value) =>
+                  BlocProvider.of<EcoActivityBloc>(context).add(
+                LoadEcoActivity(1, _selectedTab + 1, value),
               ),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(
@@ -120,8 +120,8 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
               _selectedTab = index;
               searchController.clear();
 
-              BlocProvider.of<ArticleBloc>(context).add(
-                LoadArticle(1, _selectedTab + 1, null, null),
+              BlocProvider.of<EcoActivityBloc>(context).add(
+                LoadEcoActivity(1, _selectedTab + 1, null),
               );
             },
             tabs: const [
@@ -195,18 +195,18 @@ class _EcoTabContentState extends State<EcoTabContent>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return BlocBuilder<ArticleBloc, ArticleState>(
+    return BlocBuilder<EcoActivityBloc, EcoActivityState>(
       builder: (context, state) {
-        if (state is ListArticleError) {
+        if (state is ListEcoActivityError) {
           return const CarbonErrorState();
         }
 
-        if (state is ListArticleEmpty) {
+        if (state is ListEcoActivityEmpty) {
           return const CarbonEmptyState();
         }
 
-        if (state is ListArticleLoaded) {
-          var data = state.articleList;
+        if (state is ListEcoActivityLoaded) {
+          var data = state.ecoActivityList;
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),

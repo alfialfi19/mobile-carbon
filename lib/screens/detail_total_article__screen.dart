@@ -27,19 +27,22 @@ class DetailTotalArticleScreen extends StatelessWidget {
               );
           },
         ),
-        // BlocProvider(
-        //   create: (context) {
-        //     final repository =
-        //     RepositoryProvider.of<ArticleRepository>(context);
-        //
-        //     return ArticleBloc(repository)
-        //       ..add(
-        //         LoadArticle(
-        //           1,
-        //         ),
-        //       );
-        //   },
-        // ),
+        BlocProvider(
+          create: (context) {
+            final repository =
+                RepositoryProvider.of<ArticleRepository>(context);
+
+            return ArticleBloc(repository)
+              ..add(
+                LoadArticle(
+                  1,
+                  null,
+                  null,
+                  null,
+                ),
+              );
+          },
+        ),
       ],
       child: const DetailTotalArticleContent(),
     );
@@ -97,7 +100,7 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
                     builder: (context, state) {
                       if (state is SummaryHistoryError) {
                         return CarbonErrorState(
-                          onRefresh: _refresh,
+                          onRefresh: _refreshSummaryHistory,
                         );
                       }
 
@@ -157,6 +160,80 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
                           fontWeight: FontWeight.w700,
                         ),
                   ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  BlocBuilder<ArticleBloc, ArticleState>(
+                      builder: (context, state) {
+                    if (state is ListArticleError) {
+                      return CarbonErrorState(
+                        onRefresh: _refreshArticle,
+                      );
+                    }
+
+                    if (state is ListArticleEmpty) {
+                      return const CarbonEmptyState();
+                    }
+
+                    if (state is ListArticleLoaded) {
+                      var data = state.articleList;
+                      String tempDate = DateUtil.sanitizeDateTime(
+                          data.first.createdAt ?? "-");
+
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          bool displayDate = true;
+
+                          if (index != 0) {
+                            if (DateUtil.sanitizeDateTime(
+                                    data[index].createdAt ?? "-") ==
+                                tempDate) {
+                              displayDate = false;
+                            } else {
+                              tempDate = DateUtil.sanitizeDateTime(
+                                  data[index].createdAt ?? "-");
+                            }
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (displayDate)
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 12.0),
+                                  child: Text(
+                                    tempDate,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        ?.copyWith(
+                                          color: ColorPalettes.placeholderZill,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ),
+                              HistoryCarbonEmission(
+                                label: data[index].title,
+                                pointValue: "${data[index].totalPoint} poin",
+                                leadingIcon: Image.asset(
+                                  CarbonIcons.flower,
+                                  height: 24.0,
+                                  width: 24.0,
+                                ),
+                                leadingBackgroundColor:
+                                    ColorPalettes.green.withOpacity(0.1),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+
+                    return const CarbonLoadingState();
+                  }),
                   const SizedBox(
                     height: 20.0,
                   ),
@@ -270,8 +347,24 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
   }
 
   Future<void> _refresh() async {
+    _refreshSummaryHistory();
+    _refreshArticle();
+  }
+
+  Future<void> _refreshSummaryHistory() async {
     BlocProvider.of<SummaryHistoryBloc>(context).add(
       LoadSummaryHistory(1, "Artikel"),
+    );
+  }
+
+  Future<void> _refreshArticle() async {
+    BlocProvider.of<ArticleBloc>(context).add(
+      LoadArticle(
+        1,
+        null,
+        null,
+        null,
+      ),
     );
   }
 }

@@ -197,6 +197,10 @@ class _DetailCarbonEmissionContentState
                         );
                       }
 
+                      if (state is EmisiLogEmpty) {
+                        return const CarbonEmptyState();
+                      }
+
                       if (state is EmisiLogLoaded) {
                         var data = state.emisiLogList;
                         String tempDate = DateUtil.sanitizeDateTime(

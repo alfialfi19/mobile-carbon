@@ -18,7 +18,7 @@ class EcoActivityApi {
 
     final queries = {
       'page': page ?? 1,
-      'category': category ?? 1,
+      'category': category ?? "",
       'keyword': keyword ?? "",
     };
 

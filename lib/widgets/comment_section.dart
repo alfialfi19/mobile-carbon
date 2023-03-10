@@ -4,7 +4,7 @@ import 'package:mobile_carbon/commons/commons.dart';
 import '../models/models.dart';
 import 'widgets.dart';
 
-class CommentSection extends StatelessWidget {
+class CommentSection extends StatefulWidget {
   final String? imgUrl;
   final String? author;
   final String? createdAt;
@@ -23,96 +23,88 @@ class CommentSection extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CommentSection> createState() => _CommentSectionState();
+}
+
+class _CommentSectionState extends State<CommentSection> {
+  bool isExpand = false;
+  String hideCommentLabel = 'Sembunyikan komentar';
+  String showCommentLabel = 'Lihat balasan lainnya';
+  String label = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    label = "$showCommentLabel (${widget.childComment?.length})";
+  }
+
+  void _expandComment() {
+    setState(() {
+      isExpand = !isExpand;
+
+      if (isExpand) {
+        label = hideCommentLabel;
+      } else {
+        label = "$showCommentLabel (${widget.childComment?.length})";
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Row(
-        //   children: [
-        //     AuthorItem(
-        //       author: author,
-        //       dateCreated: DateUtil.sanitizeDateTime(createdAt ?? "-"),
-        //       authorTextColor: ColorPalettes.dark,
-        //       dateTextColor: ColorPalettes.grayZill,
-        //       dividerColor: ColorPalettes.line,
-        //     ),
-        //     Expanded(
-        //       child: InkWell(
-        //         onTap: () => optionsCallback?.call(),
-        //         child: Container(
-        //           alignment: Alignment.centerRight,
-        //           width: double.maxFinite,
-        //           child: const Icon(
-        //             Icons.more_horiz_rounded,
-        //             color: ColorPalettes.dots,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // Container(
-        //   margin: const EdgeInsets.only(
-        //     top: 5.0,
-        //     bottom: 4.0,
-        //   ),
-        //   child: Text(
-        //     comment ?? "-",
-        //     style: Theme.of(context)
-        //         .textTheme
-        //         .caption
-        //         ?.copyWith(
-        //       color: ColorPalettes.dark,
-        //       fontWeight: FontWeight.w400,
-        //     ),
-        //     textAlign: TextAlign.justify,
-        //   ),
-        // ),
         CommentItem(
-          imgUrl: imgUrl,
-          author: author,
-          createdAt: createdAt,
-          comment: comment,
-          optionsCallback: optionsCallback,
+          imgUrl: widget.imgUrl,
+          author: widget.author,
+          createdAt: widget.createdAt,
+          comment: widget.comment,
+          optionsCallback: widget.optionsCallback,
         ),
-        if (childComment != null && childComment!.isNotEmpty) ...[
-          Container(
-            margin: const EdgeInsets.only(
-              bottom: 12.0,
-            ),
-            child: Text(
-              "Sembunyikan komentar",
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    color: ColorPalettes.primary,
-                    fontWeight: FontWeight.w700,
-                  ),
+        if (widget.childComment != null && widget.childComment!.isNotEmpty) ...[
+          InkWell(
+            onTap: () => _expandComment(),
+            child: Container(
+              margin: const EdgeInsets.only(
+                bottom: 12.0,
+              ),
+              child: Text(
+                label,
+                style: Theme.of(context).textTheme.caption?.copyWith(
+                      color: ColorPalettes.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
             ),
           ),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: childComment?.length,
-            itemBuilder: (context, index) {
-              return Container(
-                padding: const EdgeInsets.only(left: 36.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    left: BorderSide(
-                      color: ColorPalettes.line,
-                      width: 2.0,
+          if (isExpand)
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: widget.childComment?.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: const EdgeInsets.only(left: 36.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      left: BorderSide(
+                        color: ColorPalettes.line,
+                        width: 2.0,
+                      ),
                     ),
                   ),
-                ),
-                child: CommentItem(
-                  isChildComment: true,
-                  imgUrl: childComment?[index].file,
-                  author: childComment?[index].writerName,
-                  createdAt: DateUtil.sanitizeDateTime(
-                      childComment?[index].createdAt ?? "-"),
-                  comment: childComment?[index].desc,
-                ),
-              );
-            },
-          ),
+                  child: CommentItem(
+                    isChildComment: true,
+                    imgUrl: widget.childComment?[index].file,
+                    author: widget.childComment?[index].writerName,
+                    createdAt: DateUtil.sanitizeDateTime(
+                        widget.childComment?[index].createdAt ?? "-"),
+                    comment: widget.childComment?[index].desc,
+                  ),
+                );
+              },
+            ),
         ],
       ],
     );
