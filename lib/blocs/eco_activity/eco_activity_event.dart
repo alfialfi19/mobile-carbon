@@ -20,3 +20,14 @@ class LoadEcoActivity extends EcoActivityEvent {
         keyword,
       ];
 }
+
+class LoadEcoActivityDetail extends EcoActivityEvent {
+  final int? id;
+
+  LoadEcoActivityDetail(this.id);
+
+  @override
+  List<Object?> get props => [
+        id,
+      ];
+}

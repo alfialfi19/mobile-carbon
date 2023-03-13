@@ -4,6 +4,7 @@ import 'package:mobile_carbon/models/models.dart';
 class CommentApi {
   static const commentPath = '/comment';
   static const commentListPath = '$commentPath/list';
+  static const commentStorePath = '$commentPath/store';
 
   final Dio _dio;
 

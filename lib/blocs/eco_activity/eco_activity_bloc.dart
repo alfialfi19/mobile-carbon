@@ -18,6 +18,7 @@ class EcoActivityBloc extends Bloc<EcoActivityEvent, EcoActivityState> {
 
   EcoActivityBloc(this.ecoActivityRepository) : super(EcoActivityInitial()) {
     on<LoadEcoActivity>(_loadEcoActivityHandler);
+    on<LoadEcoActivityDetail>(_loadEcoActivityDetailHandler);
   }
 
   Future<void> _loadEcoActivityHandler(
@@ -49,6 +50,34 @@ class EcoActivityBloc extends Bloc<EcoActivityEvent, EcoActivityState> {
       );
 
       return emit(const ListEcoActivityError(errorResponse));
+    }
+  }
+
+  Future<void> _loadEcoActivityDetailHandler(
+    LoadEcoActivityDetail event,
+    Emitter<EcoActivityState> emit,
+  ) async {
+    emit(DetailEcoActivityLoading());
+
+    try {
+      final response = await ecoActivityRepository.getDetailEcoActivity(
+        id: event.id,
+      );
+
+      emit(DetailEcoActivityLoaded(response));
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(DetailEcoActivityError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: '409',
+        statusCode: 409,
+      );
+
+      return emit(const DetailEcoActivityError(errorResponse));
     }
   }
 }

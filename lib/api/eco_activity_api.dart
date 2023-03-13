@@ -4,6 +4,7 @@ import 'package:mobile_carbon/models/models.dart';
 class EcoActivityApi {
   static const ecoActivityPath = '/activity';
   static const ecoActivityListPath = '$ecoActivityPath/list';
+  static const ecoActivityDetailPath = '$ecoActivityPath/detail';
 
   final Dio _dio;
 
@@ -40,5 +41,20 @@ class EcoActivityApi {
     }
 
     return results;
+  }
+
+  Future<ArticleDetail> getDetailEcoActivity({
+    int? id,
+  }) async {
+    final queries = {
+      'id': id ?? 0,
+    };
+
+    final response = await _dio.get(
+      ecoActivityDetailPath,
+      queryParameters: queries,
+    );
+
+    return ArticleDetail.fromJson(response.data['data']);
   }
 }

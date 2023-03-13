@@ -29,6 +29,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
         category: event.category,
         keyword: event.keyword,
         type: event.type,
+        me: event.me,
       );
 
       if (response.isEmpty) {

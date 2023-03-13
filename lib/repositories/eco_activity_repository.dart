@@ -20,4 +20,14 @@ class EcoActivityRepository {
 
     return response;
   }
+
+  Future<ArticleDetail> getDetailEcoActivity({
+    int? id,
+  }) async {
+    final response = await _ecoActivityApi.getDetailEcoActivity(
+      id: id,
+    );
+
+    return response;
+  }
 }

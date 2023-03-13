@@ -219,6 +219,13 @@ class _EcoTabContentState extends State<EcoTabContent>
                   authorImg: data.first.writerImg,
                   dateCreated:
                       DateUtil.sanitizeDateTime(data.first.createdAt ?? "-"),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    Routes.detailEcoUpdate,
+                    arguments: DataArgument(
+                      id: data.first.id ?? "0",
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 40.0,
@@ -238,6 +245,7 @@ class _EcoTabContentState extends State<EcoTabContent>
                   shrinkWrap: true,
                   itemCount: data.length,
                   itemBuilder: (context, index) {
+                    print("===> data title: ${data[index].title}");
                     if (index == 0) {
                       return Container();
                     }
@@ -250,7 +258,7 @@ class _EcoTabContentState extends State<EcoTabContent>
                           data[index].createdAt ?? "-"),
                       action: () => Navigator.pushNamed(
                         context,
-                        Routes.detailArticle,
+                        Routes.detailEcoUpdate,
                         arguments: DataArgument(
                           id: data[index].id ?? "0",
                         ),

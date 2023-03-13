@@ -10,6 +10,7 @@ class Routes {
   static const detailComment = "detail-comment";
   static const detailDonation = "detail-donation";
   static const detailEcoActivity = "detail-eco-activity";
+  static const detailEcoUpdate = "detail-eco-update";
   static const detailTotalArticle = "detail-total-article";
   static const donation = "donation";
   static const ecoUpdate = "eco-update";

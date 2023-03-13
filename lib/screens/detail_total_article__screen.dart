@@ -39,6 +39,7 @@ class DetailTotalArticleScreen extends StatelessWidget {
                   null,
                   null,
                   null,
+                  null,
                 ),
               );
           },
@@ -361,6 +362,7 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
     BlocProvider.of<ArticleBloc>(context).add(
       LoadArticle(
         1,
+        null,
         null,
         null,
         null,

@@ -30,6 +30,8 @@ Widget? getPageByName(
       return const DetailDonationScreen();
     case Routes.detailEcoActivity:
       return const DetailEcoActivityScreen();
+    case Routes.detailEcoUpdate:
+      return const DetailEcoUpdateScreen();
     case Routes.detailTotalArticle:
       return const DetailTotalArticleScreen();
     case Routes.donation:

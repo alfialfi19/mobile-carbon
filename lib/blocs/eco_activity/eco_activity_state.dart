@@ -25,3 +25,17 @@ class ListEcoActivityError extends EcoActivityState {
 
   const ListEcoActivityError(this.errorResponse);
 }
+
+class DetailEcoActivityLoading extends EcoActivityState {}
+
+class DetailEcoActivityLoaded extends EcoActivityState {
+  final ArticleDetail ecoActivity;
+
+  const DetailEcoActivityLoaded(this.ecoActivity);
+}
+
+class DetailEcoActivityError extends EcoActivityState {
+  final GenericErrorResponse errorResponse;
+
+  const DetailEcoActivityError(this.errorResponse);
+}

@@ -4,6 +4,7 @@ export 'auth/auth_bloc.dart';
 export 'bloc_state.dart';
 export 'comment/comment_bloc.dart';
 export 'donation/donation_bloc.dart';
+export 'eco_activity/eco_activity_bloc.dart';
 export 'emisi_log/emisi_log_bloc.dart';
 export 'main/main_bloc.dart';
 export 'summary_emisi_log/summary_emisi_log_bloc.dart';

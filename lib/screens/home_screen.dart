@@ -37,6 +37,7 @@ class HomeScreen extends StatelessWidget {
                   1,
                   null,
                   "Rekomendasi",
+                  null,
                 ),
               );
           },
@@ -789,6 +790,7 @@ class _HomeContentState extends State<HomeContent> {
         1,
         null,
         "Rekomendasi",
+        null,
       ),
     );
   }
@@ -806,6 +808,7 @@ class _HomeContentState extends State<HomeContent> {
         1,
         null,
         "Rekomendasi",
+        null,
       ),
     );
   }

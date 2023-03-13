@@ -78,7 +78,7 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
         elevation: 0.0,
       ),
       floatingActionButton: InkWell(
-        onTap: () => print("==> add new comment"),
+        onTap: () => _showAddComment(context),
         child: Container(
           height: 54.0,
           width: 54.0,

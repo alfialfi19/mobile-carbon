@@ -11,12 +11,14 @@ class ArticleRepository {
     int? category,
     String? keyword,
     String? type,
+    int? me,
   }) async {
     final response = await _articleApi.getListArticle(
       page: page,
       category: category,
       keyword: keyword,
       type: type,
+      me: me,
     );
 
     return response;

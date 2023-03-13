@@ -141,6 +141,7 @@ class _CalculateCarbonStep3ScreenState
                       action: () {
                         Navigator.pop(context);
                         Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                     ),
                   ),

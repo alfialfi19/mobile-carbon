@@ -15,6 +15,7 @@ class ArticleApi {
     int? category,
     String? keyword,
     String? type,
+    int? me,
   }) async {
     List<ArticleDetail> results = [];
 
@@ -22,7 +23,8 @@ class ArticleApi {
       'page': page ?? 1,
       'category': category ?? "",
       'keyword': keyword ?? "",
-      'type': type ?? ""
+      'type': type ?? "",
+      'me': me ?? "",
     };
 
     final response = await _dio.get(
