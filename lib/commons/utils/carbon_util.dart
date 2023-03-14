@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_carbon/commons/commons.dart';
 
-class EmisiUtil {
+class CarbonUtil {
   static String getEmisiIcon(String category) {
     if (category == 'Makanan') {
       return CarbonIcons.food;
@@ -31,6 +31,24 @@ class EmisiUtil {
       return ColorPalettes.blue.withOpacity(0.15);
     } else {
       return ColorPalettes.orange.withOpacity(0.1);
+    }
+  }
+
+  static String getCategoryIcon(String? category) {
+    if (category == 'Transportasi') {
+      return CarbonIcons.car;
+    } else if (category == 'Makanan') {
+      return CarbonIcons.food2;
+    } else if (category == 'Alat Elektronik') {
+      return CarbonIcons.tv2;
+    } else if (category == 'Listrik Ramah Lingkungan') {
+      return CarbonIcons.electric;
+    } else if (category == 'Pembelian Pakaian') {
+      return CarbonIcons.cloth;
+    } else if (category == 'Sampah') {
+      return CarbonIcons.trash2;
+    } else {
+      return CarbonIcons.trash2;
     }
   }
 }

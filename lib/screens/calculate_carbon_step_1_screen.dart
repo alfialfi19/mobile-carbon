@@ -1,31 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_carbon/blocs/blocs.dart';
+import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
 
-class CalculateCarbonStep1Screen extends StatefulWidget {
+class CalculateCarbonStep1Screen extends StatelessWidget {
   const CalculateCarbonStep1Screen({Key? key}) : super(key: key);
 
   @override
-  State<CalculateCarbonStep1Screen> createState() =>
-      _CalculateCarbonStep1ScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            final repository = RepositoryProvider.of<MasterRepository>(context);
+
+            return MasterBloc(repository)
+              ..add(
+                LoadMasterCategory(),
+              );
+          },
+        ),
+      ],
+      child: const CalculateCarbonStep1Content(),
+    );
+  }
 }
 
-class _CalculateCarbonStep1ScreenState
-    extends State<CalculateCarbonStep1Screen> {
-  List<String> label = [
-    "Transportasi",
-    "Makanan",
-    "Alat Elektronik",
-    "Pembelian Pakaian",
-    "Sampah",
-  ];
+class CalculateCarbonStep1Content extends StatefulWidget {
+  const CalculateCarbonStep1Content({Key? key}) : super(key: key);
+
+  @override
+  State<CalculateCarbonStep1Content> createState() =>
+      _CalculateCarbonStep1ContentState();
+}
+
+class _CalculateCarbonStep1ContentState
+    extends State<CalculateCarbonStep1Content> {
+  final _scrollController = ScrollController();
+
   String selectedLabel = "";
+  int selectedId = 0;
 
   @override
   void initState() {
-    selectedLabel = label[0];
     super.initState();
   }
 
@@ -58,95 +79,94 @@ class _CalculateCarbonStep1ScreenState
           vertical: 40.0,
           horizontal: 30.0,
         ),
-        child: ListView(
-          children: [
-            Text(
-              "Pilih Kategori",
-              style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                    color: ColorPalettes.dark,
-                    fontWeight: FontWeight.w700,
+        child: PullToRefresh(
+          controller: _scrollController,
+          onRefresh: _refresh,
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Pilih Kategori",
+                    style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                          color: ColorPalettes.dark,
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
-            ),
-            const SizedBox(
-              height: 16.0,
-            ),
-            Wrap(
-              spacing: 10.0,
-              runSpacing: 15.0,
-              alignment: WrapAlignment.spaceBetween,
-              children: [
-                CategoryItem(
-                  label: label[0],
-                  callback: () => onSelectedCategory(label[0]),
-                  value: selectedLabel == label[0],
-                  imageActive: Image.asset(
-                    CarbonIcons.car,
-                    color: ColorPalettes.white,
+                  const SizedBox(
+                    height: 16.0,
                   ),
-                  imageInactive: Image.asset(
-                    CarbonIcons.car,
+                  BlocBuilder<MasterBloc, MasterState>(
+                    builder: (context, state) {
+                      if (state is MasterCategoryError) {
+                        return CarbonErrorState(
+                          onRefresh: _refresh,
+                        );
+                      }
+
+                      if (state is MasterCategoryEmpty) {
+                        return const CarbonEmptyState();
+                      }
+
+                      if (state is MasterCategoryLoaded) {
+                        var data = state.emisiCategory;
+
+                        return GridView.builder(
+                          itemCount: data.length,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return CategoryItem(
+                              label: data[index].opt ?? "-",
+                              callback: () => onSelectedCategory(
+                                  data[index].opt ?? "-",
+                                  int.parse(data[index].id ?? "0")),
+                              value: selectedLabel == data[index].opt,
+                              imageActive: Image.asset(
+                                width: 32.0,
+                                height: 32.0,
+                                CarbonUtil.getCategoryIcon(data[index].opt),
+                                color: ColorPalettes.white,
+                              ),
+                              imageInactive: Image.asset(
+                                width: 32.0,
+                                height: 32.0,
+                                CarbonUtil.getCategoryIcon(data[index].opt),
+                              ),
+                            );
+                          },
+                        );
+                      }
+
+                      return const CarbonLoadingState();
+                    },
                   ),
-                ),
-                CategoryItem(
-                  label: label[1],
-                  callback: () => onSelectedCategory(label[1]),
-                  value: selectedLabel == label[1],
-                  imageActive: Image.asset(
-                    CarbonIcons.food2,
-                    color: ColorPalettes.white,
+                  const SizedBox(
+                    height: 50.0,
                   ),
-                  imageInactive: Image.asset(
-                    CarbonIcons.food2,
-                  ),
-                ),
-                CategoryItem(
-                  label: label[2],
-                  callback: () => onSelectedCategory(label[2]),
-                  value: selectedLabel == label[2],
-                  imageActive: Image.asset(
-                    CarbonIcons.tv2,
-                    color: ColorPalettes.white,
-                  ),
-                  imageInactive: Image.asset(
-                    CarbonIcons.tv2,
-                  ),
-                ),
-                CategoryItem(
-                  label: label[3],
-                  callback: () => onSelectedCategory(label[3]),
-                  value: selectedLabel == label[3],
-                  imageActive: Image.asset(
-                    CarbonIcons.cloth,
-                    color: ColorPalettes.white,
-                  ),
-                  imageInactive: Image.asset(
-                    CarbonIcons.cloth,
-                  ),
-                ),
-                CategoryItem(
-                  label: label[4],
-                  callback: () => onSelectedCategory(label[4]),
-                  value: selectedLabel == label[4],
-                  imageActive: Image.asset(
-                    CarbonIcons.trash2,
-                    color: ColorPalettes.white,
-                  ),
-                  imageInactive: Image.asset(
-                    CarbonIcons.trash2,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 50.0,
-            ),
-            CarbonRoundedButton(
-              label: "Selanjutnya",
-              backgroundColor: ColorPalettes.primary,
-              borderColor: ColorPalettes.primary,
-              action: () => Navigator.pushNamed(
-                context,
-                Routes.calculateCarbonStep2,
+                  if (selectedId != 0)
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: CarbonRoundedButton(
+                        label: "Selanjutnya",
+                        backgroundColor: ColorPalettes.primary,
+                        borderColor: ColorPalettes.primary,
+                        action: () => Navigator.pushNamed(
+                          context,
+                          Routes.calculateCarbonStep2,
+                          arguments: DataArgument(
+                            id: selectedId.toString(),
+                            source: selectedLabel,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
           ],
@@ -155,9 +175,23 @@ class _CalculateCarbonStep1ScreenState
     );
   }
 
-  void onSelectedCategory(String value) {
+  void onSelectedCategory(
+    String value,
+    int id,
+  ) {
     setState(() {
       selectedLabel = value;
+      selectedId = id;
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _refresh() async {
+    BlocProvider.of<MasterBloc>(context).add(LoadMasterCategory());
   }
 }

@@ -39,7 +39,7 @@ class SummaryRankBloc extends Bloc<SummaryRankEvent, SummaryRankState> {
       debugPrint("error: $error");
       const errorResponse = GenericErrorResponse(
         errors: 'Something wrong',
-        status: '409',
+        status: false,
         statusCode: 409,
       );
 

@@ -245,7 +245,6 @@ class _EcoTabContentState extends State<EcoTabContent>
                   shrinkWrap: true,
                   itemCount: data.length,
                   itemBuilder: (context, index) {
-                    print("===> data title: ${data[index].title}");
                     if (index == 0) {
                       return Container();
                     }

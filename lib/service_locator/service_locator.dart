@@ -42,6 +42,9 @@ void setupLocator() {
       () => EmisiLogApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(
+      () => MasterApi(locator<BaseDioClient>().dio),
+    )
+    ..registerLazySingleton(
       () => MediaApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(

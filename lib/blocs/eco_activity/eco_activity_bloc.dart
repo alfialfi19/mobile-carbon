@@ -45,7 +45,7 @@ class EcoActivityBloc extends Bloc<EcoActivityEvent, EcoActivityState> {
       debugPrint("error: $error");
       const errorResponse = GenericErrorResponse(
         errors: 'Something wrong',
-        status: '409',
+        status: false,
         statusCode: 409,
       );
 
@@ -73,7 +73,7 @@ class EcoActivityBloc extends Bloc<EcoActivityEvent, EcoActivityState> {
       debugPrint("error: $error");
       const errorResponse = GenericErrorResponse(
         errors: 'Something wrong',
-        status: '409',
+        status: false,
         statusCode: 409,
       );
 

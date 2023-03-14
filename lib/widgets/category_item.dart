@@ -29,6 +29,7 @@ class CategoryItem extends StatelessWidget {
           0.0,
           43.0,
         ),
+        margin: const EdgeInsets.all(5.0),
         width: MediaQuery.of(context).size.width / 2.5,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24.0),
@@ -65,12 +66,16 @@ class CategoryItem extends StatelessWidget {
         child: Column(
           children: [
             value ? imageActive : imageInactive,
-            Text(
-              label,
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    color: value ? ColorPalettes.white : ColorPalettes.dark,
-                    fontWeight: FontWeight.w400,
-                  ),
+            Expanded(
+              child: Text(
+                label,
+                style: Theme.of(context).textTheme.caption?.copyWith(
+                      color: value ? ColorPalettes.white : ColorPalettes.dark,
+                      fontWeight: FontWeight.w400,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                maxLines: 2,
+              ),
             ),
           ],
         ),

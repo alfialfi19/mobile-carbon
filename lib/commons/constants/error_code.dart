@@ -10,6 +10,7 @@ class ErrorStatusMessage {
   static const String connectionTimeout = 'connection_timeout';
   static const String unauthorizedKong =
       'HttpException: Failed to parse header value';
+  static const String expiredToken = 'Expired token because logout';
 }
 
 class ErrorCodePermission {

@@ -11,13 +11,13 @@ extension ExtractDioError on DioError {
     if (error is SocketException) {
       return GenericErrorResponse(
         errors: message,
-        status: ErrorStatusMessage.connectionTimeout,
+        // status: ErrorStatusMessage.connectionTimeout,
         statusCode: ErrorStatusCode.connectionTimeout,
       );
     } else if (response == null) {
       return GenericErrorResponse(
         errors: message,
-        status: ErrorStatusMessage.unknownError,
+        // status: ErrorStatusMessage.unknownError,
         statusCode: ErrorStatusCode.unknown,
       );
     } else {
@@ -25,16 +25,17 @@ extension ExtractDioError on DioError {
         try {
           final errorJson = jsonDecode(response.toString());
 
-          /// to enter 'error' object from errorJson
-          final sanitizeErrorJson = errorJson['error'];
+          // /// to enter 'error' object from errorJson
+          // final sanitizeErrorJson = errorJson['error'];
+          // print("==> sanitizeErrorJson: $sanitizeErrorJson");
 
-          sanitizeErrorJson['statusCode'] = response!.statusCode;
+          errorJson['code'] = response!.statusCode;
 
-          return GenericErrorResponse.fromJson(sanitizeErrorJson);
+          return GenericErrorResponse.fromJson(errorJson);
         } on Exception {
           return GenericErrorResponse(
             errors: message,
-            status: response!.statusMessage,
+            // status: response!.statusMessage,
             statusCode: response!.statusCode,
           );
         }
@@ -42,7 +43,7 @@ extension ExtractDioError on DioError {
 
       return GenericErrorResponse(
         errors: message,
-        status: response!.statusMessage,
+        // status: response!.statusMessage,
         statusCode: response!.statusCode,
       );
     }

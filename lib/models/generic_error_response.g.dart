@@ -10,16 +10,16 @@ GenericErrorResponse _$GenericErrorResponseFromJson(
         Map<String, dynamic> json) =>
     GenericErrorResponse(
       errors: json['message'] as String?,
-      errorCode: json['error_code'] as String?,
-      status: json['status'] as String?,
-      statusCode: json['statusCode'] as int?,
+      errorCode: json['errorCode'] as String?,
+      status: json['status'] as bool?,
+      statusCode: json['code'] as int?,
     );
 
 Map<String, dynamic> _$GenericErrorResponseToJson(
         GenericErrorResponse instance) =>
     <String, dynamic>{
       'message': instance.errors,
-      'error_code': instance.errorCode,
+      'errorCode': instance.errorCode,
       'status': instance.status,
-      'statusCode': instance.statusCode,
+      'code': instance.statusCode,
     };

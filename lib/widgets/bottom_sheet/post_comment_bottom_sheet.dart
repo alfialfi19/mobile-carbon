@@ -66,7 +66,7 @@ class _PostCommentFormState extends State<_PostCommentForm> {
           ),
           CarbonRoundedButton(
             label: "Kirim",
-            action: () => print("Send comment request"),
+            action: () => Navigator.of(context).pop(commentController.text),
           ),
         ],
       ),

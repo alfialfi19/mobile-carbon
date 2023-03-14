@@ -3,6 +3,7 @@ export 'article_detail.dart';
 export 'blob.dart';
 export 'comments.dart';
 export 'donation_detail.dart';
+export 'emisi_category.dart';
 export 'emisi_log.dart';
 export 'generic_error_response.dart';
 export 'media_set.dart';

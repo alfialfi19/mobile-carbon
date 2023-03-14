@@ -336,13 +336,13 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                                       pointValue:
                                           "${data[index].totalPoint} poin",
                                       leadingIcon: Image.asset(
-                                        EmisiUtil.getEmisiIcon(
+                                        CarbonUtil.getEmisiIcon(
                                             data[index].categoryName ?? "-"),
                                         height: 24.0,
                                         width: 24.0,
                                       ),
                                       leadingBackgroundColor:
-                                          EmisiUtil.getEmisiBackgroundColor(
+                                          CarbonUtil.getEmisiBackgroundColor(
                                               data[index].categoryName ?? "-"),
                                     ),
                                   ],

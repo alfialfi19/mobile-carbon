@@ -9,12 +9,28 @@ class CommentRepository {
   Future<List<Comments>> getListComment({
     int? page,
     int? id,
+    String? source,
   }) async {
     final response = await _commentApi.getListComment(
       page: page,
       id: id,
+      source: source,
     );
 
     return response;
+  }
+
+  Future<void> storeComment({
+    int? idArticle,
+    int? idParent,
+    String? desc,
+    String? source,
+  }) async {
+    final response = await _commentApi.storeComment(
+      idArticle: idArticle,
+      idParent: idParent,
+      desc: desc,
+      source: source,
+    );
   }
 }

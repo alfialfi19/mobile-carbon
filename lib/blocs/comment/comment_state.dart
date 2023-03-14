@@ -25,3 +25,13 @@ class ListCommentError extends CommentState {
 
   const ListCommentError(this.errorResponse);
 }
+
+class StoreCommentLoading extends CommentState {}
+
+class StoreCommentSuccess extends CommentState {}
+
+class StoreCommentError extends CommentState {
+  final GenericErrorResponse errorResponse;
+
+  const StoreCommentError(this.errorResponse);
+}

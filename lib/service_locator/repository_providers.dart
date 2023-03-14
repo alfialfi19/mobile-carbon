@@ -38,6 +38,11 @@ final repositoryProviders = [
       locator<EcoActivityApi>(),
     ),
   ),
+  RepositoryProvider<MasterRepository>(
+    create: (context) => MasterRepository(
+      locator<MasterApi>(),
+    ),
+  ),
   RepositoryProvider<MediaRepository>(
     create: (context) => MediaRepository(
       locator<MediaApi>(),

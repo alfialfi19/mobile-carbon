@@ -16,6 +16,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   CommentBloc(this.commentRepository) : super(CommentInitial()) {
     on<LoadComment>(_loadCommentHandler);
+    on<StoreComment>(_storeCommentHandler);
   }
 
   Future<void> _loadCommentHandler(
@@ -28,6 +29,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       final response = await commentRepository.getListComment(
         page: event.page,
         id: event.id,
+        source: event.source,
       );
 
       if (response.isEmpty) {
@@ -43,11 +45,42 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       debugPrint("error: $error");
       const errorResponse = GenericErrorResponse(
         errors: 'Something wrong',
-        status: '409',
+        status: false,
         statusCode: 409,
       );
 
       return emit(const ListCommentError(errorResponse));
+    }
+  }
+
+  Future<void> _storeCommentHandler(
+    StoreComment event,
+    Emitter<CommentState> emit,
+  ) async {
+    emit(StoreCommentLoading());
+
+    try {
+      final response = await commentRepository.storeComment(
+        idArticle: event.idArticle,
+        idParent: event.idParent,
+        desc: event.desc,
+        source: event.source,
+      );
+
+      emit(StoreCommentSuccess());
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(StoreCommentError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const StoreCommentError(errorResponse));
     }
   }
 }

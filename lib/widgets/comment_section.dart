@@ -54,6 +54,7 @@ class _CommentSectionState extends State<CommentSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CommentItem(
           imgUrl: widget.imgUrl,
@@ -132,8 +133,9 @@ class CommentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment:
-          isChildComment ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      // crossAxisAlignment:
+      //     isChildComment ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [

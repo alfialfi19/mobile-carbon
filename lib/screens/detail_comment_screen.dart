@@ -26,23 +26,27 @@ class DetailCommentScreen extends StatelessWidget {
                 LoadComment(
                   1,
                   int.parse(argument.id),
+                  argument.source,
                 ),
               );
           },
         ),
       ],
       child: DetailCommentContent(
-        id: argument.id,
+        idArticle: argument.id,
+        source: argument.source,
       ),
     );
   }
 }
 
 class DetailCommentContent extends StatefulWidget {
-  final String id;
+  final String idArticle;
+  final String? source;
 
   const DetailCommentContent({
-    required this.id,
+    required this.idArticle,
+    this.source,
     Key? key,
   }) : super(key: key);
 
@@ -78,7 +82,11 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
         elevation: 0.0,
       ),
       floatingActionButton: InkWell(
-        onTap: () => _showAddComment(context),
+        onTap: () => _showAddComment(
+          context,
+          idArticle: int.parse(widget.idArticle),
+          source: widget.source,
+        ),
         child: Container(
           height: 54.0,
           width: 54.0,
@@ -120,7 +128,8 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  BlocBuilder<CommentBloc, CommentState>(
+                  BlocConsumer<CommentBloc, CommentState>(
+                    listener: _actionBlocListener,
                     builder: (context, state) {
                       if (state is ListCommentError) {
                         return CarbonErrorState(
@@ -149,8 +158,12 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
                                       data[index].createdAt ?? "-"),
                                   comment: data[index].desc,
                                   childComment: data[index].item,
-                                  optionsCallback: () =>
-                                      _showActionOptions(context),
+                                  optionsCallback: () => _showActionOptions(
+                                    context,
+                                    idArticle: int.parse(widget.idArticle),
+                                    idParent: int.parse(data[index].id ?? "0"),
+                                    source: widget.source,
+                                  ),
                                 );
                               },
                             ),
@@ -170,7 +183,12 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
     );
   }
 
-  Future<void> _showActionOptions(BuildContext context) async {
+  Future<void> _showActionOptions(
+    BuildContext context, {
+    int? idArticle,
+    int? idParent,
+    String? source,
+  }) async {
     final data = await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -180,14 +198,24 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
 
     if (data != null) {
       if (data == 1 || data == 2) {
-        _showAddComment.call(context);
+        _showAddComment.call(
+          context,
+          idArticle: idArticle,
+          idParent: idParent,
+          source: source,
+        );
       } else if (data == 3) {
         _showDeleteArticle.call(context);
       } else {}
     }
   }
 
-  Future<void> _showAddComment(BuildContext context) async {
+  Future<void> _showAddComment(
+    BuildContext context, {
+    int? idArticle,
+    int? idParent,
+    String? source,
+  }) async {
     final data = await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -196,7 +224,14 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
     );
 
     if (data != null) {
-      // do something
+      BlocProvider.of<CommentBloc>(context).add(
+        StoreComment(
+          idArticle,
+          idParent,
+          data,
+          source,
+        ),
+      );
     }
   }
 
@@ -220,11 +255,38 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
     }
   }
 
+  void _actionBlocListener(
+    BuildContext context,
+    CommentState state,
+  ) {
+    if (state is StoreCommentSuccess) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      _refresh();
+    } else if (state is StoreCommentError) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      ToastUtil.error(
+          context,
+          state.errorResponse.errors ??
+              "Terjadi kesalahan, silahkan coba lagi nanti.");
+    } else if (state is StoreCommentLoading) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => const TransparentLoadingDialog(),
+      );
+    }
+  }
+
   Future<void> _refresh() async {
     BlocProvider.of<CommentBloc>(context).add(
       LoadComment(
         1,
-        int.parse(widget.id),
+        int.parse(widget.idArticle),
+        widget.source,
       ),
     );
   }

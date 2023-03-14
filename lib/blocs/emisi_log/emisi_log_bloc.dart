@@ -42,7 +42,7 @@ class EmisiLogBloc extends Bloc<EmisiLogEvent, EmisiLogState> {
       debugPrint("error: $error");
       const errorResponse = GenericErrorResponse(
         errors: 'Something wrong',
-        status: '409',
+        status: false,
         statusCode: 409,
       );
 

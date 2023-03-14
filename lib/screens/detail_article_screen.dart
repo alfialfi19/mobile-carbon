@@ -52,7 +52,10 @@ class DetailArticleContent extends StatelessWidget {
         onTap: () => Navigator.pushNamed(
           context,
           Routes.detailComment,
-          arguments: DataArgument(id: id),
+          arguments: DataArgument(
+            id: id,
+            source: Source.article.name,
+          ),
         ),
         child: Container(
           height: 54.0,

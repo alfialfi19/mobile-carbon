@@ -75,7 +75,19 @@ class _HomeContentState extends State<HomeContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BlocBuilder<AuthBloc, AuthState>(
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is DetailAccountError) {
+                        if (state.errorResponse.errors ==
+                            ErrorStatusMessage.expiredToken) {
+                          PrefHelper().removeAllPref();
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Routes.onBoarding1,
+                          );
+                        }
+                      }
+                    },
                     builder: (context, state) {
                       if (state is DetailAccountError) {
                         return Container(
@@ -654,7 +666,19 @@ class _HomeContentState extends State<HomeContent> {
                       );
                     },
                   ),
-                  BlocBuilder<ArticleBloc, ArticleState>(
+                  BlocConsumer<ArticleBloc, ArticleState>(
+                    listener: (context, state) {
+                      if (state is ListArticleError) {
+                        if (state.errorResponse.errors ==
+                            ErrorStatusMessage.expiredToken) {
+                          PrefHelper().removeAllPref();
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Routes.onBoarding1,
+                          );
+                        }
+                      }
+                    },
                     builder: (context, state) {
                       if (state is ListArticleError) {
                         return Container(

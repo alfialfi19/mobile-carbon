@@ -7,9 +7,9 @@ part 'generic_error_response.g.dart';
 class GenericErrorResponse extends Equatable implements Exception {
   @JsonKey(name: 'message')
   final String? errors;
-  @JsonKey(name: 'error_code')
   final String? errorCode;
-  final String? status;
+  final bool? status;
+  @JsonKey(name: 'code')
   final int? statusCode;
 
   const GenericErrorResponse({

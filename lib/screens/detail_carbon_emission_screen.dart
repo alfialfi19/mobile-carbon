@@ -249,13 +249,13 @@ class _DetailCarbonEmissionContentState
                                       "${data[index].val} ${data[index].unit} -- ${data[index].createdAt}",
                                   pointValue: "${data[index].totalPoint} poin",
                                   leadingIcon: Image.asset(
-                                    EmisiUtil.getEmisiIcon(
+                                    CarbonUtil.getEmisiIcon(
                                         data[index].categoryName ?? "-"),
                                     height: 24.0,
                                     width: 24.0,
                                   ),
                                   leadingBackgroundColor:
-                                      EmisiUtil.getEmisiBackgroundColor(
+                                      CarbonUtil.getEmisiBackgroundColor(
                                           data[index].categoryName ?? "-"),
                                 ),
                               ],

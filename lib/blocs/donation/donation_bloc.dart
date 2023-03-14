@@ -64,7 +64,7 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
       debugPrint("error: $error");
       const errorResponse = GenericErrorResponse(
         errors: 'Something wrong',
-        status: '409',
+        status: false,
         statusCode: 409,
       );
 
