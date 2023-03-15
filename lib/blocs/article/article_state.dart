@@ -39,3 +39,13 @@ class DetailArticleError extends ArticleState {
 
   const DetailArticleError(this.errorResponse);
 }
+
+class StoreArticleLoading extends ArticleState {}
+
+class StoreArticleSuccess extends ArticleState {}
+
+class StoreArticleError extends ArticleState {
+  final GenericErrorResponse errorResponse;
+
+  const StoreArticleError(this.errorResponse);
+}

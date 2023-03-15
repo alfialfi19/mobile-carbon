@@ -15,6 +15,7 @@ class MediaApi {
   const MediaApi(this._dio);
 
   Future<Blob> postMedia(String filePath) async {
+    print("===> filePath postMedia: $filePath");
     final data = FormData.fromMap({
       'media': await MultipartFile.fromFile(
         filePath,

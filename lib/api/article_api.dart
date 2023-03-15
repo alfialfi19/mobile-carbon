@@ -5,6 +5,7 @@ class ArticleApi {
   static const articlePath = '/article';
   static const articleListPath = '$articlePath/list';
   static const articleDetailPath = '$articlePath/detail';
+  static const articleStorePath = '$articlePath/store';
 
   final Dio _dio;
 
@@ -60,5 +61,33 @@ class ArticleApi {
     );
 
     return ArticleDetail.fromJson(response.data['data']);
+  }
+
+  Future<void> storeArticle({
+    int? categoryId,
+    String? title,
+    List<String>? filePath,
+    String? desc,
+  }) async {
+    var formData = FormData.fromMap({
+      'category': categoryId,
+      'title': title,
+      'desc': desc,
+    });
+
+    if (filePath != null) {
+      int i = 1;
+      for (var file in filePath) {
+        formData.files.addAll([
+          MapEntry("file_$i", await MultipartFile.fromFile(file)),
+        ]);
+        i++;
+      }
+    }
+
+    await _dio.post(
+      articleStorePath,
+      data: formData,
+    );
   }
 }

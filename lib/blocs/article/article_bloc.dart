@@ -17,6 +17,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   ArticleBloc(this.articleRepository) : super(ArticleInitial()) {
     on<LoadArticle>(_loadArticleHandler);
     on<LoadArticleDetail>(_loadArticleDetailHandler);
+    on<StoreArticle>(_storeArticleHandler);
   }
 
   Future<void> _loadArticleHandler(
@@ -78,6 +79,37 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       );
 
       return emit(const DetailArticleError(errorResponse));
+    }
+  }
+
+  Future<void> _storeArticleHandler(
+    StoreArticle event,
+    Emitter<ArticleState> emit,
+  ) async {
+    emit(StoreArticleLoading());
+
+    try {
+      await articleRepository.storeArticle(
+        categoryId: event.categoryId,
+        title: event.title,
+        filePath: event.filePath,
+        desc: event.desc,
+      );
+
+      emit(StoreArticleSuccess());
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(StoreArticleError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const StoreArticleError(errorResponse));
     }
   }
 }

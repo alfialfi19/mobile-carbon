@@ -269,9 +269,10 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
       Navigator.of(context).pop();
 
       ToastUtil.error(
-          context,
-          state.errorResponse.errors ??
-              "Terjadi kesalahan, silahkan coba lagi nanti.");
+        context,
+        state.errorResponse.errors ??
+            "Terjadi kesalahan, silahkan coba lagi nanti.",
+      );
     } else if (state is StoreCommentLoading) {
       showDialog<void>(
         context: context,

@@ -17,8 +17,39 @@ class MasterBloc extends Bloc<MasterEvent, MasterState> {
   final MasterRepository masterRepository;
 
   MasterBloc(this.masterRepository) : super(MasterInitial()) {
+    on<LoadMasterArticleCategory>(_loadMasterArticleCategoryHandler);
     on<LoadMasterCategory>(_loadMasterCategoryHandler);
     on<LoadMasterSubCategory>(_loadMasterSubCategoryHandler);
+  }
+
+  Future<void> _loadMasterArticleCategoryHandler(
+    LoadMasterArticleCategory event,
+    Emitter<MasterState> emit,
+  ) async {
+    emit(MasterArticleCategoryLoading());
+
+    try {
+      final response = await masterRepository.getArticleCategory();
+
+      if (response.isEmpty) {
+        return emit(MasterArticleCategoryEmpty());
+      }
+
+      emit(MasterArticleCategoryLoaded(response));
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(MasterArticleCategoryError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const MasterArticleCategoryError(errorResponse));
+    }
   }
 
   Future<void> _loadMasterCategoryHandler(

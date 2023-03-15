@@ -25,3 +25,13 @@ class EmisiLogError extends EmisiLogState {
 
   const EmisiLogError(this.errorResponse);
 }
+
+class StoreEmisiLogLoading extends EmisiLogState {}
+
+class StoreEmisiLogSuccess extends EmisiLogState {}
+
+class StoreEmisiLogError extends EmisiLogState {
+  final GenericErrorResponse errorResponse;
+
+  const StoreEmisiLogError(this.errorResponse);
+}

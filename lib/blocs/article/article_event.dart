@@ -37,3 +37,25 @@ class LoadArticleDetail extends ArticleEvent {
         id,
       ];
 }
+
+class StoreArticle extends ArticleEvent {
+  final int? categoryId;
+  final String? title;
+  final List<String>? filePath;
+  final String? desc;
+
+  StoreArticle({
+    this.categoryId,
+    this.title,
+    this.filePath,
+    this.desc,
+  });
+
+  @override
+  List<Object?> get props => [
+        categoryId,
+        title,
+        filePath,
+        desc,
+      ];
+}

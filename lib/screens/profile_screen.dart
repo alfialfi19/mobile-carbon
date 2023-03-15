@@ -138,25 +138,25 @@ class _ProfileContentState extends State<ProfileContent> {
                                             ),
                                           ),
                                   ),
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: Container(
-                                      height: 36.0,
-                                      width: 36.0,
-                                      decoration: BoxDecoration(
-                                        color: ColorPalettes.primary,
-                                        borderRadius:
-                                            BorderRadius.circular(100.0),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: const Icon(
-                                        Icons.camera_alt_rounded,
-                                        color: ColorPalettes.white,
-                                        size: 20.0,
-                                      ),
-                                    ),
-                                  ),
+                                  // Positioned(
+                                  //   bottom: 0.0,
+                                  //   right: 0.0,
+                                  //   child: Container(
+                                  //     height: 36.0,
+                                  //     width: 36.0,
+                                  //     decoration: BoxDecoration(
+                                  //       color: ColorPalettes.primary,
+                                  //       borderRadius:
+                                  //           BorderRadius.circular(100.0),
+                                  //     ),
+                                  //     alignment: Alignment.center,
+                                  //     child: const Icon(
+                                  //       Icons.camera_alt_rounded,
+                                  //       color: ColorPalettes.white,
+                                  //       size: 20.0,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -177,6 +177,12 @@ class _ProfileContentState extends State<ProfileContent> {
                                   onTap: () => Navigator.pushNamed(
                                     context,
                                     Routes.editProfile,
+                                    arguments: AccountArgument(
+                                      name: data.fullName,
+                                      email: data.email,
+                                      phone: data.phone,
+                                      address: data.address,
+                                    ),
                                   ),
                                   child: Text(
                                     "Ubah",
@@ -260,10 +266,18 @@ class _ProfileContentState extends State<ProfileContent> {
             "email password untuk masuk kembali.",
         negativeCallback: () => Navigator.pop(context),
         positiveLabel: "Keluar",
-        positiveCallback: () => Navigator.pushReplacementNamed(
-          context,
-          Routes.onBoarding1,
-        ),
+        // positiveCallback: () => Navigator.pushReplacementNamed(
+        //   context,
+        //   Routes.onBoarding1,
+        // ),
+        positiveCallback: () {
+          PrefHelper().removeAllPref();
+
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            Routes.onBoarding1,
+            (route) => false,
+          );
+        },
       ),
     );
 

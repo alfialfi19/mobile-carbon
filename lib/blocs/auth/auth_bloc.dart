@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/commons/commons.dart';
 import 'package:mobile_carbon/models/models.dart';
@@ -16,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this.authRepository) : super(AuthInitial()) {
     on<SignIn>(_signInHandler);
     on<LoadDetailAccount>(_loadDetailAccountHandler);
+    on<StoreUpdateAccount>(_storeUpdateAccountHandler);
   }
 
   Future<void> _signInHandler(
@@ -52,6 +54,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final errorResponse = error.toGenericError();
 
       return emit(DetailAccountError(errorResponse));
+    }
+  }
+
+  Future<void> _storeUpdateAccountHandler(
+    StoreUpdateAccount event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(StoreAccountUpdateLoading());
+
+    try {
+      await authRepository.storeAccountUpdate(
+        name: event.name,
+        email: event.email,
+        phone: event.phone,
+        address: event.address,
+      );
+
+      emit(StoreAccountUpdateSuccess());
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(StoreAccountUpdateError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const StoreAccountUpdateError(errorResponse));
     }
   }
 }

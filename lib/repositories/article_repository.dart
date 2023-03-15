@@ -33,4 +33,18 @@ class ArticleRepository {
 
     return response;
   }
+
+  Future<void> storeArticle({
+    int? categoryId,
+    String? title,
+    List<String>? filePath,
+    String? desc,
+  }) async {
+    await _articleApi.storeArticle(
+      categoryId: categoryId,
+      title: title,
+      filePath: filePath,
+      desc: desc,
+    );
+  }
 }

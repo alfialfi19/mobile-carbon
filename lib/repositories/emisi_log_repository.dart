@@ -9,10 +9,24 @@ class EmisiLogRepository {
   Future<List<EmisiLog>> getEmisiLog({
     int? page,
   }) async {
-    final response = _emisiLogApi.getEmisiLog(
+    final response = await _emisiLogApi.getEmisiLog(
       page: page,
     );
 
     return response;
+  }
+
+  Future<void> storeEmisiLog({
+    String? idCategory,
+    String? idSubCategory,
+    String? val,
+    String? unit,
+  }) async {
+    await _emisiLogApi.storeEmisiLog(
+      idCategory: idCategory,
+      idSubCategory: idSubCategory,
+      val: val,
+      unit: unit,
+    );
   }
 }

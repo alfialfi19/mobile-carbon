@@ -159,8 +159,8 @@ class _CalculateCarbonStep1ContentState
                         action: () => Navigator.pushNamed(
                           context,
                           Routes.calculateCarbonStep2,
-                          arguments: DataArgument(
-                            id: selectedId.toString(),
+                          arguments: EmisiArgument(
+                            idCategory: selectedId.toString(),
                             source: selectedLabel,
                           ),
                         ),

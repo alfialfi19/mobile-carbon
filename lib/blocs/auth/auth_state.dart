@@ -37,3 +37,13 @@ class DetailAccountError extends AuthState {
 
   const DetailAccountError(this.errorResponse);
 }
+
+class StoreAccountUpdateLoading extends AuthState {}
+
+class StoreAccountUpdateSuccess extends AuthState {}
+
+class StoreAccountUpdateError extends AuthState {
+  final GenericErrorResponse errorResponse;
+
+  const StoreAccountUpdateError(this.errorResponse);
+}

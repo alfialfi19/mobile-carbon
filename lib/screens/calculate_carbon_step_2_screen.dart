@@ -12,7 +12,8 @@ class CalculateCarbonStep2Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final argument = ModalRoute.of(context)!.settings.arguments as DataArgument;
+    final argument =
+        ModalRoute.of(context)!.settings.arguments as EmisiArgument;
 
     return MultiBlocProvider(
       providers: [
@@ -22,14 +23,17 @@ class CalculateCarbonStep2Screen extends StatelessWidget {
 
             return MasterBloc(repository)
               ..add(
-                LoadMasterSubCategory(int.parse(argument.id)),
+                LoadMasterSubCategory(
+                  int.parse(argument.idCategory ?? "0"),
+                ),
               );
           },
         ),
       ],
       child: CalculateCarbonStep2Content(
-        id: int.parse(argument.id),
+        id: int.parse(argument.idCategory ?? "0"),
         label: argument.source,
+        argument: argument,
       ),
     );
   }
@@ -38,10 +42,12 @@ class CalculateCarbonStep2Screen extends StatelessWidget {
 class CalculateCarbonStep2Content extends StatefulWidget {
   final int id;
   final String? label;
+  final EmisiArgument? argument;
 
   const CalculateCarbonStep2Content({
     required this.id,
     this.label,
+    this.argument,
     Key? key,
   }) : super(key: key);
 
@@ -62,6 +68,7 @@ class _CalculateCarbonStep2ContentState
   // ];
   String selectedLabel = "";
   int selectedId = 0;
+  String selectedUnit = "";
 
   @override
   void initState() {
@@ -141,9 +148,11 @@ class _CalculateCarbonStep2ContentState
                           itemBuilder: (BuildContext context, int index) {
                             return CategoryItem(
                               label: data[index].opt ?? "-",
-                              callback: () => onSelectedCategory(
-                                  data[index].opt ?? "-",
-                                  int.parse(data[index].id ?? "0")),
+                              callback: () => onSelectedSubCategory(
+                                data[index].opt ?? "-",
+                                int.parse(data[index].id ?? "0"),
+                                data[index].unit ?? "",
+                              ),
                               value: selectedLabel == data[index].opt,
                               imageActive: Image.asset(
                                 width: 32.0,
@@ -196,6 +205,11 @@ class _CalculateCarbonStep2ContentState
                               action: () => Navigator.pushNamed(
                                 context,
                                 Routes.calculateCarbonStep3,
+                                arguments: EmisiArgument(
+                                  idCategory: widget.argument?.idCategory,
+                                  idSubCategory: selectedId.toString(),
+                                  unit: selectedUnit,
+                                ),
                               ),
                             ),
                           ),
@@ -211,13 +225,15 @@ class _CalculateCarbonStep2ContentState
     );
   }
 
-  void onSelectedCategory(
+  void onSelectedSubCategory(
     String value,
     int id,
+    String unit,
   ) {
     setState(() {
       selectedLabel = value;
       selectedId = id;
+      selectedUnit = unit;
     });
   }
 

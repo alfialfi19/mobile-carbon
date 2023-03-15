@@ -33,4 +33,18 @@ class AuthRepository {
 
     return response;
   }
+
+  Future<void> storeAccountUpdate({
+    String? name,
+    String? email,
+    String? phone,
+    String? address,
+  }) async {
+    await _authApi.storeAccountUpdate(
+      name: name,
+      email: email,
+      phone: phone,
+      address: address,
+    );
+  }
 }

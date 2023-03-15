@@ -6,6 +6,12 @@ class MasterRepository {
 
   MasterRepository(this._masterApi);
 
+  Future<List<EmisiCategory>> getArticleCategory() async {
+    final response = await _masterApi.getArticleCategory();
+
+    return response;
+  }
+
   Future<List<EmisiCategory>> getEmisiCategory() async {
     final response = await _masterApi.getEmisiCategory();
 

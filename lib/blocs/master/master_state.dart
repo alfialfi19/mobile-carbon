@@ -10,6 +10,22 @@ abstract class MasterState extends BlocState {
 
 class MasterInitial extends MasterState {}
 
+class MasterArticleCategoryLoading extends MasterState {}
+
+class MasterArticleCategoryLoaded extends MasterState {
+  final List<EmisiCategory> articleCategory;
+
+  const MasterArticleCategoryLoaded(this.articleCategory);
+}
+
+class MasterArticleCategoryEmpty extends MasterState {}
+
+class MasterArticleCategoryError extends MasterState {
+  final GenericErrorResponse errorResponse;
+
+  const MasterArticleCategoryError(this.errorResponse);
+}
+
 class MasterCategoryLoading extends MasterState {}
 
 class MasterCategoryLoaded extends MasterState {

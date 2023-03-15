@@ -4,6 +4,7 @@ import 'package:mobile_carbon/models/models.dart';
 class AuthApi {
   static const signInPath = '/auth/login';
   static const accountDetailPath = '/account/detail';
+  static const accountUpdatePath = '/account/update';
 
   final Dio _dio;
 
@@ -36,5 +37,28 @@ class AuthApi {
     );
 
     return AccountDetail.fromJson(response.data['data']);
+  }
+
+  Future<void> storeAccountUpdate({
+    String? name,
+    String? email,
+    String? phone,
+    String? address,
+  }) async {
+    var formData = FormData.fromMap({
+      'full_name': name,
+      'email': email,
+      'phone': phone,
+      'address': address,
+      // 'file': await MultipartFile.fromFile(
+      //   './text.txt',
+      //   filename: 'upload.txt',
+      // )
+    });
+
+    await _dio.post(
+      accountUpdatePath,
+      data: formData,
+    );
   }
 }

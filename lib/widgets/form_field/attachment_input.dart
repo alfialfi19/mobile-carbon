@@ -11,15 +11,18 @@ import '../../repositories/repositories.dart';
 import '../widgets.dart';
 
 typedef OnChangedAttachment = void Function(List<String>);
+typedef OnAddAttachment = void Function(String);
 
 class AttachmentInput extends StatelessWidget {
   final String? formzError;
   final OnChangedAttachment callback;
+  final OnAddAttachment onAddCallback;
   final List<MediaSet>? mediaSet;
   final bool isLocalDelete;
 
   const AttachmentInput({
     required this.callback,
+    required this.onAddCallback,
     this.formzError,
     this.mediaSet,
     this.isLocalDelete = false,
@@ -40,6 +43,7 @@ class AttachmentInput extends StatelessWidget {
       child: _AttachmentInputContent(
         formzError: formzError,
         callback: callback,
+        onAddCallback: onAddCallback,
         mediaSet: mediaSet,
       ),
     );
@@ -49,10 +53,12 @@ class AttachmentInput extends StatelessWidget {
 class _AttachmentInputContent extends StatefulWidget {
   final String? formzError;
   final OnChangedAttachment callback;
+  final OnAddAttachment onAddCallback;
   final List<MediaSet>? mediaSet;
 
   const _AttachmentInputContent({
     required this.callback,
+    required this.onAddCallback,
     this.formzError,
     this.mediaSet,
   });
@@ -83,9 +89,9 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
 
   @override
   void initState() {
-    _attachmentBlocSubscription = BlocProvider.of<AttachmentBloc>(context)
-        .stream
-        .listen(_attachmentBlocListener);
+    // _attachmentBlocSubscription = BlocProvider.of<AttachmentBloc>(context)
+    //     .stream
+    //     .listen(_attachmentBlocListener);
 
     if (widget.mediaSet != null && widget.mediaSet!.isNotEmpty) {
       setState(() {
@@ -200,11 +206,12 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
   List<FileThumbnail> _buildAttachmentThumbnail(List<File> files) {
     return _attachments.keys.map((filePath) {
       final value = _attachments[filePath];
-      final status = value.isBlank
-          ? AttachmentStatus.loading
-          : value == errorAttachmentCode
-              ? AttachmentStatus.error
-              : AttachmentStatus.added;
+      // final status = value.isBlank
+      //     ? AttachmentStatus.loading
+      //     : value == errorAttachmentCode
+      //         ? AttachmentStatus.error
+      //         : AttachmentStatus.added;
+      const status = AttachmentStatus.added;
       final thumbnail = AttachmentThumbnail(
         key: ValueKey(filePath),
         filePath: filePath,
@@ -238,22 +245,24 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
 
   void _onAttachmentAdded(File file) {
     final filePath = file.path;
-    BlocProvider.of<AttachmentBloc>(context).add(UploadAttachment(filePath));
+    // BlocProvider.of<AttachmentBloc>(context).add(UploadAttachment(filePath));
 
     setState(() {
       _attachments[filePath] = '';
     });
 
     _onAttachmentChanged();
+
+    widget.onAddCallback.call(filePath);
   }
 
   void _onAttachmentRemoved(int index, File file) {
     final filePath = file.path;
     final fileId = _attachments[filePath];
-    if (fileId.isNotBlank && fileId != errorAttachmentCode) {
-      BlocProvider.of<AttachmentBloc>(context)
-          .add(DeleteAttachment(filePath, fileId!));
-    }
+    // if (fileId.isNotBlank && fileId != errorAttachmentCode) {
+    //   BlocProvider.of<AttachmentBloc>(context)
+    //       .add(DeleteAttachment(filePath, fileId!));
+    // }
 
     setState(() {
       _attachments.remove(filePath);
@@ -263,6 +272,7 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
   }
 
   void _onAttachmentChanged() {
+    print("====> _attachments: $_attachments");
     final attachmentIds = _attachments.values
         .where((value) => value != errorAttachmentCode)
         .toList();

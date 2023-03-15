@@ -5,6 +5,7 @@ import '../models/models.dart';
 class EmisiLogApi {
   static const emisiLogPath = '/emisi-log';
   static const emisiLogListPath = '$emisiLogPath/list';
+  static const emisiLogStorePath = '$emisiLogPath/store';
 
   final Dio _dio;
 
@@ -35,5 +36,26 @@ class EmisiLogApi {
     }
 
     return results;
+  }
+
+  Future<void> storeEmisiLog({
+    String? idCategory,
+    String? idSubCategory,
+    String? val,
+    String? unit,
+  }) async {
+    var formData = FormData.fromMap(
+      {
+        'id_category': idCategory ?? 0,
+        'id_category_sub': idSubCategory ?? 0,
+        'val': val ?? "",
+        'unit': unit ?? "",
+      },
+    );
+
+    await _dio.post(
+      emisiLogStorePath,
+      data: formData,
+    );
   }
 }
