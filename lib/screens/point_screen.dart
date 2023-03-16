@@ -255,9 +255,6 @@ class _PointTabContentState extends State<PointTabContent>
           var data = state.summaryRank;
 
           return Container(
-            padding: const EdgeInsets.only(
-              top: 20.0,
-            ),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,

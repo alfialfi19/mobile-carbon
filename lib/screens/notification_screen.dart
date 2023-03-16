@@ -38,7 +38,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
           ),
           elevation: 0.0,
-          toolbarHeight: 40.0,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(60.0),
             child: Align(

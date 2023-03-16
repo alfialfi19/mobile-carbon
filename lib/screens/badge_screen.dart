@@ -50,7 +50,7 @@ class BadgeScreen extends StatelessWidget {
             ),
             Text(
               "Lencana adalah penamaan untuk level dari akun seseorang yang "
-              "akan diambil dari total poin yang telah mereka miliki. "
+              "diambil dari total poin yang telah mereka miliki. "
               "Semakin tinggi tingkatan yang mereka peroleh, maka semakin "
               "tinggi juga level lencana yang akan dimiliki oleh pengguna.",
               style: Theme.of(context).textTheme.caption?.copyWith(

@@ -105,7 +105,7 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           40.0,
-          20.0,
+          0.0,
           20.0,
           20.0,
         ),

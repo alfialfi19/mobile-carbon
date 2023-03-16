@@ -7,6 +7,7 @@ typedef OnChangedDescription = void Function(String);
 
 class TextFieldInput extends StatefulWidget {
   final String? labelText;
+  final TextStyle? labelStyle;
   final String? hintText;
   final int? maxLength;
   final int minLines;
@@ -26,6 +27,7 @@ class TextFieldInput extends StatefulWidget {
   const TextFieldInput({
     required this.controller,
     required this.callback,
+    this.labelStyle,
     this.inputAction,
     this.labelText,
     this.hintText,
@@ -82,10 +84,11 @@ class _TextFieldInputState extends State<TextFieldInput>
           if (widget.labelText != null) ...[
             Text(
               widget.labelText ?? "-",
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    color: ColorPalettes.dark,
-                    fontWeight: FontWeight.w700,
-                  ),
+              style: widget.labelStyle ??
+                  Theme.of(context).textTheme.caption?.copyWith(
+                        color: ColorPalettes.dark,
+                        fontWeight: FontWeight.w700,
+                      ),
             ),
             const SizedBox(
               height: 8.0,

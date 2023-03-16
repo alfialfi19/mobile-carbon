@@ -77,7 +77,6 @@ class _SignInContentState extends State<SignInContent> {
                     TextField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
                         hintText: 'Alamat Email',
                         prefixIcon: const Icon(Icons.mail_outline_rounded),
                         border: OutlineInputBorder(
@@ -102,7 +101,6 @@ class _SignInContentState extends State<SignInContent> {
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'Password',
                         hintText: 'Kata Sandi',
                         prefixIcon: const Icon(Icons.lock_outline_rounded),
                         border: OutlineInputBorder(

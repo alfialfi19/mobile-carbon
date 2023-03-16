@@ -55,13 +55,16 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
         backgroundColor: ColorPalettes.backgroundLight,
         appBar: AppBar(
           elevation: 0.0,
-          toolbarHeight: 120.0,
+          toolbarHeight: 80.0,
           backgroundColor: ColorPalettes.backgroundLight,
           leading: Container(),
           leadingWidth: 0.0,
           centerTitle: true,
-          title: SizedBox(
+          title: Container(
             height: 58.0,
+            margin: const EdgeInsets.only(
+              top: 40.0,
+            ),
             child: TextField(
               controller: searchController,
               style: Theme.of(context).textTheme.caption?.copyWith(

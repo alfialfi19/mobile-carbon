@@ -6,6 +6,7 @@ import 'package:mobile_carbon/widgets/widgets.dart';
 import '../blocs/blocs.dart';
 import '../commons/commons.dart';
 import '../repositories/repositories.dart';
+import '../routes.dart';
 
 class DetailEcoActivityScreen extends StatelessWidget {
   const DetailEcoActivityScreen({Key? key}) : super(key: key);
@@ -65,6 +66,7 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
     return Scaffold(
       backgroundColor: ColorPalettes.backgroundLight,
       appBar: AppBar(
+        elevation: 0.0,
         centerTitle: true,
         title: Text(
           "Eco-Activity",
@@ -83,10 +85,35 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
           ),
         ),
       ),
+      floatingActionButton: InkWell(
+        onTap: () => Navigator.pushNamed(
+          context,
+          Routes.addArticle,
+        ),
+        child: Container(
+          height: 54.0,
+          width: 54.0,
+          margin: const EdgeInsets.only(
+            right: 10.0,
+            bottom: 30.0,
+          ),
+          decoration: BoxDecoration(
+            color: ColorPalettes.primary,
+            borderRadius: BorderRadius.circular(100.0),
+          ),
+          child: const Icon(
+            Icons.add,
+            size: 32.0,
+            color: ColorPalettes.white,
+          ),
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 30.0,
-          vertical: 20.0,
+        padding: const EdgeInsets.fromLTRB(
+          30.0,
+          0.0,
+          30.0,
+          20.0,
         ),
         child: PullToRefresh(
           controller: _scrollController,
@@ -160,9 +187,6 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
                           fontWeight: FontWeight.w700,
                         ),
                   ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
                   BlocBuilder<EcoActivityBloc, EcoActivityState>(
                     builder: (context, state) {
                       if (state is ListEcoActivityError) {
@@ -203,8 +227,10 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
                                 children: [
                                   if (displayDate)
                                     Container(
-                                      margin:
-                                          const EdgeInsets.only(bottom: 12.0),
+                                      margin: const EdgeInsets.only(
+                                        bottom: 12.0,
+                                        top: 24.0,
+                                      ),
                                       child: Text(
                                         tempDate,
                                         style: Theme.of(context)

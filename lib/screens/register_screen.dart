@@ -79,7 +79,6 @@ class _RegisterContentState extends State<RegisterContent> {
                     TextField(
                       controller: nameController,
                       decoration: InputDecoration(
-                        labelText: 'Nama',
                         hintText: 'Nama',
                         prefixIcon: const Icon(Icons.person_add_alt_outlined),
                         border: OutlineInputBorder(
@@ -103,7 +102,6 @@ class _RegisterContentState extends State<RegisterContent> {
                     TextField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
                         hintText: 'Alamat Email',
                         prefixIcon: const Icon(Icons.mail_outline_rounded),
                         border: OutlineInputBorder(
@@ -128,7 +126,6 @@ class _RegisterContentState extends State<RegisterContent> {
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        labelText: 'Password',
                         hintText: 'Kata Sandi',
                         prefixIcon: const Icon(Icons.lock_outline_rounded),
                         border: OutlineInputBorder(

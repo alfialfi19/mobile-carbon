@@ -9,6 +9,10 @@ class OnBoarding4Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OnBoardingSection(
+      swipePrevCallback: () => Navigator.pushNamed(
+        context,
+        Routes.onBoarding3,
+      ),
       imageHeader: Images.onboard4,
       label: "",
       caption: "Aplikasi Daur Karbon akan membantu Anda untuk"

@@ -133,7 +133,6 @@ class _MyArticleContentState extends State<MyArticleContent> {
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20.0,
-            vertical: 20.0,
           ),
           child: TabBarView(
             physics: const NeverScrollableScrollPhysics(),

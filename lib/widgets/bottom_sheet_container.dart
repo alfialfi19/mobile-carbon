@@ -50,7 +50,7 @@ class BottomSheetContainer extends StatelessWidget {
               width: 104.0,
               height: 5.0,
               decoration: BoxDecoration(
-                color: ColorPalettes.smoke,
+                color: ColorPalettes.line,
                 borderRadius: BorderRadius.circular(2.0),
               ),
             ),

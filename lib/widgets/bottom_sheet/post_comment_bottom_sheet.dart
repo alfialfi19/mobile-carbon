@@ -12,9 +12,9 @@ class PostCommentBottomSheet extends StatelessWidget {
       children: [
         BottomSheetContainer(
           color: ColorPalettes.backgroundLight,
-          header: BottomSheetTitleHeader(
-            titleText: "Komentar",
-          ),
+          // header: BottomSheetTitleHeader(
+          //   titleText: "Komentar",
+          // ),
           content: Container(
             color: ColorPalettes.backgroundLight,
             width: double.maxFinite,
@@ -48,11 +48,18 @@ class _PostCommentFormState extends State<_PostCommentForm> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: [
+          const SizedBox(
+            height: 40.0,
+          ),
           TextFieldInput(
             padding: const EdgeInsets.symmetric(
               vertical: 6.0,
             ),
             labelText: "Komentar",
+            labelStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  color: ColorPalettes.dark,
+                  fontWeight: FontWeight.w700,
+                ),
             hintText: "Masukkan komentar",
             maxLength: null,
             minLines: 5,

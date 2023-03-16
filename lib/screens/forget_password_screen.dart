@@ -76,7 +76,6 @@ class _ForgetPasswordContentState extends State<ForgetPasswordContent> {
                     TextField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
                         hintText: 'Alamat Email',
                         prefixIcon: const Icon(Icons.mail_outline_rounded),
                         border: OutlineInputBorder(

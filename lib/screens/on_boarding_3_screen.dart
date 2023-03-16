@@ -10,6 +10,14 @@ class OnBoarding3Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OnBoardingSection(
+      swipeNextCallback: () => Navigator.pushNamed(
+        context,
+        Routes.onBoarding4,
+      ),
+      swipePrevCallback: () => Navigator.pushNamed(
+        context,
+        Routes.onBoarding2,
+      ),
       imageHeader: Images.onboard3,
       label: "Apa dampak dari emisi karbon?",
       caption: "Secara umum, dampak yang dapat dirasakan dari emisi karbon"

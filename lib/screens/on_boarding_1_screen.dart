@@ -9,10 +9,14 @@ class OnBoarding1Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OnBoardingSection(
+      swipeNextCallback: () => Navigator.pushNamed(
+        context,
+        Routes.onBoarding2,
+      ),
       imageHeader: Images.onboard1,
       label: "Apa itu emisi karbon?",
       caption: "Emisi karbon adalah proses pelepasan senyawa-senyawa "
-          "karbon ke atmosfer bumi akhibat fenomena dan kejadian yang terjadi dalam kehidupan kita.",
+          "karbon ke atmosfer bumi akibat fenomena dan kejadian yang terjadi dalam kehidupan kita.",
       countStep: 1,
       actionLabel: "Selanjutnya",
       actionCallback: () => Navigator.pushNamed(
