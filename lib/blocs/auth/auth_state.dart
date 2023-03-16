@@ -24,6 +24,34 @@ class SignInFailed extends AuthState {
   const SignInFailed(this.errorResponse);
 }
 
+class RegisterLoading extends AuthState {}
+
+class RegisterSuccess extends AuthState {
+  final String registerResponse;
+
+  const RegisterSuccess(this.registerResponse);
+}
+
+class RegisterFailed extends AuthState {
+  final GenericErrorResponse errorResponse;
+
+  const RegisterFailed(this.errorResponse);
+}
+
+class ForgetPasswordLoading extends AuthState {}
+
+class ForgetPasswordSuccess extends AuthState {
+  final String forgetPasswordResponse;
+
+  const ForgetPasswordSuccess(this.forgetPasswordResponse);
+}
+
+class ForgetPasswordFailed extends AuthState {
+  final GenericErrorResponse errorResponse;
+
+  const ForgetPasswordFailed(this.errorResponse);
+}
+
 class DetailAccountLoading extends AuthState {}
 
 class DetailAccountLoaded extends AuthState {

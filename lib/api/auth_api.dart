@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mobile_carbon/models/models.dart';
 
 class AuthApi {
   static const signInPath = '/auth/login';
+  static const registerPath = '/auth/register';
+  static const forgetPasswordPath = '/auth/forget-password';
   static const accountDetailPath = '/account/detail';
   static const accountUpdatePath = '/account/update';
 
@@ -17,10 +20,6 @@ class AuthApi {
     var formData = FormData.fromMap({
       'email': email,
       'password': password,
-      // 'file': await MultipartFile.fromFile(
-      //   './text.txt',
-      //   filename: 'upload.txt',
-      // )
     });
 
     final response = await _dio.post(
@@ -29,6 +28,42 @@ class AuthApi {
     );
 
     return LoginResponse.fromJson(response.data['data']);
+  }
+
+  Future<String> register({
+    required String fullName,
+    required String email,
+    required String password,
+  }) async {
+    var formData = FormData.fromMap({
+      'email': email,
+      'password': password,
+      'full_name': fullName,
+    });
+
+    final response = await _dio.post(
+      registerPath,
+      data: formData,
+    );
+
+    debugPrint("==> message register: ${response.data['message']}");
+    return response.data['message'];
+  }
+
+  Future<String> forgetPassword({
+    required String email,
+  }) async {
+    var formData = FormData.fromMap({
+      'email': email,
+    });
+
+    final response = await _dio.post(
+      forgetPasswordPath,
+      data: formData,
+    );
+
+    debugPrint("==> message forget pass: ${response.data['message']}");
+    return response.data['message'];
   }
 
   Future<AccountDetail> getAccountDetail() async {

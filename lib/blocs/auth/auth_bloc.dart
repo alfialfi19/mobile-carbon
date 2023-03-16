@@ -16,6 +16,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this.authRepository) : super(AuthInitial()) {
     on<SignIn>(_signInHandler);
+    on<Register>(_registerHandler);
+    on<ForgetPassword>(_forgetPasswordHandler);
     on<LoadDetailAccount>(_loadDetailAccountHandler);
     on<StoreUpdateAccount>(_storeUpdateAccountHandler);
   }
@@ -37,6 +39,73 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final errorResponse = error.toGenericError();
 
       return emit(SignInFailed(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const SignInFailed(errorResponse));
+    }
+  }
+
+  Future<void> _registerHandler(
+    Register event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(RegisterLoading());
+
+    try {
+      final response = await authRepository.register(
+        fullName: event.fullName,
+        email: event.email,
+        password: event.password,
+      );
+
+      emit(RegisterSuccess(response));
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(RegisterFailed(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const RegisterFailed(errorResponse));
+    }
+  }
+
+  Future<void> _forgetPasswordHandler(
+    ForgetPassword event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(ForgetPasswordLoading());
+
+    try {
+      final response = await authRepository.forgetPassword(
+        email: event.email,
+      );
+
+      emit(ForgetPasswordSuccess(response));
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(ForgetPasswordFailed(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const ForgetPasswordFailed(errorResponse));
     }
   }
 

@@ -28,6 +28,30 @@ class AuthRepository {
     return response;
   }
 
+  Future<String> register({
+    required String fullName,
+    required String email,
+    required String password,
+  }) async {
+    final response = await _authApi.register(
+      fullName: fullName,
+      email: email,
+      password: password,
+    );
+
+    return response;
+  }
+
+  Future<String> forgetPassword({
+    required String email,
+  }) async {
+    final response = await _authApi.forgetPassword(
+      email: email,
+    );
+
+    return response;
+  }
+
   Future<AccountDetail> getAccountDetail() async {
     final response = await _authApi.getAccountDetail();
 

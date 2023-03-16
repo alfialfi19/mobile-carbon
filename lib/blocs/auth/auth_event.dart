@@ -15,6 +15,32 @@ class SignIn extends AuthEvent {
       ];
 }
 
+class Register extends AuthEvent {
+  final String fullName;
+  final String email;
+  final String password;
+
+  Register(this.fullName, this.email, this.password);
+
+  @override
+  List<Object?> get props => [
+        fullName,
+        email,
+        password,
+      ];
+}
+
+class ForgetPassword extends AuthEvent {
+  final String email;
+
+  ForgetPassword(this.email);
+
+  @override
+  List<Object?> get props => [
+        email,
+      ];
+}
+
 class LoadDetailAccount extends AuthEvent {
   @override
   List<Object?> get props => [];

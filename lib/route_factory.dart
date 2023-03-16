@@ -40,6 +40,8 @@ Widget? getPageByName(
       return const EcoUpdateScreen();
     case Routes.editProfile:
       return const EditProfileScreen();
+    case Routes.forgetPassword:
+      return const ForgetPasswordScreen();
     case Routes.home:
       return const HomeScreen();
     case Routes.main:
@@ -62,6 +64,8 @@ Widget? getPageByName(
       return const PointScreen();
     case Routes.profile:
       return const ProfileScreen();
+    case Routes.register:
+      return const RegisterScreen();
     case Routes.signIn:
       return const SignInScreen();
     case Routes.splash:

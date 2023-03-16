@@ -15,6 +15,7 @@ class Routes {
   static const donation = "donation";
   static const ecoUpdate = "eco-update";
   static const editProfile = "edit-profile";
+  static const forgetPassword = "forget-password";
   static const home = "home";
   static const main = "main";
   static const myArticle = "my-article";
@@ -26,6 +27,7 @@ class Routes {
   static const onBoarding4 = "on-boarding-4";
   static const point = "point";
   static const profile = "profile";
+  static const register = "register";
   static const signIn = "sign-in";
   static const splash = "splash";
 }

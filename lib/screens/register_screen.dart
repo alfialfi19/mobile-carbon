@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/commons/commons.dart';
-import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/routes.dart';
 
+import '../blocs/blocs.dart';
+import '../repositories/repositories.dart';
 import '../widgets/widgets.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +18,20 @@ class SignInScreen extends StatelessWidget {
 
         return AuthBloc(repository);
       },
-      child: const SignInContent(),
+      child: const RegisterContent(),
     );
   }
 }
 
-class SignInContent extends StatefulWidget {
-  const SignInContent({Key? key}) : super(key: key);
+class RegisterContent extends StatefulWidget {
+  const RegisterContent({Key? key}) : super(key: key);
 
   @override
-  State<SignInContent> createState() => _SignInContentState();
+  State<RegisterContent> createState() => _RegisterContentState();
 }
 
-class _SignInContentState extends State<SignInContent> {
+class _RegisterContentState extends State<RegisterContent> {
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -53,7 +54,7 @@ class _SignInContentState extends State<SignInContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Masuk",
+                      "Daftar",
                       style: Theme.of(context).textTheme.headline4?.copyWith(
                             color: ColorPalettes.black,
                             fontWeight: FontWeight.w700,
@@ -64,7 +65,8 @@ class _SignInContentState extends State<SignInContent> {
                       height: 12.0,
                     ),
                     Text(
-                      "Silahkan masukkan Email dan Kata Sandi untuk Masuk",
+                      "Silahkan masukkan Nama, Email dan Kata Sandi untuk "
+                      "Daftar Akun",
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             color: ColorPalettes.grayZill,
                             fontWeight: FontWeight.w400,
@@ -73,6 +75,30 @@ class _SignInContentState extends State<SignInContent> {
                     ),
                     const SizedBox(
                       height: 24.0,
+                    ),
+                    TextField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Nama',
+                        hintText: 'Nama',
+                        prefixIcon: const Icon(Icons.person_add_alt_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            8.0,
+                          ),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: ColorPalettes.grayTextField,
+                          ),
+                        ),
+                        focusColor: ColorPalettes.primary,
+                        filled: true,
+                        fillColor: ColorPalettes.grayTextField,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12.0,
                     ),
                     TextField(
                       controller: emailController,
@@ -121,79 +147,15 @@ class _SignInContentState extends State<SignInContent> {
                       ),
                     ),
                     const SizedBox(
-                      height: 12.0,
-                    ),
-                    Container(
-                      width: double.maxFinite,
-                      alignment: Alignment.centerRight,
-                      child: InkWell(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          Routes.forgetPassword,
-                        ),
-                        child: Text(
-                          "Lupa Kata Sandi?",
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: ColorPalettes.primary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
                       height: 43.0,
                     ),
                     RoundedButton(
                       margin: 0.0,
-                      label: 'Masuk',
-                      action: () => _onClickSignIn(context),
+                      label: 'Daftar',
+                      action: () => _onClickRegister(context),
                     ),
                     const SizedBox(
                       height: 43.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: 1.0,
-                            color: ColorPalettes.line,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Atau",
-                              style:
-                                  Theme.of(context).textTheme.caption?.copyWith(
-                                        color: ColorPalettes.grayZill,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: 1.0,
-                            color: ColorPalettes.line,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 43.0,
-                    ),
-                    RoundedButton(
-                      margin: 0.0,
-                      backgroundColor: ColorPalettes.white,
-                      labelColor: ColorPalettes.black,
-                      borderColor: ColorPalettes.line,
-                      label: 'Masuk dengan akun Google',
-                      action: () {},
                     ),
                     const SizedBox(
                       height: 103.0,
@@ -201,13 +163,13 @@ class _SignInContentState extends State<SignInContent> {
                     InkWell(
                       onTap: () => Navigator.pushReplacementNamed(
                         context,
-                        Routes.register,
+                        Routes.signIn,
                       ),
                       child: Container(
                         alignment: Alignment.center,
                         child: RichText(
                           text: TextSpan(
-                            text: 'Belum punya akun? ',
+                            text: 'Sudah punya akun? ',
                             style:
                                 Theme.of(context).textTheme.caption?.copyWith(
                                       color: ColorPalettes.grayZill,
@@ -215,7 +177,7 @@ class _SignInContentState extends State<SignInContent> {
                                     ),
                             children: [
                               TextSpan(
-                                text: 'Daftar Sekarang',
+                                text: 'Masuk Sekarang',
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption
@@ -239,12 +201,15 @@ class _SignInContentState extends State<SignInContent> {
     );
   }
 
-  void _onClickSignIn(BuildContext context) {
-    if (emailController.text.isBlank || passwordController.text.isBlank) {
-      ToastUtil.error(context, "Pastikan email dan password tidak kosong");
+  void _onClickRegister(BuildContext context) {
+    if (nameController.text.isBlank ||
+        emailController.text.isBlank ||
+        passwordController.text.isBlank) {
+      ToastUtil.error(context, "Pastikan field tidak kosong");
     } else {
       BlocProvider.of<AuthBloc>(context).add(
-        SignIn(
+        Register(
+          nameController.text,
           emailController.text,
           passwordController.text,
         ),
@@ -253,19 +218,26 @@ class _SignInContentState extends State<SignInContent> {
   }
 
   void _onAuthListener(BuildContext context, AuthState state) {
-    if (state is SignInFailed) {
+    if (state is RegisterSuccess) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      ToastUtil.info(
+        context,
+        state.registerResponse,
+      );
+
+      Navigator.pushReplacementNamed(
+        context,
+        Routes.signIn,
+      );
+    } else if (state is RegisterFailed) {
       // close progress dialog
       Navigator.of(context).pop();
 
       ToastUtil.error(
-          context, state.errorResponse.errors ?? "Terjadi kesalahan");
-    } else if (state is SignInSuccess) {
-      // close progress dialog
-      Navigator.of(context).pop();
-
-      Navigator.pushReplacementNamed(
         context,
-        Routes.main,
+        state.errorResponse.errors ?? "Terjadi kesalahan",
       );
     } else {
       showDialog<void>(
@@ -278,6 +250,7 @@ class _SignInContentState extends State<SignInContent> {
 
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
