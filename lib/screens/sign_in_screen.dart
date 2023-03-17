@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/commons/commons.dart';
 import 'package:mobile_carbon/repositories/repositories.dart';
@@ -33,6 +35,14 @@ class SignInContent extends StatefulWidget {
 class _SignInContentState extends State<SignInContent> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +201,9 @@ class _SignInContentState extends State<SignInContent> {
                       labelColor: ColorPalettes.black,
                       borderColor: ColorPalettes.line,
                       label: 'Masuk dengan akun Google',
-                      action: () {},
+                      action: () {
+                        signInWithGoogle();
+                      },
                     ),
                     const SizedBox(
                       height: 103.0,
@@ -235,6 +247,28 @@ class _SignInContentState extends State<SignInContent> {
         ),
       ),
     );
+  }
+
+  Future<void> signInWithGoogle() async {
+    print("===> enter method");
+    GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+
+    print("===> googleSignInAccount: $googleSignInAccount");
+    GoogleSignInAuthentication? googleSignInAuthentication =
+        await googleSignInAccount?.authentication;
+
+    print("===> googleSignInAuthentication: $googleSignInAuthentication");
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication?.accessToken,
+      idToken: googleSignInAuthentication?.idToken,
+    );
+
+    print("===> credential: $credential");
+    var authResult = await _firebaseAuth.signInWithCredential(credential);
+
+    print("===> auth result: $authResult");
+    print("===> auth users: ${authResult.user}");
   }
 
   void _onClickSignIn(BuildContext context) {

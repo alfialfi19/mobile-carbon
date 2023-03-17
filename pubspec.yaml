@@ -17,6 +17,8 @@ dependencies:
   easy_localization: ^3.0.0   # Internationalizing and localization
   equatable: ^2.0.3
   file_picker: ^4.2.4
+  firebase_auth: ^4.3.0
+  firebase_core: ^2.8.0
   flutter:
     sdk: flutter
   flutter_bloc: ^7.2.1
@@ -26,6 +28,7 @@ dependencies:
   fluttertoast: ^8.0.8
   formz: ^0.4.1
   get_it: ^7.2.0
+  google_sign_in: ^6.0.2
   heic_to_jpg: ^0.2.0
   http: ^0.13.5
   image_picker: ^0.8.6

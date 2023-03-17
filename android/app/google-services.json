@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "228676532219",
+    "project_id": "carbon-655a8",
+    "storage_bucket": "carbon-655a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228676532219:android:7ebb649d51bc3dd8903d5e",
+        "android_client_info": {
+          "package_name": "com.carbon.daur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228676532219-6k2dbnp18miku0n59khmusiq8t2b1ur8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carbon.daur",
+            "certificate_hash": "1935d4067291e3e00f05951a1314af6b7f436557"
+          }
+        },
+        {
+          "client_id": "228676532219-ctlt8f4jdbjmnashjjph08iv5qhb7nnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYTLazgUVqwUTJPdWoyc570WJLq3cvff4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228676532219-ctlt8f4jdbjmnashjjph08iv5qhb7nnp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "228676532219-b4jrtvc5fo3snfo4ghtft3371rri303i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.carbon.daur"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
