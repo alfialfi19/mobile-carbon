@@ -12,6 +12,8 @@ class SummaryRankInitial extends SummaryRankState {}
 
 class SummaryRankLoading extends SummaryRankState {}
 
+class SummaryRankLoadingPaging extends SummaryRankState {}
+
 class SummaryRankLoaded extends SummaryRankState {
   final SummaryRank summaryRank;
 

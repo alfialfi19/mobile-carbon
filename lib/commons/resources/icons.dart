@@ -21,6 +21,7 @@ class CarbonIcons {
   static const String flower = "$iconsDir/ic-flower.png";
   static const String food2 = "$iconsDir/ic-food-2.png";
   static const String food = "$iconsDir/ic-food.png";
+  static const String google = "$iconsDir/ic-google.png";
   static const String homeActive = "$iconsDir/ic-home-active.png";
   static const String homeInactive = "$iconsDir/ic-home-inactive.png";
   static const String motorcycle = "$iconsDir/ic-motorcycle.png";

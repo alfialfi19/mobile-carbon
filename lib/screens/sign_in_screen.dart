@@ -196,6 +196,15 @@ class _SignInContentState extends State<SignInContent> {
                       height: 43.0,
                     ),
                     RoundedButton(
+                      prefix: Container(
+                        margin: const EdgeInsets.only(right: 20.0),
+                        child: Image.asset(
+                          CarbonIcons.google,
+                          height: 22.0,
+                          width: 22.0,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                       margin: 0.0,
                       backgroundColor: ColorPalettes.white,
                       labelColor: ColorPalettes.black,
@@ -250,25 +259,31 @@ class _SignInContentState extends State<SignInContent> {
   }
 
   Future<void> signInWithGoogle() async {
-    print("===> enter method");
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
 
-    print("===> googleSignInAccount: $googleSignInAccount");
     GoogleSignInAuthentication? googleSignInAuthentication =
         await googleSignInAccount?.authentication;
-
-    print("===> googleSignInAuthentication: $googleSignInAuthentication");
 
     AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication?.accessToken,
       idToken: googleSignInAuthentication?.idToken,
     );
 
-    print("===> credential: $credential");
     var authResult = await _firebaseAuth.signInWithCredential(credential);
-
-    print("===> auth result: $authResult");
     print("===> auth users: ${authResult.user}");
+
+    if (authResult.user != null) {
+      if (!mounted) return;
+
+      BlocProvider.of<AuthBloc>(context).add(
+        SignInGoogle(
+          authResult.user?.email,
+          authResult.user?.displayName,
+          authResult.user?.uid,
+          authResult.credential?.accessToken,
+        ),
+      );
+    }
   }
 
   void _onClickSignIn(BuildContext context) {

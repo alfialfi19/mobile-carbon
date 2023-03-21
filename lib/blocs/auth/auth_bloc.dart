@@ -16,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this.authRepository) : super(AuthInitial()) {
     on<SignIn>(_signInHandler);
+    on<SignInGoogle>(_signInGoogleHandler);
     on<Register>(_registerHandler);
     on<ForgetPassword>(_forgetPasswordHandler);
     on<LoadDetailAccount>(_loadDetailAccountHandler);
@@ -32,6 +33,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final response = await authRepository.signIn(
         email: event.email,
         password: event.password,
+      );
+
+      emit(SignInSuccess(response));
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(SignInFailed(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const SignInFailed(errorResponse));
+    }
+  }
+
+  Future<void> _signInGoogleHandler(
+    SignInGoogle event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(SignInLoading());
+
+    try {
+      final response = await authRepository.signInGoogle(
+        email: event.email,
+        fullName: event.fullName,
+        idExternal: event.idExternal,
+        token: event.token,
       );
 
       emit(SignInSuccess(response));

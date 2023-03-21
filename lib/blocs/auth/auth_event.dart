@@ -15,6 +15,28 @@ class SignIn extends AuthEvent {
       ];
 }
 
+class SignInGoogle extends AuthEvent {
+  final String? email;
+  final String? fullName;
+  final String? idExternal;
+  final String? token;
+
+  SignInGoogle(
+    this.email,
+    this.fullName,
+    this.idExternal,
+    this.token,
+  );
+
+  @override
+  List<Object?> get props => [
+        email,
+        fullName,
+        idExternal,
+        token,
+      ];
+}
+
 class Register extends AuthEvent {
   final String fullName;
   final String email;

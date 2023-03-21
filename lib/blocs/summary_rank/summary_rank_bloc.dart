@@ -21,14 +21,24 @@ class SummaryRankBloc extends Bloc<SummaryRankEvent, SummaryRankState> {
   }
 
   Future<void> _loadSummaryRankHandler(
-      LoadSummaryRank event, Emitter<SummaryRankState> emit) async {
-    emit(SummaryRankLoading());
+    LoadSummaryRank event,
+    Emitter<SummaryRankState> emit,
+  ) async {
+    if (event.currentData == null) {
+      emit(SummaryRankLoading());
+    } else {
+      emit(SummaryRankLoadingPaging());
+    }
 
     try {
       final response = await summaryRepository.getSummaryRank(
         page: event.page,
         type: event.type,
       );
+
+      if (event.currentData != null) {
+        response.list?.insertAll(0, event.currentData!);
+      }
 
       emit(SummaryRankLoaded(response));
     } on DioError catch (error) {

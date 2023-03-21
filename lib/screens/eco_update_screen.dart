@@ -157,7 +157,6 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
         body: const Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 30.0,
-            vertical: 20.0,
           ),
           child: TabBarView(
             physics: NeverScrollableScrollPhysics(),

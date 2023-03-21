@@ -4,6 +4,7 @@ import 'package:mobile_carbon/models/models.dart';
 
 class AuthApi {
   static const signInPath = '/auth/login';
+  static const signInSocialPath = '/auth/login-social';
   static const registerPath = '/auth/register';
   static const forgetPasswordPath = '/auth/forget-password';
   static const accountDetailPath = '/account/detail';
@@ -24,6 +25,32 @@ class AuthApi {
 
     final response = await _dio.post(
       signInPath,
+      data: formData,
+    );
+
+    return LoginResponse.fromJson(response.data['data']);
+  }
+
+  Future<LoginResponse> signInGoogle({
+    String? email,
+    String? fullName,
+    String? idExternal,
+    String? token,
+  }) async {
+    var formData = FormData.fromMap({
+      'email': email ?? "",
+      'password': '',
+      'full_name': fullName ?? "",
+      'phone': '',
+      'address': '',
+      'id_external': idExternal ?? "",
+      'type': 'Google',
+      'fcm_token': token ?? "",
+    });
+    print("===> formData: ${formData.fields}");
+
+    final response = await _dio.post(
+      signInSocialPath,
       data: formData,
     );
 

@@ -5,6 +5,7 @@ import '../commons/commons.dart';
 class RoundedButton extends StatelessWidget {
   final String label;
   final VoidCallback action;
+  final Widget? prefix;
   final double? margin;
   final Color? backgroundColor;
   final Color? labelColor;
@@ -14,6 +15,7 @@ class RoundedButton extends StatelessWidget {
     Key? key,
     required this.label,
     required this.action,
+    this.prefix,
     this.margin,
     this.backgroundColor,
     this.labelColor,
@@ -35,13 +37,19 @@ class RoundedButton extends StatelessWidget {
             color: borderColor ?? ColorPalettes.primary,
           ),
         ),
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                color: labelColor ?? ColorPalettes.white,
-                fontWeight: FontWeight.w700,
-              ),
-          textAlign: TextAlign.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            prefix ?? const SizedBox.shrink(),
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    color: labelColor ?? ColorPalettes.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
