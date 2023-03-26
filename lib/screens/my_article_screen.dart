@@ -4,6 +4,7 @@ import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/repositories/repositories.dart';
 
 import '../commons/commons.dart';
+import '../models/models.dart';
 import '../routes.dart';
 import '../widgets/widgets.dart';
 
@@ -22,11 +23,9 @@ class MyArticleScreen extends StatelessWidget {
             return ArticleBloc(repository)
               ..add(
                 LoadArticle(
-                  1,
-                  1,
-                  null,
-                  null,
-                  1,
+                  page: 1,
+                  category: 1,
+                  me: 1,
                 ),
               );
           },
@@ -89,7 +88,11 @@ class _MyArticleContentState extends State<MyArticleContent> {
               // searchController.clear();
 
               BlocProvider.of<ArticleBloc>(context).add(
-                LoadArticle(1, _selectedTab + 1, null, null, 1),
+                LoadArticle(
+                  page: 1,
+                  category: _selectedTab + 1,
+                  me: 1,
+                ),
               );
             },
             tabs: const [
@@ -156,136 +159,6 @@ class _MyArticleContentState extends State<MyArticleContent> {
     );
   }
 
-  // Widget _buildTab1Widget(BuildContext context) {
-  //   return ListView(
-  //     children: [
-  //       SizedBox(
-  //         height: 58.0,
-  //         child: TextField(
-  //           controller: searchController,
-  //           style: Theme.of(context).textTheme.caption?.copyWith(
-  //                 color: ColorPalettes.dark,
-  //                 fontWeight: FontWeight.w400,
-  //               ),
-  //           decoration: InputDecoration(
-  //             contentPadding: const EdgeInsets.symmetric(
-  //               horizontal: 24.0,
-  //             ),
-  //             labelStyle: Theme.of(context).textTheme.caption?.copyWith(
-  //                   color: ColorPalettes.placeholderZill,
-  //                   fontWeight: FontWeight.w400,
-  //                 ),
-  //             hintText: 'Cari artikel',
-  //             hintStyle: Theme.of(context).textTheme.caption?.copyWith(
-  //                   color: ColorPalettes.placeholderZill,
-  //                   fontWeight: FontWeight.w400,
-  //                 ),
-  //             suffixIcon: const Icon(Icons.search_rounded),
-  //             border: OutlineInputBorder(
-  //               borderRadius: BorderRadius.circular(
-  //                 100.0,
-  //               ),
-  //             ),
-  //             enabledBorder: OutlineInputBorder(
-  //               borderSide: const BorderSide(
-  //                 color: ColorPalettes.line,
-  //               ),
-  //               borderRadius: BorderRadius.circular(
-  //                 100.0,
-  //               ),
-  //             ),
-  //             focusColor: ColorPalettes.primary,
-  //             filled: true,
-  //             fillColor: ColorPalettes.grayTextField,
-  //           ),
-  //         ),
-  //       ),
-  //       const SizedBox(
-  //         height: 30.0,
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Budidaya Tanaman Hias Di Dalam Media Pot",
-  //         author: "Taylor Akabane",
-  //         createdAt: "11 April 2022",
-  //         action: () => Navigator.pushNamed(
-  //           context,
-  //           Routes.detailArticle,
-  //         ),
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Budidaya Pohon Mangga",
-  //         author: "Boruto Uzumaki",
-  //         createdAt: "10 Januari 2022",
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Melestarikan Tanaman Enceng Gondok",
-  //         author: "Akaba",
-  //         createdAt: "12 Desember 2021",
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Budidaya Tanaman Hias Di Dalam Media Pot",
-  //         author: "Taylor Akabane",
-  //         createdAt: "11 April 2022",
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Budidaya Pohon Mangga",
-  //         author: "Boruto Uzumaki",
-  //         createdAt: "10 Januari 2022",
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Budidaya Tanaman Hias Di Dalam Media Pot",
-  //         author: "Taylor Akabane",
-  //         createdAt: "11 April 2022",
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Budidaya Pohon Mangga",
-  //         author: "Boruto Uzumaki",
-  //         createdAt: "10 Januari 2022",
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Melestarikan Tanaman Enceng Gondok",
-  //         author: "Akaba",
-  //         createdAt: "12 Desember 2021",
-  //       ),
-  //       RelatedArticleItem(
-  //         title: "Cara Melestarikan Tanaman Enceng Gondok",
-  //         author: "Akaba",
-  //         createdAt: "12 Desember 2021",
-  //       ),
-  //     ],
-  //   );
-  // }
-  //
-  // Widget _buildTab2Widget(BuildContext context) {
-  //   return ListView(
-  //     children: [
-  //       Text("This is tab 2"),
-  //       Text("Test test 2"),
-  //       Text("Lorem ipsum til damet 2"),
-  //     ],
-  //   );
-  // }
-  //
-  // Widget _buildTab3Widget(BuildContext context) {
-  //   return ListView(
-  //     children: [
-  //       Text("This is tab 3"),
-  //       Text("Test test 3"),
-  //       Text("Lorem ipsum til damet 3"),
-  //     ],
-  //   );
-  // }
-  //
-  // Widget _buildTab4Widget(BuildContext context) {
-  //   return ListView(
-  //     children: [
-  //       Text("This is tab 4"),
-  //       Text("Test test 4"),
-  //       Text("Lorem ipsum til damet 4"),
-  //     ],
-  //   );
-  // }
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -309,6 +182,35 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
     with AutomaticKeepAliveClientMixin {
   TextEditingController searchController = TextEditingController();
 
+  final _scrollController = ScrollController();
+
+  bool _isLoading = false;
+  int _page = 2;
+
+  List<ArticleDetail> data = [];
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onLoadMore);
+    super.initState();
+  }
+
+  void _onLoadMore() {
+    if (_scrollController.position.extentAfter <= 0 && !_isLoading) {
+      _isLoading = true;
+
+      BlocProvider.of<ArticleBloc>(context).add(
+        LoadArticle(
+          page: _page,
+          category: widget.selectedIndex + 1,
+          me: 1,
+          currentData: data,
+        ),
+      );
+      _page++;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -325,10 +227,12 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
           return const CarbonEmptyState();
         }
 
-        if (state is ListArticleLoaded) {
-          var data = state.articleList;
+        if (state is ListArticleLoadingPaging) {
+          var currentData = data;
 
           return ListView(
+            controller: _scrollController,
+            physics: const ClampingScrollPhysics(),
             children: [
               SizedBox(
                 height: 58.0,
@@ -340,7 +244,106 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
                       ),
                   onSubmitted: (value) =>
                       BlocProvider.of<ArticleBloc>(context).add(
-                    LoadArticle(1, widget.selectedIndex + 1, value, "", 1),
+                    LoadArticle(
+                      page: 1,
+                      category: widget.selectedIndex + 1,
+                      keyword: value,
+                      me: 1,
+                    ),
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 24.0,
+                    ),
+                    labelStyle: Theme.of(context).textTheme.caption?.copyWith(
+                          color: ColorPalettes.placeholderZill,
+                          fontWeight: FontWeight.w400,
+                        ),
+                    hintText: 'Cari artikel',
+                    hintStyle: Theme.of(context).textTheme.caption?.copyWith(
+                          color: ColorPalettes.placeholderZill,
+                          fontWeight: FontWeight.w400,
+                        ),
+                    suffixIcon: const Icon(Icons.search_rounded),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        100.0,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: ColorPalettes.line,
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        100.0,
+                      ),
+                    ),
+                    focusColor: ColorPalettes.primary,
+                    filled: true,
+                    fillColor: ColorPalettes.grayTextField,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30.0,
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: currentData.length,
+                itemBuilder: (context, index) {
+                  return RelatedArticleItem(
+                    title: currentData[index].title,
+                    author: currentData[index].writerName,
+                    imageUrl: currentData[index].file?.first,
+                    createdAt: DateUtil.sanitizeDateTime(
+                        currentData[index].createdAt ?? "-"),
+                    action: () => Navigator.pushNamed(
+                      context,
+                      Routes.detailArticle,
+                      arguments: DataArgument(
+                        id: currentData[index].id ?? "0",
+                      ),
+                    ),
+                  );
+                },
+              ),
+              Container(
+                color: ColorPalettes.white,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    color: ColorPalettes.primary,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+
+        if (state is ListArticleLoaded) {
+          data = state.articleList;
+          _isLoading = false;
+
+          return ListView(
+            controller: _scrollController,
+            physics: const ClampingScrollPhysics(),
+            children: [
+              SizedBox(
+                height: 58.0,
+                child: TextField(
+                  controller: searchController,
+                  style: Theme.of(context).textTheme.caption?.copyWith(
+                        color: ColorPalettes.dark,
+                        fontWeight: FontWeight.w400,
+                      ),
+                  onSubmitted: (value) =>
+                      BlocProvider.of<ArticleBloc>(context).add(
+                    LoadArticle(
+                      page: 1,
+                      category: widget.selectedIndex + 1,
+                      keyword: value,
+                      me: 1,
+                    ),
                   ),
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
@@ -402,6 +405,7 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
             ],
           );
         }
+        _page = 2;
 
         return const CarbonLoadingState();
       },
@@ -411,6 +415,7 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
   @override
   void dispose() {
     searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -419,7 +424,11 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
 
   Future<void> _refresh() async {
     BlocProvider.of<ArticleBloc>(context).add(
-      LoadArticle(1, widget.selectedIndex + 1, "", "", 1),
+      LoadArticle(
+        page: 1,
+        category: widget.selectedIndex + 1,
+        me: 1,
+      ),
     );
   }
 }

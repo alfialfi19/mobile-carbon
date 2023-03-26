@@ -74,7 +74,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
           child: TabBarView(
             children: [
-              _buildTab1Widget(context),
+              // _buildTab1Widget(context),
+              _buildTab2Widget(context),
               _buildTab2Widget(context),
             ],
           ),

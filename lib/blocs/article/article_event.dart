@@ -8,14 +8,16 @@ class LoadArticle extends ArticleEvent {
   final String? keyword;
   final String? type;
   final int? me;
+  final List<ArticleDetail>? currentData;
 
-  LoadArticle(
+  LoadArticle({
     this.page,
     this.category,
     this.keyword,
     this.type,
     this.me,
-  );
+    this.currentData,
+  });
 
   @override
   List<Object?> get props => [
@@ -24,6 +26,7 @@ class LoadArticle extends ArticleEvent {
         keyword,
         type,
         me,
+        currentData,
       ];
 }
 

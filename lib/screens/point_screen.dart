@@ -43,19 +43,9 @@ class PointContent extends StatefulWidget {
 }
 
 class _PointContentState extends State<PointContent> {
-  final _scrollController = ScrollController();
-  bool isLoading = false;
-
   @override
   void initState() {
-    _scrollController.addListener(_onLoadMore);
     super.initState();
-  }
-
-  void _onLoadMore() {
-    if (_scrollController.position.extentAfter <= 0 && !isLoading) {
-      print("===> kuy load more");
-    }
   }
 
   @override
@@ -309,12 +299,6 @@ class _PointContentState extends State<PointContent> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   Future<void> _refresh() async {

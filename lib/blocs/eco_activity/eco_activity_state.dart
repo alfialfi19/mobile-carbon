@@ -12,6 +12,8 @@ class EcoActivityInitial extends EcoActivityState {}
 
 class ListEcoActivityLoading extends EcoActivityState {}
 
+class ListEcoActivityLoadingPaging extends EcoActivityState {}
+
 class ListEcoActivityEmpty extends EcoActivityState {}
 
 class ListEcoActivityLoaded extends EcoActivityState {

@@ -23,7 +23,11 @@ class EcoActivityBloc extends Bloc<EcoActivityEvent, EcoActivityState> {
 
   Future<void> _loadEcoActivityHandler(
       LoadEcoActivity event, Emitter<EcoActivityState> emit) async {
-    emit(ListEcoActivityLoading());
+    if (event.currentData != null) {
+      emit(ListEcoActivityLoadingPaging());
+    } else {
+      emit(ListEcoActivityLoading());
+    }
 
     try {
       final response = await ecoActivityRepository.getListEcoActivity(
@@ -31,6 +35,10 @@ class EcoActivityBloc extends Bloc<EcoActivityEvent, EcoActivityState> {
         category: event.category,
         keyword: event.keyword,
       );
+
+      if (event.currentData != null) {
+        response.insertAll(0, event.currentData!);
+      }
 
       if (response.isEmpty) {
         return emit(ListEcoActivityEmpty());

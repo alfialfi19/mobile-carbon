@@ -36,11 +36,7 @@ class DetailTotalArticleScreen extends StatelessWidget {
             return ArticleBloc(repository)
               ..add(
                 LoadArticle(
-                  1,
-                  null,
-                  null,
-                  null,
-                  null,
+                  page: 1,
                 ),
               );
           },
@@ -388,11 +384,7 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
   Future<void> _refreshArticle() async {
     BlocProvider.of<ArticleBloc>(context).add(
       LoadArticle(
-        1,
-        null,
-        null,
-        null,
-        null,
+        page: 1,
       ),
     );
   }

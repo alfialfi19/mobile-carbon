@@ -12,6 +12,8 @@ class ArticleInitial extends ArticleState {}
 
 class ListArticleLoading extends ArticleState {}
 
+class ListArticleLoadingPaging extends ArticleState {}
+
 class ListArticleLoaded extends ArticleState {
   final List<ArticleDetail> articleList;
 

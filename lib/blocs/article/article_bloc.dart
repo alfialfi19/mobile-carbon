@@ -22,7 +22,11 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   Future<void> _loadArticleHandler(
       LoadArticle event, Emitter<ArticleState> emit) async {
-    emit(ListArticleLoading());
+    if (event.currentData != null) {
+      emit(ListArticleLoadingPaging());
+    } else {
+      emit(ListArticleLoading());
+    }
 
     try {
       final response = await articleRepository.getListArticle(
@@ -32,6 +36,10 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
         type: event.type,
         me: event.me,
       );
+
+      if (event.currentData != null) {
+        response.insertAll(0, event.currentData!);
+      }
 
       if (response.isEmpty) {
         return emit(ListArticleEmpty());

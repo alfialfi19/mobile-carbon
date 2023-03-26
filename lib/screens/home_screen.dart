@@ -33,11 +33,9 @@ class HomeScreen extends StatelessWidget {
             return ArticleBloc(repository)
               ..add(
                 LoadArticle(
-                  1,
-                  1,
-                  null,
-                  "Rekomendasi",
-                  null,
+                  page: 1,
+                  category: 1,
+                  type: "Rekomendasi",
                 ),
               );
           },
@@ -821,11 +819,9 @@ class _HomeContentState extends State<HomeContent> {
     );
     BlocProvider.of<ArticleBloc>(context).add(
       LoadArticle(
-        1,
-        1,
-        null,
-        "Rekomendasi",
-        null,
+        page: 1,
+        category: 1,
+        type: "Rekomendasi",
       ),
     );
   }
@@ -839,11 +835,9 @@ class _HomeContentState extends State<HomeContent> {
   Future<void> _refreshArticle() async {
     BlocProvider.of<ArticleBloc>(context).add(
       LoadArticle(
-        1,
-        1,
-        null,
-        "Rekomendasi",
-        null,
+        page: 1,
+        category: 1,
+        type: "Rekomendasi",
       ),
     );
   }

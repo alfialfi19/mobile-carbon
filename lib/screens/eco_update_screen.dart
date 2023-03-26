@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_carbon/blocs/eco_activity/eco_activity_bloc.dart';
+import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
+import '../models/models.dart';
 import '../repositories/repositories.dart';
 
 class EcoUpdateScreen extends StatelessWidget {
@@ -22,9 +23,8 @@ class EcoUpdateScreen extends StatelessWidget {
             return EcoActivityBloc(repository)
               ..add(
                 LoadEcoActivity(
-                  1,
-                  1,
-                  null,
+                  page: 1,
+                  category: 1,
                 ),
               );
           },
@@ -73,7 +73,11 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
                   ),
               onSubmitted: (value) =>
                   BlocProvider.of<EcoActivityBloc>(context).add(
-                LoadEcoActivity(1, _selectedTab + 1, value),
+                LoadEcoActivity(
+                  page: 1,
+                  category: _selectedTab + 1,
+                  keyword: value,
+                ),
               ),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(
@@ -124,7 +128,10 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
               searchController.clear();
 
               BlocProvider.of<EcoActivityBloc>(context).add(
-                LoadEcoActivity(1, _selectedTab + 1, null),
+                LoadEcoActivity(
+                  page: 1,
+                  category: _selectedTab + 1,
+                ),
               );
             },
             tabs: const [
@@ -161,10 +168,18 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
           child: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
-              EcoTabContent(),
-              EcoTabContent(),
-              EcoTabContent(),
-              EcoTabContent(),
+              EcoTabContent(
+                categoryId: 1,
+              ),
+              EcoTabContent(
+                categoryId: 2,
+              ),
+              EcoTabContent(
+                categoryId: 3,
+              ),
+              EcoTabContent(
+                categoryId: 4,
+              ),
             ],
           ),
         ),
@@ -185,7 +200,12 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
 }
 
 class EcoTabContent extends StatefulWidget {
-  const EcoTabContent({Key? key}) : super(key: key);
+  final int categoryId;
+
+  const EcoTabContent({
+    required this.categoryId,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<EcoTabContent> createState() => _EcoTabContentState();
@@ -193,6 +213,34 @@ class EcoTabContent extends StatefulWidget {
 
 class _EcoTabContentState extends State<EcoTabContent>
     with AutomaticKeepAliveClientMixin {
+  final _scrollController = ScrollController();
+
+  bool _isLoading = false;
+  int _page = 2;
+
+  List<ArticleDetail> data = [];
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onLoadMore);
+    super.initState();
+  }
+
+  void _onLoadMore() {
+    if (_scrollController.position.extentAfter <= 0 && !_isLoading) {
+      _isLoading = true;
+
+      BlocProvider.of<EcoActivityBloc>(context).add(
+        LoadEcoActivity(
+          page: _page,
+          category: widget.categoryId,
+          currentData: data,
+        ),
+      );
+      _page++;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -207,12 +255,90 @@ class _EcoTabContentState extends State<EcoTabContent>
           return const CarbonEmptyState();
         }
 
-        if (state is ListEcoActivityLoaded) {
-          var data = state.ecoActivityList;
+        if (state is ListEcoActivityLoadingPaging) {
+          var currentData = data;
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: ListView(
+              controller: _scrollController,
+              physics: const ClampingScrollPhysics(),
+              children: [
+                MainArticleItem(
+                  imageUrl: currentData.first.file?.first,
+                  articleLabel: currentData.first.title ?? "",
+                  authorName: currentData.first.writerName ?? "-",
+                  authorImg: currentData.first.writerImg,
+                  dateCreated: DateUtil.sanitizeDateTime(
+                      currentData.first.createdAt ?? "-"),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    Routes.detailEcoUpdate,
+                    arguments: DataArgument(
+                      id: currentData.first.id ?? "0",
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 40.0,
+                ),
+                Text(
+                  "Artikel Terkait",
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: ColorPalettes.dark,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: currentData.length,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Container();
+                    }
+
+                    return RelatedArticleItem(
+                      title: currentData[index].title,
+                      author: currentData[index].writerName,
+                      imageUrl: currentData[index].file?.first,
+                      createdAt: DateUtil.sanitizeDateTime(
+                          currentData[index].createdAt ?? "-"),
+                      action: () => Navigator.pushNamed(
+                        context,
+                        Routes.detailEcoUpdate,
+                        arguments: DataArgument(
+                          id: currentData[index].id ?? "0",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Container(
+                  color: ColorPalettes.white,
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: ColorPalettes.primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        if (state is ListEcoActivityLoaded) {
+          data = state.ecoActivityList;
+          _isLoading = false;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: ListView(
+              controller: _scrollController,
+              physics: const ClampingScrollPhysics(),
               children: [
                 MainArticleItem(
                   imageUrl: data.first.file?.first,
@@ -271,6 +397,7 @@ class _EcoTabContentState extends State<EcoTabContent>
             ),
           );
         }
+        _page = 2;
 
         return const CarbonLoadingState();
       },
@@ -279,4 +406,10 @@ class _EcoTabContentState extends State<EcoTabContent>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 }
