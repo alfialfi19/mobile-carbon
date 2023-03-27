@@ -4,12 +4,17 @@ abstract class EmisiLogEvent extends Equatable {}
 
 class LoadEmisiLog extends EmisiLogEvent {
   final int? page;
+  final List<EmisiLog>? currentData;
 
-  LoadEmisiLog(this.page);
+  LoadEmisiLog({
+    this.page,
+    this.currentData,
+  });
 
   @override
   List<Object?> get props => [
         page,
+        currentData,
       ];
 }
 

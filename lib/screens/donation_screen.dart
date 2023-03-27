@@ -5,6 +5,7 @@ import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
+import '../models/models.dart';
 import '../routes.dart';
 
 class DonationScreen extends StatelessWidget {
@@ -22,9 +23,8 @@ class DonationScreen extends StatelessWidget {
             return DonationBloc(repository)
               ..add(
                 LoadDonationList(
-                  1,
-                  "Terupdate",
-                  "",
+                  page: 1,
+                  category: "Terupdate",
                 ),
               );
           },
@@ -45,6 +45,32 @@ class DonationContent extends StatefulWidget {
 class _DonationContentState extends State<DonationContent> {
   final _scrollController = ScrollController();
   TextEditingController searchController = TextEditingController();
+
+  bool _isLoading = false;
+  int _page = 2;
+
+  List<DonationDetail> listData = [];
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onLoadMore);
+    super.initState();
+  }
+
+  void _onLoadMore() {
+    if (_scrollController.position.extentAfter <= 0 && !_isLoading) {
+      _isLoading = true;
+
+      BlocProvider.of<DonationBloc>(context).add(
+        LoadDonationList(
+          page: _page,
+          category: "Terupdate",
+          currentData: listData,
+        ),
+      );
+      _page++;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +118,9 @@ class _DonationContentState extends State<DonationContent> {
                     onSubmitted: (value) =>
                         BlocProvider.of<DonationBloc>(context).add(
                       LoadDonationList(
-                        1,
-                        "Terupdate",
-                        value,
+                        page: 1,
+                        category: "Terupdate",
+                        keyword: value,
                       ),
                     ),
                     decoration: InputDecoration(
@@ -210,8 +236,57 @@ class _DonationContentState extends State<DonationContent> {
                         return const CarbonEmptyState();
                       }
 
+                      if (state is ListDonationLoadingPaging) {
+                        var currentData = listData;
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListView.separated(
+                              physics: const ClampingScrollPhysics(),
+                              itemCount: currentData.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return RelatedArticleItem(
+                                  margin: const EdgeInsets.only(bottom: 0.0),
+                                  title: currentData[index].title,
+                                  author: currentData[index].writerName,
+                                  imageUrl: currentData[index].file?.first,
+                                  createdAt: DateUtil.sanitizeDateTime(
+                                      currentData[index].createdAt!),
+                                  action: () => Navigator.pushNamed(
+                                    context,
+                                    Routes.detailDonation,
+                                    arguments: DataArgument(
+                                      id: currentData[index].id ?? "0",
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) => Container(
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 16.0,
+                                ),
+                                child: const Divider(
+                                  color: ColorPalettes.line,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              color: ColorPalettes.white,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: ColorPalettes.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+
                       if (state is ListDonationLoaded) {
-                        var listData = state.donationList;
+                        listData = state.donationList;
+                        _isLoading = false;
 
                         return ListView.separated(
                           physics: const ClampingScrollPhysics(),
@@ -244,6 +319,7 @@ class _DonationContentState extends State<DonationContent> {
                           ),
                         );
                       }
+                      _page = 2;
 
                       return const CarbonLoadingState();
                     },
@@ -266,9 +342,8 @@ class _DonationContentState extends State<DonationContent> {
   Future<void> _refresh() async {
     BlocProvider.of<DonationBloc>(context).add(
       LoadDonationList(
-        1,
-        "Terupdate",
-        "",
+        page: 1,
+        category: "Terupdate",
       ),
     );
   }

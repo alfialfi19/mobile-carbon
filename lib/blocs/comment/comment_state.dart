@@ -12,6 +12,8 @@ class CommentInitial extends CommentState {}
 
 class ListCommentLoading extends CommentState {}
 
+class ListCommentLoadingPaging extends CommentState {}
+
 class ListCommentLoaded extends CommentState {
   final List<Comments> commentList;
 

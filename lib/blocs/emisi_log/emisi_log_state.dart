@@ -12,6 +12,8 @@ class EmisiLogInitial extends EmisiLogState {}
 
 class EmisiLogLoading extends EmisiLogState {}
 
+class EmisiLogLoadingPaging extends EmisiLogState {}
+
 class EmisiLogLoaded extends EmisiLogState {
   final List<EmisiLog> emisiLogList;
 

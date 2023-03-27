@@ -6,6 +6,7 @@ import 'package:mobile_carbon/widgets/comment_section.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
+import '../models/models.dart';
 
 class DetailCommentScreen extends StatelessWidget {
   const DetailCommentScreen({Key? key}) : super(key: key);
@@ -24,9 +25,9 @@ class DetailCommentScreen extends StatelessWidget {
             return CommentBloc(repository)
               ..add(
                 LoadComment(
-                  1,
-                  int.parse(argument.id),
-                  argument.source,
+                  page: 1,
+                  id: int.parse(argument.id),
+                  source: argument.source,
                 ),
               );
           },
@@ -56,6 +57,33 @@ class DetailCommentContent extends StatefulWidget {
 
 class _DetailCommentContentState extends State<DetailCommentContent> {
   final _scrollController = ScrollController();
+
+  bool _isLoading = false;
+  int _page = 2;
+
+  List<Comments> data = [];
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onLoadMore);
+    super.initState();
+  }
+
+  void _onLoadMore() {
+    if (_scrollController.position.extentAfter <= 0 && !_isLoading) {
+      _isLoading = true;
+
+      BlocProvider.of<CommentBloc>(context).add(
+        LoadComment(
+          page: _page,
+          id: int.parse(widget.idArticle),
+          source: widget.source,
+          currentData: data,
+        ),
+      );
+      _page++;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +169,48 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
                         return const CarbonEmptyState();
                       }
 
+                      if (state is ListCommentLoadingPaging) {
+                        var currentData = data;
+
+                        return Column(
+                          children: [
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: currentData.length,
+                              itemBuilder: (context, index) {
+                                return CommentSection(
+                                  imgUrl: currentData[index].file,
+                                  author: currentData[index].writerName,
+                                  createdAt: DateUtil.sanitizeDateTime(
+                                      currentData[index].createdAt ?? "-"),
+                                  comment: currentData[index].desc,
+                                  childComment: currentData[index].item,
+                                  optionsCallback: () => _showActionOptions(
+                                    context,
+                                    idArticle: int.parse(widget.idArticle),
+                                    idParent:
+                                        int.parse(currentData[index].id ?? "0"),
+                                    source: widget.source,
+                                  ),
+                                );
+                              },
+                            ),
+                            Container(
+                              color: ColorPalettes.white,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: ColorPalettes.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+
                       if (state is ListCommentLoaded) {
-                        var data = state.commentList;
+                        data = state.commentList;
+                        _isLoading = false;
 
                         return Column(
                           children: [
@@ -170,6 +238,7 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
                           ],
                         );
                       }
+                      _page = 2;
 
                       return const CarbonLoadingState();
                     },
@@ -285,9 +354,9 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
   Future<void> _refresh() async {
     BlocProvider.of<CommentBloc>(context).add(
       LoadComment(
-        1,
-        int.parse(widget.idArticle),
-        widget.source,
+        page: 1,
+        id: int.parse(widget.idArticle),
+        source: widget.source,
       ),
     );
   }

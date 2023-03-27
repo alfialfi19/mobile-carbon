@@ -12,6 +12,8 @@ class DonationInitial extends DonationState {}
 
 class ListDonationLoading extends DonationState {}
 
+class ListDonationLoadingPaging extends DonationState {}
+
 class ListDonationLoaded extends DonationState {
   final List<DonationDetail> donationList;
 

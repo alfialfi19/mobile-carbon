@@ -23,7 +23,11 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     LoadComment event,
     Emitter<CommentState> emit,
   ) async {
-    emit(ListCommentLoading());
+    if (event.currentData != null) {
+      emit(ListCommentLoadingPaging());
+    } else {
+      emit(ListCommentLoading());
+    }
 
     try {
       final response = await commentRepository.getListComment(
@@ -31,6 +35,10 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         id: event.id,
         source: event.source,
       );
+
+      if (event.currentData != null) {
+        response.insertAll(0, event.currentData!);
+      }
 
       if (response.isEmpty) {
         return emit(ListCommentEmpty());

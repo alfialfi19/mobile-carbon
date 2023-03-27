@@ -23,12 +23,20 @@ class EmisiLogBloc extends Bloc<EmisiLogEvent, EmisiLogState> {
     LoadEmisiLog event,
     Emitter<EmisiLogState> emit,
   ) async {
-    emit(EmisiLogLoading());
+    if (event.currentData != null) {
+      emit(EmisiLogLoadingPaging());
+    } else {
+      emit(EmisiLogLoading());
+    }
 
     try {
       final response = await emisiLogRepository.getEmisiLog(
         page: event.page,
       );
+
+      if (event.currentData != null) {
+        response.insertAll(0, event.currentData!);
+      }
 
       if (response.isEmpty) {
         return emit(EmisiLogEmpty());

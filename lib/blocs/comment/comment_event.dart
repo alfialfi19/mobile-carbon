@@ -6,18 +6,21 @@ class LoadComment extends CommentEvent {
   final int? page;
   final int? id;
   final String? source;
+  final List<Comments>? currentData;
 
-  LoadComment(
+  LoadComment({
     this.page,
     this.id,
     this.source,
-  );
+    this.currentData,
+  });
 
   @override
   List<Object?> get props => [
         page,
         id,
         source,
+        currentData,
       ];
 }
 

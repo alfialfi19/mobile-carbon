@@ -5,6 +5,7 @@ import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../blocs/blocs.dart';
 import '../commons/commons.dart';
+import '../models/models.dart';
 import '../repositories/repositories.dart';
 import '../routes.dart';
 
@@ -58,6 +59,30 @@ class DetailEcoActivityContent extends StatefulWidget {
 
 class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
   final _scrollController = ScrollController();
+
+  bool _isLoading = false;
+  int _page = 2;
+  List<ArticleDetail> dataHistory = [];
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onLoadMore);
+    super.initState();
+  }
+
+  void _onLoadMore() {
+    if (_scrollController.position.extentAfter <= 0 && !_isLoading) {
+      _isLoading = true;
+
+      BlocProvider.of<EcoActivityBloc>(context).add(
+        LoadEcoActivity(
+          page: _page,
+          currentData: dataHistory,
+        ),
+      );
+      _page++;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,66 +222,146 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
                         return const CarbonEmptyState();
                       }
 
-                      if (state is ListEcoActivityLoaded) {
-                        var data = state.ecoActivityList;
+                      if (state is ListEcoActivityLoadingPaging) {
+                        var currentData = dataHistory;
                         String tempDate = DateUtil.sanitizeDateTime(
-                            data.first.createdAt ?? "-");
+                            currentData.first.createdAt ?? "-");
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: currentData.length,
+                              itemBuilder: (context, index) {
+                                bool displayDate = true;
+
+                                if (index != 0) {
+                                  if (DateUtil.sanitizeDateTime(
+                                          currentData[index].createdAt ??
+                                              "-") ==
+                                      tempDate) {
+                                    displayDate = false;
+                                  } else {
+                                    tempDate = DateUtil.sanitizeDateTime(
+                                        currentData[index].createdAt ?? "-");
+                                  }
+                                }
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (displayDate)
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                          bottom: 12.0,
+                                          top: 24.0,
+                                        ),
+                                        child: Text(
+                                          tempDate,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              ?.copyWith(
+                                                color: ColorPalettes
+                                                    .placeholderZill,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                        ),
+                                      ),
+                                    HistoryCarbonEmission(
+                                      label: currentData[index].title,
+                                      pointValue:
+                                          "${currentData[index].totalPoint} poin",
+                                      leadingIcon: Image.asset(
+                                        CarbonIcons.flower,
+                                        height: 24.0,
+                                        width: 24.0,
+                                      ),
+                                      leadingBackgroundColor:
+                                          ColorPalettes.green.withOpacity(0.1),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                            Container(
+                              color: ColorPalettes.white,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: ColorPalettes.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+
+                      if (state is ListEcoActivityLoaded) {
+                        _isLoading = false;
+
+                        dataHistory = state.ecoActivityList;
+                        String tempDate = DateUtil.sanitizeDateTime(
+                            dataHistory.first.createdAt ?? "-");
 
                         return ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              bool displayDate = true;
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: dataHistory.length,
+                          itemBuilder: (context, index) {
+                            bool displayDate = true;
 
-                              if (index != 0) {
-                                if (DateUtil.sanitizeDateTime(
-                                        data[index].createdAt ?? "-") ==
-                                    tempDate) {
-                                  displayDate = false;
-                                } else {
-                                  tempDate = DateUtil.sanitizeDateTime(
-                                      data[index].createdAt ?? "-");
-                                }
+                            if (index != 0) {
+                              if (DateUtil.sanitizeDateTime(
+                                      dataHistory[index].createdAt ?? "-") ==
+                                  tempDate) {
+                                displayDate = false;
+                              } else {
+                                tempDate = DateUtil.sanitizeDateTime(
+                                    dataHistory[index].createdAt ?? "-");
                               }
+                            }
 
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (displayDate)
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        bottom: 12.0,
-                                        top: 24.0,
-                                      ),
-                                      child: Text(
-                                        tempDate,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2
-                                            ?.copyWith(
-                                              color:
-                                                  ColorPalettes.placeholderZill,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                      ),
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (displayDate)
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                      bottom: 12.0,
+                                      top: 24.0,
                                     ),
-                                  HistoryCarbonEmission(
-                                    label: data[index].title,
-                                    pointValue:
-                                        "${data[index].totalPoint} poin",
-                                    leadingIcon: Image.asset(
-                                      CarbonIcons.flower,
-                                      height: 24.0,
-                                      width: 24.0,
+                                    child: Text(
+                                      tempDate,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2
+                                          ?.copyWith(
+                                            color:
+                                                ColorPalettes.placeholderZill,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                     ),
-                                    leadingBackgroundColor:
-                                        ColorPalettes.green.withOpacity(0.1),
                                   ),
-                                ],
-                              );
-                            });
+                                HistoryCarbonEmission(
+                                  label: dataHistory[index].title,
+                                  pointValue:
+                                      "${dataHistory[index].totalPoint} poin",
+                                  leadingIcon: Image.asset(
+                                    CarbonIcons.flower,
+                                    height: 24.0,
+                                    width: 24.0,
+                                  ),
+                                  leadingBackgroundColor:
+                                      ColorPalettes.green.withOpacity(0.1),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       }
+                      _page = 2;
 
                       return const CarbonLoadingState();
                     },

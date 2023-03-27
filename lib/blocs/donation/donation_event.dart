@@ -6,14 +6,21 @@ class LoadDonationList extends DonationEvent {
   final int? page;
   final String? category;
   final String? keyword;
+  final List<DonationDetail>? currentData;
 
-  LoadDonationList(this.page, this.category, this.keyword);
+  LoadDonationList({
+    this.page,
+    this.category,
+    this.keyword,
+    this.currentData,
+  });
 
   @override
   List<Object?> get props => [
         page,
         category,
         keyword,
+        currentData,
       ];
 }
 

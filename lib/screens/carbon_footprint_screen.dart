@@ -7,6 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import '../blocs/blocs.dart';
 import '../commons/commons.dart';
+import '../models/models.dart';
 
 class CarbonFootprintScreen extends StatelessWidget {
   const CarbonFootprintScreen({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class CarbonFootprintScreen extends StatelessWidget {
             return EmisiLogBloc(repository)
               ..add(
                 LoadEmisiLog(
-                  1,
+                  page: 1,
                 ),
               );
           },
@@ -54,6 +55,31 @@ class CarbonFootprintContent extends StatefulWidget {
 
 class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
   final _scrollController = ScrollController();
+
+  bool _isLoading = false;
+  int _page = 2;
+
+  List<EmisiLog> dataLog = [];
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onLoadMore);
+    super.initState();
+  }
+
+  void _onLoadMore() {
+    if (_scrollController.position.extentAfter <= 0 && !_isLoading) {
+      _isLoading = true;
+
+      BlocProvider.of<EmisiLogBloc>(context).add(
+        LoadEmisiLog(
+          page: _page,
+          currentData: dataLog,
+        ),
+      );
+      _page++;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -286,26 +312,117 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                             );
                           }
 
-                          if (state is EmisiLogLoaded) {
-                            var data = state.emisiLogList;
+                          if (state is EmisiLogEmpty) {
+                            return const CarbonEmptyState();
+                          }
+
+                          if (state is EmisiLogLoadingPaging) {
+                            var currentData = dataLog;
                             String tempDate = DateUtil.sanitizeDateTime(
-                                data.first.createdAt ?? "-");
+                                currentData.first.createdAt ?? "-");
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: currentData.length,
+                                  itemBuilder: (context, index) {
+                                    bool displayDate = true;
+
+                                    if (index != 0) {
+                                      if (DateUtil.sanitizeDateTime(
+                                              currentData[index].createdAt ??
+                                                  "-") ==
+                                          tempDate) {
+                                        displayDate = false;
+                                      } else {
+                                        tempDate = DateUtil.sanitizeDateTime(
+                                            currentData[index].createdAt ??
+                                                "-");
+                                      }
+                                    }
+
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        if (displayDate)
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 12.0),
+                                            child: Text(
+                                              tempDate,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2
+                                                  ?.copyWith(
+                                                    color: ColorPalettes
+                                                        .placeholderZill,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
+                                          ),
+                                        HistoryCarbonEmission(
+                                          label:
+                                              "${currentData[index].categoryName} ${currentData[index].categorySubName}",
+                                          caption:
+                                              "${currentData[index].val} ${currentData[index].unit}",
+                                          pointValue:
+                                              "${currentData[index].totalPoint} poin",
+                                          leadingIcon: Image.asset(
+                                            CarbonUtil.getEmisiIcon(
+                                                currentData[index]
+                                                        .categoryName ??
+                                                    "-"),
+                                            height: 24.0,
+                                            width: 24.0,
+                                          ),
+                                          leadingBackgroundColor: CarbonUtil
+                                              .getEmisiBackgroundColor(
+                                                  currentData[index]
+                                                          .categoryName ??
+                                                      "-"),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                Container(
+                                  color: ColorPalettes.white,
+                                  child: const Center(
+                                    child: CircularProgressIndicator(
+                                      color: ColorPalettes.primary,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+
+                          if (state is EmisiLogLoaded) {
+                            _isLoading = false;
+
+                            dataLog = state.emisiLogList;
+                            String tempDate = DateUtil.sanitizeDateTime(
+                                dataLog.first.createdAt ?? "-");
 
                             return ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: data.length,
+                              itemCount: dataLog.length,
                               itemBuilder: (context, index) {
                                 bool displayDate = true;
 
                                 if (index != 0) {
                                   if (DateUtil.sanitizeDateTime(
-                                          data[index].createdAt ?? "-") ==
+                                          dataLog[index].createdAt ?? "-") ==
                                       tempDate) {
                                     displayDate = false;
                                   } else {
                                     tempDate = DateUtil.sanitizeDateTime(
-                                        data[index].createdAt ?? "-");
+                                        dataLog[index].createdAt ?? "-");
                                   }
                                 }
 
@@ -330,115 +447,32 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                                       ),
                                     HistoryCarbonEmission(
                                       label:
-                                          "${data[index].categoryName} ${data[index].categorySubName}",
+                                          "${dataLog[index].categoryName} ${dataLog[index].categorySubName}",
                                       caption:
-                                          "${data[index].val} ${data[index].unit} -- ${data[index].createdAt}",
+                                          "${dataLog[index].val} ${dataLog[index].unit}",
                                       pointValue:
-                                          "${data[index].totalPoint} poin",
+                                          "${dataLog[index].totalPoint} poin",
                                       leadingIcon: Image.asset(
                                         CarbonUtil.getEmisiIcon(
-                                            data[index].categoryName ?? "-"),
+                                            dataLog[index].categoryName ?? "-"),
                                         height: 24.0,
                                         width: 24.0,
                                       ),
                                       leadingBackgroundColor:
                                           CarbonUtil.getEmisiBackgroundColor(
-                                              data[index].categoryName ?? "-"),
+                                              dataLog[index].categoryName ??
+                                                  "-"),
                                     ),
                                   ],
                                 );
                               },
                             );
                           }
+                          _page = 2;
 
                           return const CarbonLoadingState();
                         },
                       ),
-                      // Container(
-                      //   margin: const EdgeInsets.only(bottom: 12.0),
-                      //   child: Text(
-                      //     "Hari Ini",
-                      //     style:
-                      //         Theme.of(context).textTheme.subtitle2?.copyWith(
-                      //               color: ColorPalettes.placeholderZill,
-                      //               fontWeight: FontWeight.w700,
-                      //             ),
-                      //   ),
-                      // ),
-                      // HistoryCarbonEmission(
-                      //   label: "Daging Ayam",
-                      //   caption: "5,65 kg",
-                      //   pointValue: "20 poin",
-                      //   leadingIcon: Image.asset(
-                      //     CarbonIcons.food,
-                      //     height: 24.0,
-                      //     width: 24.0,
-                      //   ),
-                      //   leadingBackgroundColor:
-                      //       ColorPalettes.orange.withOpacity(0.1),
-                      // ),
-                      // HistoryCarbonEmission(
-                      //   label: "Diesel",
-                      //   caption: "12,29 kg",
-                      //   pointValue: "75 poin",
-                      //   leadingIcon: Image.asset(
-                      //     CarbonIcons.tv,
-                      //     height: 24.0,
-                      //     width: 24.0,
-                      //   ),
-                      //   leadingBackgroundColor:
-                      //       ColorPalettes.blue.withOpacity(0.15),
-                      // ),
-                      // HistoryCarbonEmission(
-                      //   label: "Sampah Organik",
-                      //   caption: "89,12 kg",
-                      //   pointValue: "126 poin",
-                      //   leadingIcon: Image.asset(
-                      //     CarbonIcons.trash,
-                      //     height: 24.0,
-                      //     width: 24.0,
-                      //   ),
-                      //   leadingBackgroundColor:
-                      //       ColorPalettes.green.withOpacity(0.15),
-                      // ),
-                      // const SizedBox(
-                      //   height: 30.0,
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.only(bottom: 12.0),
-                      //   child: Text(
-                      //     "22 Desember 2022",
-                      //     style:
-                      //         Theme.of(context).textTheme.subtitle2?.copyWith(
-                      //               color: ColorPalettes.placeholderZill,
-                      //               fontWeight: FontWeight.w700,
-                      //             ),
-                      //   ),
-                      // ),
-                      // HistoryCarbonEmission(
-                      //   label: "Diesel",
-                      //   caption: "12,29 kg",
-                      //   pointValue: "75 poin",
-                      //   leadingIcon: Image.asset(
-                      //     CarbonIcons.tv,
-                      //     height: 24.0,
-                      //     width: 24.0,
-                      //   ),
-                      //   leadingBackgroundColor:
-                      //       ColorPalettes.blue.withOpacity(0.15),
-                      // ),
-                      // HistoryCarbonEmission(
-                      //   label: "Daging Ayam",
-                      //   caption: "5,65 kg",
-                      //   pointValue: "20 poin",
-                      //   leadingIcon: Image.asset(
-                      //     CarbonIcons.food,
-                      //     height: 24.0,
-                      //     width: 24.0,
-                      //   ),
-                      //   leadingBackgroundColor:
-                      //       ColorPalettes.orange.withOpacity(0.1),
-                      // ),
                     ],
                   ),
                 ],
@@ -469,7 +503,7 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
 
   Future<void> _refreshEmisiLog() async {
     BlocProvider.of<EmisiLogBloc>(context).add(
-      LoadEmisiLog(1),
+      LoadEmisiLog(page: 1),
     );
   }
 }

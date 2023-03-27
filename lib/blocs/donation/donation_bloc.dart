@@ -23,7 +23,11 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
 
   Future<void> _loadDonationListHandler(
       LoadDonationList event, Emitter<DonationState> emit) async {
-    emit(ListDonationLoading());
+    if (event.currentData != null) {
+      emit(ListDonationLoadingPaging());
+    } else {
+      emit(ListDonationLoading());
+    }
 
     try {
       final response = await donationRepository.getListDonation(
@@ -31,6 +35,10 @@ class DonationBloc extends Bloc<DonationEvent, DonationState> {
         category: event.category,
         keyword: event.keyword,
       );
+
+      if (event.currentData != null) {
+        response.insertAll(0, event.currentData!);
+      }
 
       if (response.isEmpty) {
         return emit(ListDonationEmpty());
