@@ -71,6 +71,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       final response = await commentRepository.storeComment(
         idArticle: event.idArticle,
         idParent: event.idParent,
+        idComment: event.idComment,
         desc: event.desc,
         source: event.source,
       );

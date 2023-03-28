@@ -6,6 +6,7 @@ class CommentApi {
   static const commentPath = '/comment';
   static const commentListPath = '$commentPath/list';
   static const commentStorePath = '$commentPath/store';
+  static const commentUpdatePath = '$commentPath/update';
 
   static const commentActivityPath = '/comment-activity';
   static const commentActivityListPath = '$commentActivityPath/list';
@@ -59,6 +60,7 @@ class CommentApi {
   Future<void> storeComment({
     int? idArticle,
     int? idParent,
+    String? idComment,
     String? desc,
     String? source,
   }) async {
@@ -78,10 +80,22 @@ class CommentApi {
         data: formData,
       );
     } else {
-      response = await _dio.post(
-        commentStorePath,
-        data: formData,
-      );
+      if (idComment != null) {
+        final queries = {
+          'id': idComment,
+        };
+
+        response = await _dio.post(
+          commentUpdatePath,
+          data: formData,
+          queryParameters: queries,
+        );
+      } else {
+        response = await _dio.post(
+          commentStorePath,
+          data: formData,
+        );
+      }
     }
   }
 }

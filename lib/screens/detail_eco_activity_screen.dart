@@ -287,7 +287,7 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
                               },
                             ),
                             Container(
-                              color: ColorPalettes.white,
+                              color: ColorPalettes.backgroundLight,
                               child: const Center(
                                 child: CircularProgressIndicator(
                                   color: ColorPalettes.primary,

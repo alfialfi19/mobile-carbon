@@ -23,12 +23,14 @@ class CommentRepository {
   Future<void> storeComment({
     int? idArticle,
     int? idParent,
+    String? idComment,
     String? desc,
     String? source,
   }) async {
     final response = await _commentApi.storeComment(
       idArticle: idArticle,
       idParent: idParent,
+      idComment: idComment,
       desc: desc,
       source: source,
     );

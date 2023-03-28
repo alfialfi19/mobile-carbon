@@ -27,20 +27,23 @@ class LoadComment extends CommentEvent {
 class StoreComment extends CommentEvent {
   final int? idArticle;
   final int? idParent;
+  final String? idComment;
   final String? desc;
   final String? source;
 
-  StoreComment(
+  StoreComment({
     this.idArticle,
     this.idParent,
+    this.idComment,
     this.desc,
     this.source,
-  );
+  });
 
   @override
   List<Object?> get props => [
         idArticle,
         idParent,
+        idComment,
         desc,
         source,
       ];

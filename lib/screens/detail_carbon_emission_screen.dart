@@ -300,7 +300,7 @@ class _DetailCarbonEmissionContentState
                               },
                             ),
                             Container(
-                              color: ColorPalettes.white,
+                              color: ColorPalettes.backgroundLight,
                               child: const Center(
                                 child: CircularProgressIndicator(
                                   color: ColorPalettes.primary,

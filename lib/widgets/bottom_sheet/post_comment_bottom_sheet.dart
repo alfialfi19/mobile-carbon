@@ -4,7 +4,12 @@ import '../../commons/commons.dart';
 import '../widgets.dart';
 
 class PostCommentBottomSheet extends StatelessWidget {
-  const PostCommentBottomSheet({Key? key}) : super(key: key);
+  final String? currentComment;
+
+  const PostCommentBottomSheet({
+    this.currentComment,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,9 @@ class PostCommentBottomSheet extends StatelessWidget {
           content: Container(
             color: ColorPalettes.backgroundLight,
             width: double.maxFinite,
-            child: _PostCommentForm(),
+            child: _PostCommentForm(
+              currentComment: currentComment,
+            ),
           ),
         ),
       ],
@@ -27,7 +34,12 @@ class PostCommentBottomSheet extends StatelessWidget {
 }
 
 class _PostCommentForm extends StatefulWidget {
-  const _PostCommentForm({Key? key}) : super(key: key);
+  final String? currentComment;
+
+  const _PostCommentForm({
+    this.currentComment,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<_PostCommentForm> createState() => _PostCommentFormState();
@@ -35,6 +47,15 @@ class _PostCommentForm extends StatefulWidget {
 
 class _PostCommentFormState extends State<_PostCommentForm> {
   TextEditingController commentController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.currentComment != null) {
+      commentController.text = widget.currentComment!;
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
