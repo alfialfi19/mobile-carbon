@@ -7,3 +7,8 @@ enum Source {
   article,
   activity,
 }
+
+enum DropdownSource {
+  calculateCarbon,
+  addArticle,
+}

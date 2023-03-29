@@ -124,41 +124,47 @@ class _CalculateCarbonStep3ContentState
                   Images.humans,
                 ),
               ),
-              Wrap(
+              Row(
                 children: [
-                  TextFieldInput(
-                    padding: const EdgeInsets.only(
-                      left: 15.0,
-                    ),
-                    contentPadding: const EdgeInsets.all(
-                      16.0,
-                    ),
-                    prefix: Container(
+                  Expanded(
+                    child: TextFieldInput(
                       padding: const EdgeInsets.only(
-                        right: 12.0,
-                        left: 16.0,
+                        left: 15.0,
                       ),
-                      child: Icon(
-                        Icons.access_time_rounded,
-                        color: Colors.black.withOpacity(0.3),
+                      contentPadding: const EdgeInsets.all(
+                        16.0,
                       ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    width: MediaQuery.of(context).size.width / 3,
-                    maxLength: null,
-                    controller: timeController,
-                    callback: (value) => print(
-                      "==> time: $value",
+                      prefix: Container(
+                        padding: const EdgeInsets.only(
+                          right: 12.0,
+                          left: 16.0,
+                        ),
+                        child: Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.black.withOpacity(0.3),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      width: MediaQuery.of(context).size.width,
+                      maxLength: null,
+                      source: DropdownSource.calculateCarbon,
+                      controller: timeController,
+                      callback: (value) => print(
+                        "==> time: $value",
+                      ),
                     ),
                   ),
-                  CategoryInput(
-                    width: MediaQuery.of(context).size.width / 3,
-                    label: null,
-                    categoryItem: unit,
-                    callback: (value) {
-                      print("===> selectedTimeCategory: $value");
-                      _selectedUnit = value;
-                    },
+                  Expanded(
+                    child: CategoryInput(
+                      width: MediaQuery.of(context).size.width,
+                      label: null,
+                      source: DropdownSource.calculateCarbon,
+                      categoryItem: unit,
+                      callback: (value) {
+                        print("===> selectedTimeCategory: $value");
+                        _selectedUnit = value;
+                      },
+                    ),
                   ),
                 ],
               ),

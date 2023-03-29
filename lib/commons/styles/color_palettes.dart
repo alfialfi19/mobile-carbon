@@ -16,6 +16,7 @@ class ColorPalettes {
   static const Color grayDivider = Color.fromRGBO(217, 217, 217, 1);
 
   static const Color grayTextField = Color.fromRGBO(244, 244, 244, 1);
+  static const Color grayHint = Color.fromRGBO(170, 170, 168, 1);
   static const Color gray100 = Color.fromRGBO(208, 214, 221, 1);
   static const Color dark = Color.fromRGBO(33, 33, 33, 1);
   static const Color darkGray = Color.fromRGBO(35, 41, 51, 1);

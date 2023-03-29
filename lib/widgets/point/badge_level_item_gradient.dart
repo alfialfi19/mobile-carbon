@@ -8,7 +8,7 @@ class BadgeLevelItemGradient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 128.0,
+      width: 138.0,
       margin: const EdgeInsets.symmetric(
         vertical: 10.0,
       ),
@@ -55,6 +55,7 @@ class BadgeLevelItemGradient extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
             textAlign: TextAlign.justify,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

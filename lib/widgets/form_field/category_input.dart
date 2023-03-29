@@ -10,6 +10,7 @@ class CategoryInput extends StatefulWidget {
   final OnChangedCategory callback;
   final String? label;
   final double? width;
+  final DropdownSource source;
 
   const CategoryInput({
     Key? key,
@@ -18,6 +19,7 @@ class CategoryInput extends StatefulWidget {
     required this.callback,
     this.label = "Kategori",
     this.width,
+    this.source = DropdownSource.addArticle,
   }) : super(key: key);
 
   @override
@@ -56,9 +58,17 @@ class _CategoryInputState extends State<CategoryInput> {
               height: 8.0,
             ),
           ],
-          SizedBox(
+          Container(
             height: 55.0,
             width: widget.width,
+            decoration: BoxDecoration(
+              color: widget.source == DropdownSource.calculateCarbon
+                  ? ColorPalettes.grayTextField
+                  : ColorPalettes.white,
+              borderRadius: BorderRadius.circular(
+                8.0,
+              ),
+            ),
             child: DropdownButtonFormField<String>(
               // value: _balances.length == 1 ? _balances.single : null,
               // onChanged: _onValueChanged,
@@ -68,6 +78,9 @@ class _CategoryInputState extends State<CategoryInput> {
               items: _constructMenuItems(),
               decoration: InputDecoration(
                 hintText: widget.label,
+                isDense: true,
+                fillColor: ColorPalettes.line,
+                focusColor: ColorPalettes.line,
                 // helperText: _selectedBalanceCategory != null
                 //     ? LocaleKeys.request_reimbursement_category_balance_helper
                 //     .tr(args: [
@@ -105,9 +118,16 @@ class _CategoryInputState extends State<CategoryInput> {
                 ),
                 // errorText: errorText,
               ),
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: Icon(Icons.arrow_drop_down),
+              icon: Padding(
+                padding: EdgeInsets.only(
+                  right:
+                      widget.source == DropdownSource.addArticle ? 20.0 : 0.0,
+                ),
+                child: Icon(
+                  widget.source == DropdownSource.addArticle
+                      ? Icons.arrow_drop_down
+                      : Icons.keyboard_arrow_down_rounded,
+                ),
               ),
             ),
           ),

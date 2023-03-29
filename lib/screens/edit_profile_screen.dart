@@ -121,6 +121,7 @@ class _EditProfileContentState extends State<EditProfileContent> {
                 hintText: "Masukkan nomor telepon",
                 maxLength: null,
                 controller: telephoneController,
+                keyboardType: TextInputType.number,
                 callback: (value) => print(
                   "==> telephone: $value",
                 ),

@@ -24,6 +24,8 @@ class TextFieldInput extends StatefulWidget {
   final Widget? prefix;
   final TextInputType keyboardType;
 
+  final DropdownSource source;
+
   const TextFieldInput({
     required this.controller,
     required this.callback,
@@ -40,6 +42,7 @@ class TextFieldInput extends StatefulWidget {
     this.width,
     this.prefix,
     this.keyboardType = TextInputType.multiline,
+    this.source = DropdownSource.addArticle,
     Key? key,
   }) : super(key: key);
 
@@ -94,7 +97,10 @@ class _TextFieldInputState extends State<TextFieldInput>
               height: 8.0,
             ),
           ],
-          SizedBox(
+          Container(
+            color: widget.source == DropdownSource.addArticle
+                ? ColorPalettes.white
+                : ColorPalettes.grayTextField,
             width: widget.width,
             child: TextFormField(
               autofocus: widget.isAutoFocus,

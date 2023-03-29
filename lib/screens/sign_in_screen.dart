@@ -88,7 +88,15 @@ class _SignInContentState extends State<SignInContent> {
                       controller: emailController,
                       decoration: InputDecoration(
                         hintText: 'Alamat Email',
-                        prefixIcon: const Icon(Icons.mail_outline_rounded),
+                        hintStyle:
+                            Theme.of(context).textTheme.caption?.copyWith(
+                                  color: ColorPalettes.grayHint,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                        prefixIcon: const Icon(
+                          Icons.mail_outline_rounded,
+                          color: ColorPalettes.grayHint,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                             8.0,
@@ -112,7 +120,15 @@ class _SignInContentState extends State<SignInContent> {
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Kata Sandi',
-                        prefixIcon: const Icon(Icons.lock_outline_rounded),
+                        hintStyle:
+                            Theme.of(context).textTheme.caption?.copyWith(
+                                  color: ColorPalettes.grayHint,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                        prefixIcon: const Icon(
+                          Icons.lock_outline_rounded,
+                          color: ColorPalettes.grayHint,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                             8.0,
