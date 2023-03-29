@@ -137,7 +137,7 @@ class _DeleteArticleForm extends StatelessWidget {
                       label: positiveLabel!,
                       backgroundColor: ColorPalettes.redConfirmation,
                       borderColor: ColorPalettes.redConfirmation,
-                      action: () => positiveCallback?.call(),
+                      action: () => Navigator.of(context).pop(true),
                     ),
                   ),
               ],

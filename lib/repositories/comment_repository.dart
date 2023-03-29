@@ -20,6 +20,14 @@ class CommentRepository {
     return response;
   }
 
+  Future<void> deleteComment({
+    String? idComment,
+  }) async {
+    await _commentApi.deleteComment(
+      idComment: idComment,
+    );
+  }
+
   Future<void> storeComment({
     int? idArticle,
     int? idParent,

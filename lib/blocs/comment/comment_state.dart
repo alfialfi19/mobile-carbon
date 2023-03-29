@@ -28,6 +28,16 @@ class ListCommentError extends CommentState {
   const ListCommentError(this.errorResponse);
 }
 
+class DeleteCommentLoading extends CommentState {}
+
+class DeleteCommentSuccess extends CommentState {}
+
+class DeleteCommentError extends CommentState {
+  final GenericErrorResponse errorResponse;
+
+  const DeleteCommentError(this.errorResponse);
+}
+
 class StoreCommentLoading extends CommentState {}
 
 class StoreCommentSuccess extends CommentState {}

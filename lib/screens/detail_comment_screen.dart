@@ -193,7 +193,8 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
                                               idArticle:
                                                   int.parse(widget.idArticle),
                                               idParent: int.parse(
-                                                  currentData[index].id ?? "0"),
+                                                  currentData[index].idParent ??
+                                                      "0"),
                                               idComment: data[index].id,
                                               source: widget.source,
                                               currentComment: data[index].desc,
@@ -232,19 +233,19 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
                                       data[index].createdAt ?? "-"),
                                   comment: data[index].desc,
                                   childComment: data[index].item,
-                                  optionsCallback: () => widget.source ==
-                                          Source.article.name
-                                      ? _showActionOptions(
-                                          context,
-                                          idArticle:
-                                              int.parse(widget.idArticle),
-                                          idParent:
-                                              int.parse(data[index].id ?? "0"),
-                                          idComment: data[index].id,
-                                          source: widget.source,
-                                          currentComment: data[index].desc,
-                                        )
-                                      : null,
+                                  optionsCallback: () =>
+                                      widget.source == Source.article.name
+                                          ? _showActionOptions(
+                                              context,
+                                              idArticle:
+                                                  int.parse(widget.idArticle),
+                                              idParent: int.parse(
+                                                  data[index].idParent ?? "0"),
+                                              idComment: data[index].id,
+                                              source: widget.source,
+                                              currentComment: data[index].desc,
+                                            )
+                                          : null,
                                 );
                               },
                             ),
@@ -281,11 +282,11 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
     );
 
     if (data != null) {
-      if (data == 1 || data == 2) {
+      if (data == 1) {
         _showAddComment.call(
           context,
           idArticle: idArticle,
-          idParent: idParent,
+          idParent: int.parse(idComment ?? "0"),
           source: source,
         );
       } else if (data == 2) {
@@ -298,7 +299,10 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
           currentComment: currentComment,
         );
       } else if (data == 3) {
-        _showDeleteArticle.call(context);
+        _showDeleteArticle.call(
+          context,
+          idComment: idComment,
+        );
       } else {}
     }
   }
@@ -333,7 +337,10 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
     }
   }
 
-  Future<void> _showDeleteArticle(BuildContext context) async {
+  Future<void> _showDeleteArticle(
+    BuildContext context, {
+    String? idComment,
+  }) async {
     final data = await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -349,7 +356,11 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
     );
 
     if (data != null) {
-      // do something
+      BlocProvider.of<CommentBloc>(context).add(
+        DeleteComment(
+          idComment: idComment,
+        ),
+      );
     }
   }
 
@@ -362,10 +373,18 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
       Navigator.of(context).pop();
 
       _refresh();
+    } else if (state is DeleteCommentSuccess) {
+      _refresh();
     } else if (state is StoreCommentError) {
       // close progress dialog
       Navigator.of(context).pop();
 
+      ToastUtil.error(
+        context,
+        state.errorResponse.errors ??
+            "Terjadi kesalahan, silahkan coba lagi nanti.",
+      );
+    } else if (state is DeleteCommentError) {
       ToastUtil.error(
         context,
         state.errorResponse.errors ??

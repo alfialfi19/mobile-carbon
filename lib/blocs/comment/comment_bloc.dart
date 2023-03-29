@@ -16,6 +16,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   CommentBloc(this.commentRepository) : super(CommentInitial()) {
     on<LoadComment>(_loadCommentHandler);
+    on<DeleteComment>(_deleteCommentHandler);
     on<StoreComment>(_storeCommentHandler);
   }
 
@@ -58,6 +59,34 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       );
 
       return emit(const ListCommentError(errorResponse));
+    }
+  }
+
+  Future<void> _deleteCommentHandler(
+    DeleteComment event,
+    Emitter<CommentState> emit,
+  ) async {
+    emit(DeleteCommentLoading());
+
+    try {
+      final response = await commentRepository.deleteComment(
+        idComment: event.idComment,
+      );
+
+      emit(DeleteCommentSuccess());
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(DeleteCommentError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const DeleteCommentError(errorResponse));
     }
   }
 

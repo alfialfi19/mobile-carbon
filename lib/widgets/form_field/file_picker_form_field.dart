@@ -174,22 +174,25 @@ class _FilePickerFormFieldState extends FormFieldState<List<File>> {
         children: [
           fileThumbnails[index].thumbnail,
           if (fileThumbnails[index].showClearButton)
-            GestureDetector(
-              onTap: () => _removeFileAtIndex(index),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  right: 10.0,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(7.4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.0),
-                    color: ColorPalettes.redConfirmation,
+            Positioned(
+              top: 0.0,
+              child: GestureDetector(
+                onTap: () => _removeFileAtIndex(index),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
                   ),
-                  child: const Icon(
-                    Icons.close,
-                    color: ColorPalettes.white,
-                    size: 20.0,
+                  child: Container(
+                    padding: const EdgeInsets.all(7.4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.0),
+                      color: ColorPalettes.redConfirmation,
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      color: ColorPalettes.white,
+                      size: 20.0,
+                    ),
                   ),
                 ),
               ),

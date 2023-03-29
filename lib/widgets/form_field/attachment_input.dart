@@ -221,7 +221,8 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
 
       return FileThumbnail(
         thumbnail,
-        showClearButton: showClearButton,
+        // showClearButton: showClearButton,
+        showClearButton: true,
       );
     }).toList();
   }

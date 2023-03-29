@@ -7,6 +7,7 @@ class CommentApi {
   static const commentListPath = '$commentPath/list';
   static const commentStorePath = '$commentPath/store';
   static const commentUpdatePath = '$commentPath/update';
+  static const commentDeletePath = '$commentPath/delete';
 
   static const commentActivityPath = '/comment-activity';
   static const commentActivityListPath = '$commentActivityPath/list';
@@ -55,6 +56,20 @@ class CommentApi {
     }
 
     return results;
+  }
+
+  Future<void> deleteComment({
+    String? idComment,
+  }) async {
+    var formData = FormData.fromMap({
+      'id': idComment ?? "0",
+    });
+    print("===> formData: ${formData.fields}");
+
+    await _dio.post(
+      commentDeletePath,
+      data: formData,
+    );
   }
 
   Future<void> storeComment({
