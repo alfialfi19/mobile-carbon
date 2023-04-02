@@ -12,6 +12,8 @@ class CommentApi {
   static const commentActivityPath = '/comment-activity';
   static const commentActivityListPath = '$commentActivityPath/list';
   static const commentActivityStorePath = '$commentActivityPath/store';
+  static const commentActivityUpdatePath = '$commentActivityPath/update';
+  static const commentActivityDeletePath = '$commentActivityPath/delete';
 
   final Dio _dio;
 
@@ -60,16 +62,24 @@ class CommentApi {
 
   Future<void> deleteComment({
     String? idComment,
+    String? source,
   }) async {
     var formData = FormData.fromMap({
       'id': idComment ?? "0",
     });
     print("===> formData: ${formData.fields}");
 
-    await _dio.post(
-      commentDeletePath,
-      data: formData,
-    );
+    if (source != null && source == Source.activity.name) {
+      await _dio.post(
+        commentActivityDeletePath,
+        data: formData,
+      );
+    } else {
+      await _dio.post(
+        commentDeletePath,
+        data: formData,
+      );
+    }
   }
 
   Future<void> storeComment({
@@ -90,10 +100,22 @@ class CommentApi {
     Response response;
 
     if (source != null && source == Source.activity.name) {
-      response = await _dio.post(
-        commentActivityStorePath,
-        data: formData,
-      );
+      if (idComment != null) {
+        final queries = {
+          'id': idComment,
+        };
+
+        response = await _dio.post(
+          commentActivityUpdatePath,
+          data: formData,
+          queryParameters: queries,
+        );
+      } else {
+        response = await _dio.post(
+          commentActivityStorePath,
+          data: formData,
+        );
+      }
     } else {
       if (idComment != null) {
         final queries = {

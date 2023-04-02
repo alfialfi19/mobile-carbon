@@ -164,15 +164,11 @@ class _DonationContentState extends State<DonationContent> {
                         height: 333,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24.0),
-                          image: DecorationImage(
-                            image: const AssetImage(
-                              Images.dummyDonation,
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              Images.donation,
                             ),
                             fit: BoxFit.fill,
-                            colorFilter: ColorFilter.mode(
-                              ColorPalettes.blackZill.withOpacity(0.9),
-                              BlendMode.modulate,
-                            ),
                           ),
                         ),
                       ),

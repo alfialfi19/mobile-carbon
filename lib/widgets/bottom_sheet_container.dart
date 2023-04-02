@@ -49,6 +49,9 @@ class BottomSheetContainer extends StatelessWidget {
             Container(
               width: 104.0,
               height: 5.0,
+              margin: const EdgeInsets.only(
+                top: 12.0,
+              ),
               decoration: BoxDecoration(
                 color: ColorPalettes.line,
                 borderRadius: BorderRadius.circular(2.0),

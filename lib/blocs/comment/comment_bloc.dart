@@ -71,6 +71,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     try {
       final response = await commentRepository.deleteComment(
         idComment: event.idComment,
+        source: event.source,
       );
 
       emit(DeleteCommentSuccess());

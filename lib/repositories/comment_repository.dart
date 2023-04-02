@@ -22,9 +22,11 @@ class CommentRepository {
 
   Future<void> deleteComment({
     String? idComment,
+    String? source,
   }) async {
     await _commentApi.deleteComment(
       idComment: idComment,
+      source: source,
     );
   }
 

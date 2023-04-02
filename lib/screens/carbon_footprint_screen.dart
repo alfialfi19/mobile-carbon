@@ -132,8 +132,8 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
         padding: const EdgeInsets.fromLTRB(
           40.0,
           0.0,
-          20.0,
-          20.0,
+          40.0,
+          0.0,
         ),
         child: PullToRefresh(
           controller: _scrollController,
@@ -474,6 +474,9 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                         },
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 20.0,
                   ),
                 ],
               ),

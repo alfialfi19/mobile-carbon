@@ -61,8 +61,8 @@ class _HomeContentState extends State<HomeContent> {
     return Scaffold(
       backgroundColor: ColorPalettes.backgroundLight,
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 30.0,
+        padding: const EdgeInsets.only(
+          left: 30.0,
         ),
         child: PullToRefresh(
           controller: _scrollController,
@@ -134,14 +134,21 @@ class _HomeContentState extends State<HomeContent> {
                             children: [
                               Row(
                                 children: [
-                                  SizedBox(
-                                    height: 56.0,
-                                    width: 56.0,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: data.file != null
-                                          ? Image.network(data.file!)
-                                          : Image.asset(Images.dummyProfile),
+                                  InkWell(
+                                    onTap: () =>
+                                        BlocProvider.of<MainBloc>(context).add(
+                                      MainScreenChange(index: 3),
+                                    ),
+                                    child: SizedBox(
+                                      height: 56.0,
+                                      width: 56.0,
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: data.file != null
+                                            ? Image.network(data.file!)
+                                            : Image.asset(Images.dummyProfile),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -204,6 +211,9 @@ class _HomeContentState extends State<HomeContent> {
                                   ),
                                   Expanded(
                                     child: Container(
+                                      padding: const EdgeInsets.only(
+                                        right: 20.0,
+                                      ),
                                       width: double.maxFinite,
                                       alignment: Alignment.centerRight,
                                       child: Stack(
@@ -244,63 +254,39 @@ class _HomeContentState extends State<HomeContent> {
                               const SizedBox(
                                 height: 20.0,
                               ),
-                              Stack(
-                                children: [
-                                  Container(
-                                    height: 430,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24.0),
-                                      image: DecorationImage(
-                                        image: const AssetImage(
-                                          Images.dummyHome,
-                                        ),
-                                        fit: BoxFit.fill,
-                                        colorFilter: ColorFilter.mode(
-                                          ColorPalettes.blackZill
-                                              .withOpacity(0.9),
-                                          BlendMode.modulate,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 20.0,
-                                    left: 20.0,
-                                    right: 20.0,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Apa itu Daur Karbon?",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2
-                                              ?.copyWith(
-                                                fontSize: 18.0,
-                                                color: ColorPalettes.white,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                        ),
-                                        const SizedBox(
-                                          height: 4.0,
-                                        ),
-                                        Text(
+                              SizedBox(
+                                height: 430,
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const ClampingScrollPhysics(),
+                                  children: const [
+                                    HomeHeader(
+                                      imgAsset: Images.home1,
+                                      label: "Apa itu Daur Karbon?",
+                                      caption:
                                           "Daur karbon merupakan siklus pertukaran yang berlangsung"
                                           " terus menerus antara komponen abiotik dengan komponen"
                                           " biotik yang sudah ada di bumi sejak jutaan tahun.",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .caption
-                                              ?.copyWith(
-                                                color: ColorPalettes.white,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                        ),
-                                      ],
                                     ),
-                                  ),
-                                ],
+                                    HomeHeader(
+                                      imgAsset: Images.home2,
+                                      label: "Apa manfaat Daur Karbon?",
+                                      caption:
+                                          "Manfaat daur karbon adalah mengembalikan"
+                                          " karbon yang ada di atmosfer ke organisme hidup,"
+                                          " fotosintesis, dan respirasi.",
+                                    ),
+                                    HomeHeader(
+                                      imgAsset: Images.home3,
+                                      label: "Bagaimana siklus Daur Karbon?",
+                                      caption:
+                                          "Daur karbon dimulai dari karbon yang berada"
+                                          " di atmosfer mengalami pergerakan dan berpindah"
+                                          " melalui tumbuhan (produsen), konsumen dan organisme"
+                                          " pengurai, kemudian kembali ke atmosfer.",
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(
                                 height: 52.0,
@@ -462,204 +448,218 @@ class _HomeContentState extends State<HomeContent> {
                               const SizedBox(
                                 height: 20.0,
                               ),
-                              Container(
-                                padding: const EdgeInsets.all(20.0),
-                                margin: const EdgeInsets.only(right: 16.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                      ColorPalettes.greenGradient2,
-                                      ColorPalettes.greenGradient1,
-                                    ],
-                                  ),
+                              InkWell(
+                                onTap: () =>
+                                    BlocProvider.of<MainBloc>(context).add(
+                                  MainScreenChange(index: 2),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 12.0,
-                                            vertical: 4.0,
+                                child: Container(
+                                  padding: const EdgeInsets.all(20.0),
+                                  margin: const EdgeInsets.only(right: 16.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        ColorPalettes.greenGradient2,
+                                        ColorPalettes.greenGradient1,
+                                      ],
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 12.0,
+                                              vertical: 4.0,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100.0),
+                                              color: ColorPalettes.white
+                                                  .withOpacity(0.2),
+                                            ),
+                                            child: Text(
+                                              "${data.levelDetail?.deadlineDay ?? "0"} hari lagi",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .overline
+                                                  ?.copyWith(
+                                                    color: ColorPalettes
+                                                        .backgroundZill,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                            ),
                                           ),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100.0),
-                                            color: ColorPalettes.white
-                                                .withOpacity(0.2),
+                                          const SizedBox(
+                                            height: 27.0,
                                           ),
-                                          child: Text(
-                                            "${data.levelDetail?.deadlineDay ?? "0"} hari lagi",
+                                          Text(
+                                            data.levelDetail?.level ?? "-",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .overline
+                                                .headline6
                                                 ?.copyWith(
-                                                  color: ColorPalettes
-                                                      .backgroundZill,
+                                                  color: ColorPalettes.white,
                                                   fontWeight: FontWeight.w700,
                                                 ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          height: 27.0,
-                                        ),
-                                        Text(
-                                          data.levelDetail?.level ?? "-",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6
-                                              ?.copyWith(
-                                                color: ColorPalettes.white,
-                                                fontWeight: FontWeight.w700,
+                                          const SizedBox(
+                                            height: 9.0,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                      right: 6.0,
+                                                    ),
+                                                    height: 16.0,
+                                                    width: 16.0,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color:
+                                                            ColorPalettes.white,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100.0),
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      child: data
+                                                                  .levelDetail
+                                                                  ?.participantList[
+                                                                      0]
+                                                                  .file !=
+                                                              null
+                                                          ? Image.network(
+                                                              data
+                                                                  .levelDetail!
+                                                                  .participantList[
+                                                                      0]
+                                                                  .file!,
+                                                            )
+                                                          : Image.asset(
+                                                              Images
+                                                                  .dummyProfile,
+                                                            ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                      right: 6.0,
+                                                      left: 8.0,
+                                                    ),
+                                                    height: 16.0,
+                                                    width: 16.0,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color:
+                                                            ColorPalettes.white,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100.0),
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      child: data
+                                                                  .levelDetail
+                                                                  ?.participantList[
+                                                                      1]
+                                                                  .file !=
+                                                              null
+                                                          ? Image.network(
+                                                              data
+                                                                  .levelDetail!
+                                                                  .participantList[
+                                                                      1]
+                                                                  .file!,
+                                                            )
+                                                          : Image.asset(
+                                                              Images
+                                                                  .dummyProfile,
+                                                            ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                      right: 6.0,
+                                                      left: 16.0,
+                                                    ),
+                                                    height: 16.0,
+                                                    width: 16.0,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color:
+                                                            ColorPalettes.white,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100.0),
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      child: data
+                                                                  .levelDetail
+                                                                  ?.participantList[
+                                                                      2]
+                                                                  .file !=
+                                                              null
+                                                          ? Image.network(
+                                                              data
+                                                                  .levelDetail!
+                                                                  .participantList[
+                                                                      2]
+                                                                  .file!,
+                                                            )
+                                                          : Image.asset(
+                                                              Images
+                                                                  .dummyProfile,
+                                                            ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                        ),
-                                        const SizedBox(
-                                          height: 9.0,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                    right: 6.0,
-                                                  ),
-                                                  height: 16.0,
-                                                  width: 16.0,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
+                                              Text(
+                                                "${data.levelDetail?.participant ?? "-"} peserta",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .caption
+                                                    ?.copyWith(
                                                       color:
                                                           ColorPalettes.white,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100.0),
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100),
-                                                    child: data
-                                                                .levelDetail
-                                                                ?.participantList[
-                                                                    0]
-                                                                .file !=
-                                                            null
-                                                        ? Image.network(
-                                                            data
-                                                                .levelDetail!
-                                                                .participantList[
-                                                                    0]
-                                                                .file!,
-                                                          )
-                                                        : Image.asset(
-                                                            Images.dummyProfile,
-                                                          ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                    right: 6.0,
-                                                    left: 8.0,
-                                                  ),
-                                                  height: 16.0,
-                                                  width: 16.0,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color:
-                                                          ColorPalettes.white,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100.0),
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100),
-                                                    child: data
-                                                                .levelDetail
-                                                                ?.participantList[
-                                                                    1]
-                                                                .file !=
-                                                            null
-                                                        ? Image.network(
-                                                            data
-                                                                .levelDetail!
-                                                                .participantList[
-                                                                    1]
-                                                                .file!,
-                                                          )
-                                                        : Image.asset(
-                                                            Images.dummyProfile,
-                                                          ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                    right: 6.0,
-                                                    left: 16.0,
-                                                  ),
-                                                  height: 16.0,
-                                                  width: 16.0,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color:
-                                                          ColorPalettes.white,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100.0),
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100),
-                                                    child: data
-                                                                .levelDetail
-                                                                ?.participantList[
-                                                                    2]
-                                                                .file !=
-                                                            null
-                                                        ? Image.network(
-                                                            data
-                                                                .levelDetail!
-                                                                .participantList[
-                                                                    2]
-                                                                .file!,
-                                                          )
-                                                        : Image.asset(
-                                                            Images.dummyProfile,
-                                                          ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              "${data.levelDetail?.participant ?? "-"} peserta",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .caption
-                                                  ?.copyWith(
-                                                    color: ColorPalettes.white,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Image.asset(
-                                      CarbonIcons.personGroup,
-                                    ),
-                                  ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Image.asset(
+                                        CarbonIcons.personGroup,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

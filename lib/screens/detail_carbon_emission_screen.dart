@@ -190,7 +190,7 @@ class _DetailCarbonEmissionContentState
                                 ),
                               ),
                               DetailPointComponent(
-                                iconHeaderAsset: CarbonIcons.pointActive,
+                                iconHeaderAsset: CarbonIcons.rank,
                                 caption: "Peringkat saya saat ini",
                                 captionColor: ColorPalettes.dark,
                                 pointValue: data.rank ?? "-",

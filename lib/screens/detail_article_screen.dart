@@ -106,6 +106,27 @@ class DetailArticleContent extends StatelessWidget {
                     ),
                   ),
                   expandedHeight: 300.0,
+                  // actions: [
+                  //   InkWell(
+                  //     onTap: () => Navigator.pop(context),
+                  //     child: Container(
+                  //       margin: const EdgeInsets.only(
+                  //         left: 20.0,
+                  //         top: 10.0,
+                  //       ),
+                  //       padding: const EdgeInsets.all(6.0),
+                  //       decoration: BoxDecoration(
+                  //         color: ColorPalettes.white,
+                  //         borderRadius: BorderRadius.circular(100.0),
+                  //       ),
+                  //       child: const Icon(
+                  //         Icons.chevron_left_rounded,
+                  //         size: 32.0,
+                  //         color: ColorPalettes.dark,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ],
                 ),
                 SliverToBoxAdapter(
                   child: CarbonErrorState(
@@ -129,24 +150,47 @@ class DetailArticleContent extends StatelessWidget {
                   backgroundColor: ColorPalettes.white,
                   automaticallyImplyLeading: false,
                   titleSpacing: 0.0,
-                  title: InkWell(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                        left: 20.0,
-                        top: 10.0,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                            left: 20.0,
+                            top: 10.0,
+                          ),
+                          padding: const EdgeInsets.all(6.0),
+                          decoration: BoxDecoration(
+                            color: ColorPalettes.white,
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          child: const Icon(
+                            Icons.chevron_left_rounded,
+                            size: 32.0,
+                            color: ColorPalettes.dark,
+                          ),
+                        ),
                       ),
-                      padding: const EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        color: ColorPalettes.white,
-                        borderRadius: BorderRadius.circular(100.0),
+                      InkWell(
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                            right: 20.0,
+                            top: 10.0,
+                          ),
+                          padding: const EdgeInsets.all(6.0),
+                          decoration: BoxDecoration(
+                            color: ColorPalettes.white,
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          child: const Icon(
+                            Icons.more_vert_rounded,
+                            size: 32.0,
+                            color: ColorPalettes.dark,
+                          ),
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.chevron_left_rounded,
-                        size: 32.0,
-                        color: ColorPalettes.dark,
-                      ),
-                    ),
+                    ],
                   ),
                   expandedHeight: 300.0,
                   floating: true,

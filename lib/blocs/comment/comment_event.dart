@@ -26,14 +26,17 @@ class LoadComment extends CommentEvent {
 
 class DeleteComment extends CommentEvent {
   final String? idComment;
+  final String? source;
 
   DeleteComment({
     this.idComment,
+    this.source,
   });
 
   @override
   List<Object?> get props => [
         idComment,
+        source,
       ];
 }
 

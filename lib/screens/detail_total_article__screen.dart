@@ -185,7 +185,7 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
                                 backgroundColor: ColorPalettes.white,
                               ),
                               DetailPointComponent(
-                                iconHeaderAsset: CarbonIcons.pointActive,
+                                iconHeaderAsset: CarbonIcons.rank,
                                 caption: "Peringkat saya saat ini",
                                 captionColor: ColorPalettes.dark,
                                 pointValue: data.rank ?? "-",
