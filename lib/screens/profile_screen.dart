@@ -274,7 +274,7 @@ class _ProfileContentState extends State<ProfileContent> {
           PrefHelper().removeAllPref();
 
           Navigator.of(context).pushNamedAndRemoveUntil(
-            Routes.onBoarding1,
+            Routes.onBoarding,
             (route) => false,
           );
         },

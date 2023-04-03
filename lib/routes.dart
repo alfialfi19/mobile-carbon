@@ -21,6 +21,7 @@ class Routes {
   static const myArticle = "my-article";
   static const notFound = "not-found";
   static const notification = "notification";
+  static const onBoarding = "on-boarding";
   static const onBoarding1 = "on-boarding-1";
   static const onBoarding2 = "on-boarding-2";
   static const onBoarding3 = "on-boarding-3";

@@ -24,6 +24,7 @@ export 'on_boarding_1_screen.dart';
 export 'on_boarding_2_screen.dart';
 export 'on_boarding_3_screen.dart';
 export 'on_boarding_4_screen.dart';
+export 'on_boarding_screen.dart';
 export 'point_screen.dart';
 export 'profile_screen.dart';
 export 'register_screen.dart';

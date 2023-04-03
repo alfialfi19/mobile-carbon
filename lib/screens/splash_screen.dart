@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _checkSession(context);
     Timer(
       const Duration(seconds: 1),
-      () => Navigator.pushReplacementNamed(context, Routes.onBoarding1),
+      () => Navigator.pushReplacementNamed(context, Routes.onBoarding),
     );
   }
 

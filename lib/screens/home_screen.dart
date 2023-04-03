@@ -84,7 +84,7 @@ class _HomeContentState extends State<HomeContent> {
                             PrefHelper().removeAllPref();
                             Navigator.pushReplacementNamed(
                               context,
-                              Routes.onBoarding1,
+                              Routes.onBoarding,
                             );
                           }
                         }
@@ -681,7 +681,7 @@ class _HomeContentState extends State<HomeContent> {
                             PrefHelper().removeAllPref();
                             Navigator.pushReplacementNamed(
                               context,
-                              Routes.onBoarding1,
+                              Routes.onBoarding,
                             );
                           }
                         }

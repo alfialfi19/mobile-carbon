@@ -52,6 +52,8 @@ Widget? getPageByName(
       return const NotFoundScreen();
     case Routes.notification:
       return const NotificationScreen();
+    case Routes.onBoarding:
+      return const OnBoardingScreen();
     case Routes.onBoarding1:
       return const OnBoarding1Screen();
     case Routes.onBoarding2:
