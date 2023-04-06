@@ -449,10 +449,16 @@ class _HomeContentState extends State<HomeContent> {
                                 height: 20.0,
                               ),
                               InkWell(
-                                onTap: () =>
-                                    BlocProvider.of<MainBloc>(context).add(
-                                  MainScreenChange(index: 2),
-                                ),
+                                onTap: () {
+                                  BlocProvider.of<MainBloc>(context).add(
+                                    MainScreenChange(index: 2),
+                                  );
+
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.badge,
+                                  );
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.all(20.0),
                                   margin: const EdgeInsets.only(right: 16.0),
