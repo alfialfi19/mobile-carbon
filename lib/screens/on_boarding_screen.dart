@@ -18,6 +18,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
+    PrefHelper().setAlreadyOnBoard(value: true);
+
     Navigator.pushNamed(
       context,
       Routes.signIn,

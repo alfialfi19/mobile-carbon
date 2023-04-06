@@ -55,6 +55,38 @@ class HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<HomeContent> {
   final _scrollController = ScrollController();
+  final _recommendationController = ScrollController();
+
+  final List<String> _headerImg = [
+    Images.home1,
+    Images.home2,
+    Images.home3,
+  ];
+  final List<String> _headerLabel = [
+    "Apa itu Daur Karbon?",
+    "Apa manfaat Daur Karbon?",
+    "Bagaimana siklus Daur Karbon?",
+  ];
+  final List<String> _headerCaption = [
+    "Daur karbon merupakan siklus pertukaran yang berlangsung"
+        " terus menerus antara komponen abiotik dengan komponen"
+        " biotik yang sudah ada di bumi sejak jutaan tahun.",
+    "Manfaat daur karbon adalah mengembalikan"
+        " karbon yang ada di atmosfer ke organisme hidup,"
+        " fotosintesis, dan respirasi.",
+    "Daur karbon dimulai dari karbon yang berada"
+        " di atmosfer mengalami pergerakan dan berpindah"
+        " melalui tumbuhan (produsen), konsumen dan organisme"
+        " pengurai, kemudian kembali ke atmosfer.",
+  ];
+
+  int _activeHeader = 0;
+  int _activeRecommendation = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -255,37 +287,34 @@ class _HomeContentState extends State<HomeContent> {
                                 height: 20.0,
                               ),
                               SizedBox(
-                                height: 430,
-                                child: ListView(
+                                height: 430.0,
+                                child: PageView.builder(
                                   scrollDirection: Axis.horizontal,
                                   physics: const ClampingScrollPhysics(),
-                                  children: const [
-                                    HomeHeader(
-                                      imgAsset: Images.home1,
-                                      label: "Apa itu Daur Karbon?",
-                                      caption:
-                                          "Daur karbon merupakan siklus pertukaran yang berlangsung"
-                                          " terus menerus antara komponen abiotik dengan komponen"
-                                          " biotik yang sudah ada di bumi sejak jutaan tahun.",
-                                    ),
-                                    HomeHeader(
-                                      imgAsset: Images.home2,
-                                      label: "Apa manfaat Daur Karbon?",
-                                      caption:
-                                          "Manfaat daur karbon adalah mengembalikan"
-                                          " karbon yang ada di atmosfer ke organisme hidup,"
-                                          " fotosintesis, dan respirasi.",
-                                    ),
-                                    HomeHeader(
-                                      imgAsset: Images.home3,
-                                      label: "Bagaimana siklus Daur Karbon?",
-                                      caption:
-                                          "Daur karbon dimulai dari karbon yang berada"
-                                          " di atmosfer mengalami pergerakan dan berpindah"
-                                          " melalui tumbuhan (produsen), konsumen dan organisme"
-                                          " pengurai, kemudian kembali ke atmosfer.",
-                                    ),
-                                  ],
+                                  itemCount: 3,
+                                  pageSnapping: true,
+                                  onPageChanged: (page) {
+                                    setState(() {
+                                      _activeHeader = page;
+                                    });
+                                  },
+                                  itemBuilder: (context, index) {
+                                    return HomeHeader(
+                                      imgAsset: _headerImg[index],
+                                      label: _headerLabel[index],
+                                      caption: _headerCaption[index],
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 12.0,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: indicatorsRecommendation(
+                                  3,
+                                  _activeHeader,
                                 ),
                               ),
                               const SizedBox(
@@ -772,11 +801,16 @@ class _HomeContentState extends State<HomeContent> {
                               ),
                               SizedBox(
                                 height: 340.0,
-                                child: ListView.builder(
+                                child: PageView.builder(
                                   scrollDirection: Axis.horizontal,
                                   physics: const ClampingScrollPhysics(),
-                                  shrinkWrap: true,
                                   itemCount: data.length > 3 ? 3 : data.length,
+                                  pageSnapping: true,
+                                  onPageChanged: (page) {
+                                    setState(() {
+                                      _activeRecommendation = page;
+                                    });
+                                  },
                                   itemBuilder: (context, index) {
                                     return MainArticleItem(
                                       articleLabel: data[index].title,
@@ -787,6 +821,16 @@ class _HomeContentState extends State<HomeContent> {
                                       imageUrl: data[index].file?.first,
                                     );
                                   },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 12.0,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: indicatorsRecommendation(
+                                  data.length > 3 ? 3 : data.length,
+                                  _activeRecommendation,
                                 ),
                               ),
                             ],
@@ -813,9 +857,26 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
+  List<Widget> indicatorsRecommendation(imagesLength, currentIndex) {
+    return List<Widget>.generate(imagesLength, (index) {
+      return Container(
+        margin: const EdgeInsets.only(right: 6.0),
+        height: 6.0,
+        width: index == currentIndex ? 44.0 : 6.0,
+        decoration: BoxDecoration(
+          color: index == currentIndex
+              ? ColorPalettes.grayZill
+              : ColorPalettes.placeholderZill,
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+      );
+    });
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
+    _recommendationController.dispose();
     super.dispose();
   }
 

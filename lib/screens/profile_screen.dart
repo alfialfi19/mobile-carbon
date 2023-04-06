@@ -271,10 +271,10 @@ class _ProfileContentState extends State<ProfileContent> {
         //   Routes.onBoarding1,
         // ),
         positiveCallback: () {
-          PrefHelper().removeAllPref();
+          PrefHelper().removeUserSession();
 
           Navigator.of(context).pushNamedAndRemoveUntil(
-            Routes.onBoarding,
+            Routes.signIn,
             (route) => false,
           );
         },

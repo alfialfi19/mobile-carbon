@@ -182,7 +182,7 @@ class _AddArticleContentState extends State<AddArticleContent> {
                               labelColor: ColorPalettes.dark,
                               backgroundColor: ColorPalettes.backgroundLight,
                               borderColor: ColorPalettes.line,
-                              action: () => print("==> Cancel delete article"),
+                              action: () => Navigator.pop(context),
                             ),
                           ),
                           const SizedBox(

@@ -28,10 +28,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
     String? token = await PrefHelper().getAccessToken();
 
+    bool? isAlreadyOnBoard = await PrefHelper().isAlreadyOnBoard() ?? false;
+
     if (token != null) {
       if (!mounted) return;
 
       Navigator.pushReplacementNamed(context, Routes.main);
+    } else if (isAlreadyOnBoard) {
+      if (!mounted) return;
+
+      Navigator.pushReplacementNamed(context, Routes.signIn);
     }
   }
 
