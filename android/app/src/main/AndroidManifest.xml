@@ -15,7 +15,7 @@
         android:maxSdkVersion="29" />
 
    <application
-        android:label="mobile_carbon"
+        android:label="Daur Karbon"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

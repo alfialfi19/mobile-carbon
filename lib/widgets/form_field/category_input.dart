@@ -34,6 +34,8 @@ class _CategoryInputState extends State<CategoryInput> {
   void initState() {
     if (widget.item != null) {
       _selectedItem = widget.item;
+
+      _onValueChanged(_selectedItem);
     }
     _categoryItem = widget.categoryItem;
     super.initState();
@@ -73,7 +75,7 @@ class _CategoryInputState extends State<CategoryInput> {
               // value: _balances.length == 1 ? _balances.single : null,
               // onChanged: _onValueChanged,
               // items: _constructMenuItems(),
-              value: null,
+              value: _selectedItem,
               onChanged: _onValueChanged,
               items: _constructMenuItems(),
               decoration: InputDecoration(
@@ -137,6 +139,8 @@ class _CategoryInputState extends State<CategoryInput> {
   }
 
   void _onValueChanged(String? value) {
+    print("===> masuk onValueChanged");
+    print("===> onValueChanged from : $value");
     if (value != null) {
       setState(() {
         _selectedItem = value;

@@ -62,3 +62,41 @@ class StoreArticle extends ArticleEvent {
         desc,
       ];
 }
+
+class UpdateArticle extends ArticleEvent {
+  final String? articleId;
+  final int? categoryId;
+  final String? title;
+  final List<String>? filePath;
+  final String? desc;
+
+  UpdateArticle({
+    this.articleId,
+    this.categoryId,
+    this.title,
+    this.filePath,
+    this.desc,
+  });
+
+  @override
+  List<Object?> get props => [
+        articleId,
+        categoryId,
+        title,
+        filePath,
+        desc,
+      ];
+}
+
+class DeleteArticle extends ArticleEvent {
+  final String? idArticle;
+
+  DeleteArticle({
+    this.idArticle,
+  });
+
+  @override
+  List<Object?> get props => [
+        idArticle,
+      ];
+}

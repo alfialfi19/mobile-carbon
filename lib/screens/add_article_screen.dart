@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_carbon/models/models.dart';
 import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
@@ -12,6 +13,9 @@ class AddArticleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final argument =
+        ModalRoute.of(context)!.settings.arguments as ArticleArgument?;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -33,13 +37,20 @@ class AddArticleScreen extends StatelessWidget {
           },
         ),
       ],
-      child: const AddArticleContent(),
+      child: AddArticleContent(
+        currentArticle: argument?.currentArticle,
+      ),
     );
   }
 }
 
 class AddArticleContent extends StatefulWidget {
-  const AddArticleContent({Key? key}) : super(key: key);
+  final ArticleDetail? currentArticle;
+
+  const AddArticleContent({
+    this.currentArticle,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<AddArticleContent> createState() => _AddArticleContentState();
@@ -60,6 +71,19 @@ class _AddArticleContentState extends State<AddArticleContent> {
   TextEditingController plantDescriptionController = TextEditingController();
   String _selectedCategory = "";
   String _selectedCategoryId = "";
+
+  @override
+  void initState() {
+    if (widget.currentArticle?.title != null) {
+      plantTypeController.text = widget.currentArticle!.title!;
+    }
+
+    if (widget.currentArticle?.desc != null) {
+      plantDescriptionController.text = widget.currentArticle!.desc!;
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +137,7 @@ class _AddArticleContentState extends State<AddArticleContent> {
                 return ListView(
                   children: [
                     CategoryInput(
+                      item: widget.currentArticle?.categoryName,
                       categoryItem: category,
                       callback: (value) {
                         print("===> selectedCategory: $value");
@@ -193,15 +218,30 @@ class _AddArticleContentState extends State<AddArticleContent> {
                               label: "Kirim",
                               backgroundColor: ColorPalettes.primary,
                               borderColor: ColorPalettes.primary,
-                              action: () =>
+                              action: () {
+                                if (widget.currentArticle?.id != null) {
                                   BlocProvider.of<ArticleBloc>(context).add(
-                                StoreArticle(
-                                  categoryId: int.parse(_selectedCategoryId),
-                                  title: plantTypeController.text,
-                                  filePath: filePaths,
-                                  desc: plantDescriptionController.text,
-                                ),
-                              ),
+                                    UpdateArticle(
+                                      articleId: widget.currentArticle?.id,
+                                      categoryId:
+                                          int.parse(_selectedCategoryId),
+                                      title: plantTypeController.text,
+                                      filePath: filePaths,
+                                      desc: plantDescriptionController.text,
+                                    ),
+                                  );
+                                } else {
+                                  BlocProvider.of<ArticleBloc>(context).add(
+                                    StoreArticle(
+                                      categoryId:
+                                          int.parse(_selectedCategoryId),
+                                      title: plantTypeController.text,
+                                      filePath: filePaths,
+                                      desc: plantDescriptionController.text,
+                                    ),
+                                  );
+                                }
+                              },
                             ),
                           ),
                         ],
@@ -239,6 +279,15 @@ class _AddArticleContentState extends State<AddArticleContent> {
         Routes.main,
         (route) => false,
       );
+    } else if (state is UpdateArticleSuccess) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      // navigate to other screen
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.main,
+        (route) => false,
+      );
     } else if (state is StoreArticleError) {
       // close progress dialog
       Navigator.of(context).pop();
@@ -248,7 +297,22 @@ class _AddArticleContentState extends State<AddArticleContent> {
         state.errorResponse.errors ??
             "Terjadi kesalahan, silahkan coba lagi nanti.",
       );
+    } else if (state is UpdateArticleError) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      ToastUtil.error(
+        context,
+        state.errorResponse.errors ??
+            "Terjadi kesalahan, silahkan coba lagi nanti.",
+      );
     } else if (state is StoreArticleLoading) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => const TransparentLoadingDialog(),
+      );
+    } else if (state is UpdateArticleLoading) {
       showDialog<void>(
         context: context,
         barrierDismissible: false,

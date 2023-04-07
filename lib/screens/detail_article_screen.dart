@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/blocs/blocs.dart';
+import 'package:mobile_carbon/models/models.dart';
 import 'package:mobile_carbon/routes.dart';
 
 import '../commons/commons.dart';
@@ -77,7 +78,8 @@ class DetailArticleContent extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocBuilder<ArticleBloc, ArticleState>(
+      body: BlocConsumer<ArticleBloc, ArticleState>(
+        listener: _actionBlocListener,
         builder: (context, state) {
           if (state is DetailArticleError) {
             return CustomScrollView(
@@ -173,6 +175,10 @@ class DetailArticleContent extends StatelessWidget {
                         ),
                       ),
                       InkWell(
+                        onTap: () => _showActionOptions(
+                          context,
+                          currentArticle: data,
+                        ),
                         child: Container(
                           margin: const EdgeInsets.only(
                             right: 20.0,
@@ -309,5 +315,93 @@ class DetailArticleContent extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> _showActionOptions(
+    BuildContext context, {
+    ArticleDetail? currentArticle,
+  }) async {
+    final data = await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: defaultBottomSheetShape,
+      builder: (context) => const ArticleActionBottomSheet(),
+    );
+
+    if (data != null) {
+      print("==> data: ${data}");
+      if (data == 1) {
+        Navigator.pushReplacementNamed(
+          context,
+          Routes.addArticle,
+          arguments: ArticleArgument(
+            currentArticle: currentArticle,
+          ),
+        );
+      } else if (data == 2) {
+        _showDeleteArticle.call(
+          context,
+          idArticle: currentArticle?.id,
+        );
+      } else {}
+    }
+  }
+
+  Future<void> _showDeleteArticle(
+    BuildContext context, {
+    String? idArticle,
+  }) async {
+    final data = await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: defaultBottomSheetShape,
+      builder: (context) => DeleteArticleBottomSheet(
+        label: "Hapus Artikel",
+        caption:
+            "Apakah Anda ingin menghapus artikel? Artikel yang telah dihapus "
+            "tidak dapat dikembalikan lagi.",
+        negativeCallback: () => Navigator.pop(context),
+        positiveLabel: "Hapus",
+      ),
+    );
+
+    if (data != null) {
+      BlocProvider.of<ArticleBloc>(context).add(
+        DeleteArticle(
+          idArticle: idArticle,
+        ),
+      );
+    }
+  }
+
+  void _actionBlocListener(
+    BuildContext context,
+    ArticleState state,
+  ) {
+    if (state is DeleteArticleSuccess) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      // navigate to other screen
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        Routes.main,
+        (route) => false,
+      );
+    } else if (state is DeleteArticleError) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      ToastUtil.error(
+        context,
+        state.errorResponse.errors ??
+            "Terjadi kesalahan, silahkan coba lagi nanti.",
+      );
+    } else if (state is DeleteArticleLoading) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => const TransparentLoadingDialog(),
+      );
+    }
   }
 }

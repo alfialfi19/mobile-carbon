@@ -51,3 +51,23 @@ class StoreArticleError extends ArticleState {
 
   const StoreArticleError(this.errorResponse);
 }
+
+class UpdateArticleLoading extends ArticleState {}
+
+class UpdateArticleSuccess extends ArticleState {}
+
+class UpdateArticleError extends ArticleState {
+  final GenericErrorResponse errorResponse;
+
+  const UpdateArticleError(this.errorResponse);
+}
+
+class DeleteArticleLoading extends ArticleState {}
+
+class DeleteArticleSuccess extends ArticleState {}
+
+class DeleteArticleError extends ArticleState {
+  final GenericErrorResponse errorResponse;
+
+  const DeleteArticleError(this.errorResponse);
+}

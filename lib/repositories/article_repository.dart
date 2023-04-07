@@ -47,4 +47,28 @@ class ArticleRepository {
       desc: desc,
     );
   }
+
+  Future<void> updateArticle({
+    String? articleId,
+    int? categoryId,
+    String? title,
+    List<String>? filePath,
+    String? desc,
+  }) async {
+    await _articleApi.updateArticle(
+      articleId: articleId,
+      categoryId: categoryId,
+      title: title,
+      filePath: filePath,
+      desc: desc,
+    );
+  }
+
+  Future<void> deleteArticle({
+    String? idArticle,
+  }) async {
+    await _articleApi.deleteArticle(
+      idArticle: idArticle,
+    );
+  }
 }

@@ -45,6 +45,8 @@ class MyArticleContent extends StatefulWidget {
 
 class _MyArticleContentState extends State<MyArticleContent> {
   final _scrollController = ScrollController();
+  TextEditingController searchController = TextEditingController();
+
   int _selectedTab = 0;
 
   @override
@@ -55,22 +57,91 @@ class _MyArticleContentState extends State<MyArticleContent> {
         backgroundColor: ColorPalettes.backgroundLight,
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            "Artikelku",
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  fontSize: 18.0,
-                  color: ColorPalettes.dark,
-                  fontWeight: FontWeight.w700,
+          title: Column(
+            children: [
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(
+                      Icons.chevron_left_rounded,
+                      color: ColorPalettes.dark,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: double.maxFinite,
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Artikelku",
+                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                              fontSize: 18.0,
+                              color: ColorPalettes.dark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 10.0,
                 ),
+                height: 58.0,
+                child: TextField(
+                  controller: searchController,
+                  style: Theme.of(context).textTheme.caption?.copyWith(
+                        color: ColorPalettes.dark,
+                        fontWeight: FontWeight.w400,
+                      ),
+                  onSubmitted: (value) =>
+                      BlocProvider.of<ArticleBloc>(context).add(
+                    LoadArticle(
+                      page: 1,
+                      category: _selectedTab + 1,
+                      keyword: value,
+                      me: 1,
+                    ),
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 24.0,
+                    ),
+                    labelStyle: Theme.of(context).textTheme.caption?.copyWith(
+                          color: ColorPalettes.placeholderZill,
+                          fontWeight: FontWeight.w400,
+                        ),
+                    hintText: 'Cari artikel',
+                    hintStyle: Theme.of(context).textTheme.caption?.copyWith(
+                          color: ColorPalettes.placeholderZill,
+                          fontWeight: FontWeight.w400,
+                        ),
+                    suffixIcon: const Icon(Icons.search_rounded),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        100.0,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: ColorPalettes.line,
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        100.0,
+                      ),
+                    ),
+                    focusColor: ColorPalettes.primary,
+                    filled: true,
+                    fillColor: ColorPalettes.grayTextField,
+                  ),
+                ),
+              ),
+            ],
           ),
           backgroundColor: ColorPalettes.backgroundLight,
-          leading: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: const Icon(
-              Icons.chevron_left_rounded,
-              color: ColorPalettes.dark,
-            ),
-          ),
+          leadingWidth: 0.0,
+          toolbarHeight: 130.0,
           elevation: 0.0,
           bottom: TabBar(
             isScrollable: true,
@@ -234,58 +305,8 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
             controller: _scrollController,
             physics: const ClampingScrollPhysics(),
             children: [
-              SizedBox(
-                height: 58.0,
-                child: TextField(
-                  controller: searchController,
-                  style: Theme.of(context).textTheme.caption?.copyWith(
-                        color: ColorPalettes.dark,
-                        fontWeight: FontWeight.w400,
-                      ),
-                  onSubmitted: (value) =>
-                      BlocProvider.of<ArticleBloc>(context).add(
-                    LoadArticle(
-                      page: 1,
-                      category: widget.selectedIndex + 1,
-                      keyword: value,
-                      me: 1,
-                    ),
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 24.0,
-                    ),
-                    labelStyle: Theme.of(context).textTheme.caption?.copyWith(
-                          color: ColorPalettes.placeholderZill,
-                          fontWeight: FontWeight.w400,
-                        ),
-                    hintText: 'Cari artikel',
-                    hintStyle: Theme.of(context).textTheme.caption?.copyWith(
-                          color: ColorPalettes.placeholderZill,
-                          fontWeight: FontWeight.w400,
-                        ),
-                    suffixIcon: const Icon(Icons.search_rounded),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        100.0,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: ColorPalettes.line,
-                      ),
-                      borderRadius: BorderRadius.circular(
-                        100.0,
-                      ),
-                    ),
-                    focusColor: ColorPalettes.primary,
-                    filled: true,
-                    fillColor: ColorPalettes.grayTextField,
-                  ),
-                ),
-              ),
               const SizedBox(
-                height: 30.0,
+                height: 10.0,
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -328,58 +349,8 @@ class _MyArticleTabContentState extends State<MyArticleTabContent>
             controller: _scrollController,
             physics: const ClampingScrollPhysics(),
             children: [
-              SizedBox(
-                height: 58.0,
-                child: TextField(
-                  controller: searchController,
-                  style: Theme.of(context).textTheme.caption?.copyWith(
-                        color: ColorPalettes.dark,
-                        fontWeight: FontWeight.w400,
-                      ),
-                  onSubmitted: (value) =>
-                      BlocProvider.of<ArticleBloc>(context).add(
-                    LoadArticle(
-                      page: 1,
-                      category: widget.selectedIndex + 1,
-                      keyword: value,
-                      me: 1,
-                    ),
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 24.0,
-                    ),
-                    labelStyle: Theme.of(context).textTheme.caption?.copyWith(
-                          color: ColorPalettes.placeholderZill,
-                          fontWeight: FontWeight.w400,
-                        ),
-                    hintText: 'Cari artikel',
-                    hintStyle: Theme.of(context).textTheme.caption?.copyWith(
-                          color: ColorPalettes.placeholderZill,
-                          fontWeight: FontWeight.w400,
-                        ),
-                    suffixIcon: const Icon(Icons.search_rounded),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        100.0,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: ColorPalettes.line,
-                      ),
-                      borderRadius: BorderRadius.circular(
-                        100.0,
-                      ),
-                    ),
-                    focusColor: ColorPalettes.primary,
-                    filled: true,
-                    fillColor: ColorPalettes.grayTextField,
-                  ),
-                ),
-              ),
               const SizedBox(
-                height: 30.0,
+                height: 10.0,
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),

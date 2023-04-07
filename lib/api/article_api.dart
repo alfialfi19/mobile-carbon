@@ -6,6 +6,8 @@ class ArticleApi {
   static const articleListPath = '$articlePath/list';
   static const articleDetailPath = '$articlePath/detail';
   static const articleStorePath = '$articlePath/store';
+  static const articleUpdatePath = '$articlePath/update';
+  static const articleDeletePath = '$articlePath/delete';
 
   final Dio _dio;
 
@@ -87,6 +89,53 @@ class ArticleApi {
 
     await _dio.post(
       articleStorePath,
+      data: formData,
+    );
+  }
+
+  Future<void> updateArticle({
+    String? articleId,
+    int? categoryId,
+    String? title,
+    List<String>? filePath,
+    String? desc,
+  }) async {
+    var formData = FormData.fromMap({
+      'category': categoryId,
+      'title': title,
+      'desc': desc,
+    });
+
+    if (filePath != null) {
+      int i = 1;
+      for (var file in filePath) {
+        formData.files.addAll([
+          MapEntry("file_$i", await MultipartFile.fromFile(file)),
+        ]);
+        i++;
+      }
+    }
+
+    final queries = {
+      'id': articleId,
+    };
+
+    await _dio.post(
+      articleUpdatePath,
+      data: formData,
+      queryParameters: queries,
+    );
+  }
+
+  Future<void> deleteArticle({
+    String? idArticle,
+  }) async {
+    var formData = FormData.fromMap({
+      'id': idArticle ?? "0",
+    });
+
+    await _dio.post(
+      articleDeletePath,
       data: formData,
     );
   }

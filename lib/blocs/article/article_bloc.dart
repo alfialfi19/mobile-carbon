@@ -18,6 +18,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     on<LoadArticle>(_loadArticleHandler);
     on<LoadArticleDetail>(_loadArticleDetailHandler);
     on<StoreArticle>(_storeArticleHandler);
+    on<UpdateArticle>(_updateArticleHandler);
+    on<DeleteArticle>(_deleteArticleHandler);
   }
 
   Future<void> _loadArticleHandler(
@@ -118,6 +120,66 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       );
 
       return emit(const StoreArticleError(errorResponse));
+    }
+  }
+
+  Future<void> _updateArticleHandler(
+    UpdateArticle event,
+    Emitter<ArticleState> emit,
+  ) async {
+    emit(UpdateArticleLoading());
+
+    try {
+      await articleRepository.updateArticle(
+        articleId: event.articleId,
+        categoryId: event.categoryId,
+        title: event.title,
+        filePath: event.filePath,
+        desc: event.desc,
+      );
+
+      emit(UpdateArticleSuccess());
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(UpdateArticleError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const UpdateArticleError(errorResponse));
+    }
+  }
+
+  Future<void> _deleteArticleHandler(
+    DeleteArticle event,
+    Emitter<ArticleState> emit,
+  ) async {
+    emit(DeleteArticleLoading());
+
+    try {
+      await articleRepository.deleteArticle(
+        idArticle: event.idArticle,
+      );
+
+      emit(DeleteArticleSuccess());
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(DeleteArticleError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const DeleteArticleError(errorResponse));
     }
   }
 }
