@@ -294,6 +294,7 @@ class _DetailCarbonEmissionContentState
                                           CarbonUtil.getEmisiBackgroundColor(
                                               currentData[index].categoryName ??
                                                   "-"),
+                                      showWidgetSpan: true,
                                     ),
                                   ],
                                 );
@@ -373,6 +374,7 @@ class _DetailCarbonEmissionContentState
                                   leadingBackgroundColor:
                                       CarbonUtil.getEmisiBackgroundColor(
                                           dataLog[index].categoryName ?? "-"),
+                                  showWidgetSpan: true,
                                 ),
                               ],
                             );

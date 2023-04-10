@@ -43,6 +43,11 @@ final repositoryProviders = [
       locator<MasterApi>(),
     ),
   ),
+  RepositoryProvider<NotificationRepository>(
+    create: (context) => NotificationRepository(
+      locator<NotificationApi>(),
+    ),
+  ),
   RepositoryProvider<MediaRepository>(
     create: (context) => MediaRepository(
       locator<MediaApi>(),

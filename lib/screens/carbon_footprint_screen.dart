@@ -384,6 +384,7 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                                                   currentData[index]
                                                           .categoryName ??
                                                       "-"),
+                                          showWidgetSpan: true,
                                         ),
                                       ],
                                     );
@@ -462,6 +463,7 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                                           CarbonUtil.getEmisiBackgroundColor(
                                               dataLog[index].categoryName ??
                                                   "-"),
+                                      showWidgetSpan: true,
                                     ),
                                   ],
                                 );

@@ -6,4 +6,5 @@ export 'eco_activity_repository.dart';
 export 'emisi_log_repository.dart';
 export 'master_repository.dart';
 export 'media_repository.dart';
+export 'notification_repository.dart';
 export 'summary_repository.dart';

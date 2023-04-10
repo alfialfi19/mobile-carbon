@@ -8,6 +8,7 @@ class HistoryCarbonEmission extends StatelessWidget {
   final String? pointValue;
   final Widget? leadingIcon;
   final Color? leadingBackgroundColor;
+  final bool showWidgetSpan;
 
   const HistoryCarbonEmission({
     Key? key,
@@ -16,6 +17,7 @@ class HistoryCarbonEmission extends StatelessWidget {
     this.pointValue,
     this.leadingIcon,
     this.leadingBackgroundColor,
+    this.showWidgetSpan = false,
   }) : super(key: key);
 
   @override
@@ -54,12 +56,32 @@ class HistoryCarbonEmission extends StatelessWidget {
                   overflow: TextOverflow.visible,
                 ),
                 if (caption != null)
-                  Text(
-                    caption ?? "-",
-                    style: Theme.of(context).textTheme.overline?.copyWith(
-                          color: ColorPalettes.placeholderZill,
-                          fontWeight: FontWeight.w400,
-                        ),
+                  RichText(
+                    text: TextSpan(
+                      text: caption ?? "-",
+                      style: Theme.of(context).textTheme.overline?.copyWith(
+                            color: ColorPalettes.placeholderZill,
+                            fontWeight: FontWeight.w400,
+                          ),
+                      children: [
+                        if (showWidgetSpan) ...[
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.top,
+                            child: Text(
+                              ' CO2',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .overline
+                                  ?.copyWith(
+                                    color: ColorPalettes.placeholderZill,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 6.0,
+                                  ),
+                            ),
+                          ),
+                        ]
+                      ],
+                    ),
                   ),
               ],
             ),

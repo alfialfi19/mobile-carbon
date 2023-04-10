@@ -45,6 +45,9 @@ void setupLocator() {
       () => MasterApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(
+      () => NotificationApi(locator<BaseDioClient>().dio),
+    )
+    ..registerLazySingleton(
       () => MediaApi(locator<BaseDioClient>().dio),
     )
     ..registerLazySingleton(

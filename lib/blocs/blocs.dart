@@ -8,6 +8,7 @@ export 'eco_activity/eco_activity_bloc.dart';
 export 'emisi_log/emisi_log_bloc.dart';
 export 'main/main_bloc.dart';
 export 'master/master_bloc.dart';
+export 'notification/notification_bloc.dart';
 export 'summary_emisi_log/summary_emisi_log_bloc.dart';
 export 'summary_history/summary_history_bloc.dart';
 export 'summary_rank/summary_rank_bloc.dart';

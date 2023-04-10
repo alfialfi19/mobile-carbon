@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_carbon/blocs/blocs.dart';
+import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
 
-class NotificationScreen extends StatefulWidget {
+class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            final repository =
+                RepositoryProvider.of<NotificationRepository>(context);
+
+            return NotificationBloc(repository)
+              ..add(
+                LoadNotification(
+                  status: "Aktif",
+                ),
+              );
+          },
+        ),
+      ],
+      child: const NotificationContent(),
+    );
+  }
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class NotificationContent extends StatefulWidget {
+  const NotificationContent({Key? key}) : super(key: key);
+
+  @override
+  State<NotificationContent> createState() => _NotificationContentState();
+}
+
+class _NotificationContentState extends State<NotificationContent> {
   final _scrollController = ScrollController();
 
   @override
@@ -55,6 +84,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       Theme.of(context).textTheme.bodyText1?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
+                  onTap: (index) =>
+                      BlocProvider.of<NotificationBloc>(context).add(
+                    LoadNotification(
+                      status: index == 0 ? "Aktif" : "Tidak Aktif",
+                    ),
+                  ),
                   tabs: const [
                     Tab(
                       text: 'Terbaru',
@@ -67,16 +102,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
+        body: const Padding(
+          padding: EdgeInsets.symmetric(
             horizontal: 30.0,
-            vertical: 20.0,
+            vertical: 10.0,
           ),
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
+              NotificationTabContent(
+                status: 'Aktif',
+              ),
+              NotificationTabContent(
+                status: 'Tidak Aktif',
+              ),
               // _buildTab1Widget(context),
-              _buildTab2Widget(context),
-              _buildTab2Widget(context),
+              // _buildTab2Widget(context),
+              // _buildTab2Widget(context),
             ],
           ),
         ),
@@ -191,5 +233,79 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<void> _refresh() async {
     await Future.delayed(const Duration(seconds: 2));
+  }
+}
+
+class NotificationTabContent extends StatefulWidget {
+  final String status;
+
+  const NotificationTabContent({
+    required this.status,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<NotificationTabContent> createState() => _NotificationTabContentState();
+}
+
+class _NotificationTabContentState extends State<NotificationTabContent>
+    with AutomaticKeepAliveClientMixin {
+  final _scrollControllerContent = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return BlocBuilder<NotificationBloc, NotificationState>(
+      builder: (context, state) {
+        if (state is ListNotificationError) {
+          return const CarbonErrorState();
+        }
+
+        if (state is ListNotificationEmpty) {
+          return const CarbonEmptyState();
+        }
+
+        if (state is ListNotificationLoaded) {
+          var data = state.notificationList;
+
+          return ListView.separated(
+            physics: const ClampingScrollPhysics(),
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return NotificationItem(
+                imageUrl: data[index].title != null &&
+                        data[index].title!.contains("berhasil")
+                    ? CarbonIcons.success
+                    : CarbonIcons.failed,
+                notificationLabel: data[index].title,
+                notificationCaption: data[index].desc,
+                timeStamp:
+                    DateUtil.sanitizeDateTime(data[index].createdAt ?? "-"),
+              );
+            },
+            separatorBuilder: (context, index) => Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 16.0,
+              ),
+              child: const Divider(
+                color: ColorPalettes.line,
+              ),
+            ),
+          );
+        }
+
+        return const CarbonLoadingState();
+      },
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    _scrollControllerContent.dispose();
+    super.dispose();
   }
 }
