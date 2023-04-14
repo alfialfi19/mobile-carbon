@@ -168,8 +168,14 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                                   lineWidth: 10.0,
                                   animation: true,
                                   percent: double.parse(
-                                          data.detail?.percentage ?? "0") /
-                                      100,
+                                                  data.detail?.percentage ??
+                                                      "0") /
+                                              100 <=
+                                          1.0
+                                      ? double.parse(
+                                              data.detail?.percentage ?? "0") /
+                                          100
+                                      : 100 / 100,
                                   center: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -274,6 +280,9 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                                     return SizedBox(
                                       width: 200.0,
                                       child: DetailPointComponent(
+                                        iconHeaderAsset:
+                                            CarbonUtil.getEmisiIcon(
+                                                data.list?[index].opt ?? "-"),
                                         caption: data.list?[index].opt ?? "-",
                                         captionColor: ColorPalettes.grayZill,
                                         pointValue:

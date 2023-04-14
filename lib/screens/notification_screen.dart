@@ -5,6 +5,7 @@ import 'package:mobile_carbon/repositories/repositories.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
 
 import '../commons/commons.dart';
+import '../routes.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -256,7 +257,8 @@ class _NotificationTabContentState extends State<NotificationTabContent>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return BlocBuilder<NotificationBloc, NotificationState>(
+    return BlocConsumer<NotificationBloc, NotificationState>(
+      listener: _actionBlocListener,
       builder: (context, state) {
         if (state is ListNotificationError) {
           return const CarbonErrorState();
@@ -274,6 +276,11 @@ class _NotificationTabContentState extends State<NotificationTabContent>
             itemCount: data.length,
             itemBuilder: (context, index) {
               return NotificationItem(
+                onTap: () => BlocProvider.of<NotificationBloc>(context).add(
+                  LoadDetailNotification(
+                    id: data[index].id,
+                  ),
+                ),
                 imageUrl: data[index].title != null &&
                         data[index].title!.contains("berhasil")
                     ? CarbonIcons.success
@@ -307,5 +314,50 @@ class _NotificationTabContentState extends State<NotificationTabContent>
   void dispose() {
     _scrollControllerContent.dispose();
     super.dispose();
+  }
+
+  void _actionBlocListener(
+    BuildContext context,
+    NotificationState state,
+  ) {
+    if (state is DetailNotificationLoaded) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      if (state.notificationDetail.type != null &&
+          state.notificationDetail.type == "Article") {
+        Navigator.pushReplacementNamed(
+          context,
+          Routes.detailArticle,
+          arguments: DataArgument(
+            id: state.notificationDetail.idArticle ?? "0",
+          ),
+        );
+      } else if (state.notificationDetail.type != null &&
+          state.notificationDetail.type == "Activity") {
+        Navigator.pushReplacementNamed(
+          context,
+          Routes.detailEcoUpdate,
+          arguments: DataArgument(
+            id: state.notificationDetail.idArticle ?? "0",
+          ),
+        );
+      }
+    } else if (state is DetailNotificationError) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      ToastUtil.error(
+        context,
+        state.errorResponse.errors ??
+            "Terjadi kesalahan, silahkan coba lagi nanti.",
+      );
+    } else if (state is DetailNotificationLoading) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => const TransparentLoadingDialog(),
+      );
+    }
   }
 }

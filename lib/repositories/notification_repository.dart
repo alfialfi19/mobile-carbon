@@ -15,4 +15,14 @@ class NotificationRepository {
 
     return response;
   }
+
+  Future<NotificationDetail> getDetailNotification({
+    String? id,
+  }) async {
+    final response = await _notificationApi.getDetailNotification(
+      id: id,
+    );
+
+    return response;
+  }
 }

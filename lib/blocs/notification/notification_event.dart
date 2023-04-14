@@ -14,3 +14,16 @@ class LoadNotification extends NotificationEvent {
         status,
       ];
 }
+
+class LoadDetailNotification extends NotificationEvent {
+  final String? id;
+
+  LoadDetailNotification({
+    this.id,
+  });
+
+  @override
+  List<Object?> get props => [
+        id,
+      ];
+}

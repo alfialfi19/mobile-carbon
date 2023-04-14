@@ -170,6 +170,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         phone: event.phone,
         address: event.address,
+        filePath: event.filePath,
       );
 
       emit(StoreAccountUpdateSuccess());

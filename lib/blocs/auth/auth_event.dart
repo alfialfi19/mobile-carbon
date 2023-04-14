@@ -73,12 +73,14 @@ class StoreUpdateAccount extends AuthEvent {
   final String? email;
   final String? phone;
   final String? address;
+  final String? filePath;
 
   StoreUpdateAccount(
     this.name,
     this.email,
     this.phone,
     this.address,
+    this.filePath,
   );
 
   @override
@@ -87,5 +89,6 @@ class StoreUpdateAccount extends AuthEvent {
         email,
         phone,
         address,
+        filePath,
       ];
 }

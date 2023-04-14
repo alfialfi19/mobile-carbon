@@ -106,17 +106,29 @@ class AuthApi {
     String? email,
     String? phone,
     String? address,
+    String? filePath,
   }) async {
+    print("===> filePath is: $filePath");
     var formData = FormData.fromMap({
       'full_name': name,
       'email': email,
       'phone': phone,
       'address': address,
       // 'file': await MultipartFile.fromFile(
-      //   './text.txt',
-      //   filename: 'upload.txt',
-      // )
+      //   filePath ?? "",
+      // ),
     });
+
+    if (filePath != null) {
+      formData.files.add(
+        MapEntry(
+          "file",
+          await MultipartFile.fromFile(filePath),
+        ),
+      );
+    }
+
+    print("===> formData: ${formData.fields}");
 
     await _dio.post(
       accountUpdatePath,

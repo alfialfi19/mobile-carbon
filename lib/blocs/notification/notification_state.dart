@@ -25,3 +25,17 @@ class ListNotificationError extends NotificationState {
 
   const ListNotificationError(this.errorResponse);
 }
+
+class DetailNotificationLoading extends NotificationState {}
+
+class DetailNotificationLoaded extends NotificationState {
+  final NotificationDetail notificationDetail;
+
+  const DetailNotificationLoaded(this.notificationDetail);
+}
+
+class DetailNotificationError extends NotificationState {
+  final GenericErrorResponse errorResponse;
+
+  const DetailNotificationError(this.errorResponse);
+}

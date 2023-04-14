@@ -86,6 +86,7 @@ class ArticleApi {
         i++;
       }
     }
+    print("===> formData: ${formData.fields}");
 
     await _dio.post(
       articleStorePath,

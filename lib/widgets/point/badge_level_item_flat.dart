@@ -40,9 +40,13 @@ class BadgeLevelItemFlat extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Image.asset(
-            CarbonIcons.badgeElite,
-          ),
+          badgeLabel == "Eco-Legend"
+              ? Image.asset(
+                  CarbonIcons.badgeLegend,
+                )
+              : Image.asset(
+                  CarbonIcons.badgeElite,
+                ),
           const SizedBox(
             height: 8.0,
           ),

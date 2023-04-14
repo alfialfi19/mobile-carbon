@@ -84,12 +84,14 @@ class AuthRepository {
     String? email,
     String? phone,
     String? address,
+    String? filePath,
   }) async {
     await _authApi.storeAccountUpdate(
       name: name,
       email: email,
       phone: phone,
       address: address,
+      filePath: filePath,
     );
   }
 }

@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_carbon/routes.dart';
 import 'package:mobile_carbon/widgets/widgets.dart';
@@ -71,8 +75,10 @@ class _ProfileContentState extends State<ProfileContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BlocBuilder<AuthBloc, AuthState>(
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: _actionBlocListener,
                     builder: (context, state) {
+                      print("===> blocbuilder state: $state");
                       if (state is DetailAccountError) {
                         return Container(
                           padding: const EdgeInsets.symmetric(
@@ -138,25 +144,28 @@ class _ProfileContentState extends State<ProfileContent> {
                                             ),
                                           ),
                                   ),
-                                  // Positioned(
-                                  //   bottom: 0.0,
-                                  //   right: 0.0,
-                                  //   child: Container(
-                                  //     height: 36.0,
-                                  //     width: 36.0,
-                                  //     decoration: BoxDecoration(
-                                  //       color: ColorPalettes.primary,
-                                  //       borderRadius:
-                                  //           BorderRadius.circular(100.0),
-                                  //     ),
-                                  //     alignment: Alignment.center,
-                                  //     child: const Icon(
-                                  //       Icons.camera_alt_rounded,
-                                  //       color: ColorPalettes.white,
-                                  //       size: 20.0,
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Positioned(
+                                    bottom: 0.0,
+                                    right: 0.0,
+                                    child: InkWell(
+                                      onTap: () => _onClickProfilePhoto(),
+                                      child: Container(
+                                        height: 36.0,
+                                        width: 36.0,
+                                        decoration: BoxDecoration(
+                                          color: ColorPalettes.primary,
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: const Icon(
+                                          Icons.camera_alt_rounded,
+                                          color: ColorPalettes.white,
+                                          size: 20.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -290,6 +299,98 @@ class _ProfileContentState extends State<ProfileContent> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> _onClickProfilePhoto() async {
+    await _onPickFiles();
+  }
+
+  Future<void> _onPickFiles() async {
+    FilePickerResult? pickedFile;
+
+    try {
+      pickedFile = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: [
+          FileExtensions.jpg,
+          FileExtensions.jpeg,
+          FileExtensions.png,
+        ],
+        allowMultiple: false,
+      );
+    } on PlatformException catch (err) {
+      final code = err.code;
+
+      if (code == ErrorCodePermission.storageDenied) {
+        _showToastMessage(
+          "Please allow your storage permission",
+        );
+      } else {
+        _showToastMessage(
+          "Terjadi kesalahan, silahkan coba lagi nanti",
+        );
+      }
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    if (pickedFile != null) {
+      final platformFiles = pickedFile.files;
+      final files = platformFiles
+          .where((value) => value.path != null)
+          .map((value) => File(value.path!))
+          .toList();
+      // await _addFile(files);
+      print("===> files files: $files");
+
+      BlocProvider.of<AuthBloc>(context).add(
+        StoreUpdateAccount(
+          null,
+          null,
+          null,
+          null,
+          files.first.path,
+        ),
+      );
+    }
+  }
+
+  // Actions
+  void _showToastMessage(String message) {
+    ToastUtil.info(context, message);
+  }
+
+  void _actionBlocListener(
+    BuildContext context,
+    AuthState state,
+  ) {
+    if (state is StoreAccountUpdateSuccess) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      // refresh
+      _refresh();
+    } else if (state is StoreAccountUpdateError) {
+      // close progress dialog
+      Navigator.of(context).pop();
+
+      ToastUtil.error(
+        context,
+        state.errorResponse.errors ??
+            "Terjadi kesalahan, silahkan coba lagi nanti.",
+      );
+
+      // refresh
+      _refresh();
+    } else if (state is StoreAccountUpdateLoading) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => const TransparentLoadingDialog(),
+      );
+    }
   }
 
   Future<void> _refresh() async {

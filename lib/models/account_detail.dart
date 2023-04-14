@@ -12,8 +12,11 @@ class AccountDetail extends Equatable {
   final String? phone;
   final String? address;
   final String? level;
+  @JsonKey(name: 'total_point_1')
   final String? totalPoint1;
+  @JsonKey(name: 'total_point_2')
   final String? totalPoint2;
+  @JsonKey(name: 'total_point_3')
   final String? totalPoint3;
   final String? status;
   final String? file;

@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../../commons/commons.dart';
 
 class BadgeLevelItemGradient extends StatelessWidget {
-  const BadgeLevelItemGradient({Key? key}) : super(key: key);
+  final String badgeLabel;
+
+  const BadgeLevelItemGradient({
+    required this.badgeLabel,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,7 @@ class BadgeLevelItemGradient extends StatelessWidget {
             height: 8.0,
           ),
           Text(
-            "Eco-newbie",
+            badgeLabel,
             style: Theme.of(context).textTheme.caption?.copyWith(
                   color: ColorPalettes.white,
                   fontWeight: FontWeight.w400,

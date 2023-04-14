@@ -18,10 +18,13 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
 
   NotificationBloc(this.notificationRepository) : super(NotificationInitial()) {
     on<LoadNotification>(_loadNotificationHandler);
+    on<LoadDetailNotification>(_loadDetailNotificationHandler);
   }
 
   Future<void> _loadNotificationHandler(
-      LoadNotification event, Emitter<NotificationState> emit,) async {
+    LoadNotification event,
+    Emitter<NotificationState> emit,
+  ) async {
     emit(ListNotificationLoading());
 
     try {
@@ -47,6 +50,34 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       );
 
       return emit(const ListNotificationError(errorResponse));
+    }
+  }
+
+  Future<void> _loadDetailNotificationHandler(
+    LoadDetailNotification event,
+    Emitter<NotificationState> emit,
+  ) async {
+    emit(DetailNotificationLoading());
+
+    try {
+      final response = await notificationRepository.getDetailNotification(
+        id: event.id,
+      );
+
+      emit(DetailNotificationLoaded(response));
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(DetailNotificationError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const DetailNotificationError(errorResponse));
     }
   }
 }

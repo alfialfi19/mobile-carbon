@@ -38,4 +38,19 @@ class NotificationApi {
 
     return results;
   }
+
+  Future<NotificationDetail> getDetailNotification({
+    String? id,
+  }) async {
+    final queries = {
+      'id': id ?? "0",
+    };
+
+    final response = await _dio.get(
+      notificationDetailPath,
+      queryParameters: queries,
+    );
+
+    return NotificationDetail.fromJson(response.data['data']);
+  }
 }

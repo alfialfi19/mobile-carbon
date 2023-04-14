@@ -131,7 +131,7 @@ class _AttachmentInputContentState extends State<_AttachmentInputContent> {
 
   @override
   void dispose() {
-    _attachmentBlocSubscription.cancel();
+    // _attachmentBlocSubscription.cancel();
 
     super.dispose();
   }
