@@ -34,6 +34,7 @@ class EcoActivityBloc extends Bloc<EcoActivityEvent, EcoActivityState> {
         page: event.page,
         category: event.category,
         keyword: event.keyword,
+        me: event.me,
       );
 
       if (event.currentData != null) {

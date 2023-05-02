@@ -38,6 +38,7 @@ class DetailTotalArticleScreen extends StatelessWidget {
               ..add(
                 LoadArticle(
                   page: 1,
+                  me: 1,
                 ),
               );
           },
@@ -78,6 +79,7 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
         LoadArticle(
           page: _page,
           currentData: dataLog,
+          me: 1,
         ),
       );
       _page++;
@@ -493,6 +495,7 @@ class _DetailTotalArticleContentState extends State<DetailTotalArticleContent> {
     BlocProvider.of<ArticleBloc>(context).add(
       LoadArticle(
         page: 1,
+        me: 1,
       ),
     );
   }

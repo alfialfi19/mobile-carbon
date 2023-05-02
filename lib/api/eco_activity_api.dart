@@ -14,6 +14,7 @@ class EcoActivityApi {
     int? page,
     int? category,
     String? keyword,
+    required String me,
   }) async {
     List<ArticleDetail> results = [];
 
@@ -21,6 +22,7 @@ class EcoActivityApi {
       'page': page ?? 1,
       'category': category ?? "",
       'keyword': keyword ?? "",
+      'me': me,
     };
 
     final response = await _dio.get(

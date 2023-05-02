@@ -11,11 +11,13 @@ class EcoActivityRepository {
     int? page,
     int? category,
     String? keyword,
+    required String me,
   }) async {
     final response = await _ecoActivityApi.getListEcoActivity(
       page: page,
       category: category,
       keyword: keyword,
+      me: me,
     );
 
     return response;

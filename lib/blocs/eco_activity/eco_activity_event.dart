@@ -7,12 +7,14 @@ class LoadEcoActivity extends EcoActivityEvent {
   final int? category;
   final String? keyword;
   final List<ArticleDetail>? currentData;
+  final String me;
 
   LoadEcoActivity({
     this.page,
     this.category,
     this.keyword,
     this.currentData,
+    this.me = "0",
   });
 
   @override
@@ -21,6 +23,7 @@ class LoadEcoActivity extends EcoActivityEvent {
         category,
         keyword,
         currentData,
+        me,
       ];
 }
 

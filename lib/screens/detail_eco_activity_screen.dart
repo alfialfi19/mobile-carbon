@@ -39,6 +39,7 @@ class DetailEcoActivityScreen extends StatelessWidget {
               ..add(
                 LoadEcoActivity(
                   page: 1,
+                  me: "1",
                 ),
               );
           },
@@ -78,6 +79,7 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
         LoadEcoActivity(
           page: _page,
           currentData: dataHistory,
+          me: "1",
         ),
       );
       _page++;
@@ -394,7 +396,10 @@ class _DetailEcoActivityContentState extends State<DetailEcoActivityContent> {
 
   Future<void> _refreshEcoActivity() async {
     BlocProvider.of<EcoActivityBloc>(context).add(
-      LoadEcoActivity(page: 1),
+      LoadEcoActivity(
+        page: 1,
+        me: "1",
+      ),
     );
   }
 }
