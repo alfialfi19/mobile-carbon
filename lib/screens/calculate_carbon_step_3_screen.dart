@@ -15,6 +15,9 @@ class CalculateCarbonStep3Screen extends StatelessWidget {
     final argument =
         ModalRoute.of(context)!.settings.arguments as EmisiArgument;
 
+    print("==> argument: ${argument.source}");
+    print("==> argument: ${argument.idCategory}");
+    print("==> argument: ${argument.idSubCategory}");
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -58,6 +61,25 @@ class _CalculateCarbonStep3ContentState
 
   List<String> unit = [];
   TextEditingController timeController = TextEditingController();
+
+  TextEditingController distanceController = TextEditingController();
+
+  TextEditingController wheatController = TextEditingController();
+  TextEditingController vegetableController = TextEditingController();
+  TextEditingController milkController = TextEditingController();
+
+  TextEditingController refrigeratorAmountController = TextEditingController();
+  TextEditingController refrigeratorUnitController = TextEditingController();
+  TextEditingController fanAmountController = TextEditingController();
+  TextEditingController fanUnitController = TextEditingController();
+  TextEditingController acAmountController = TextEditingController();
+  TextEditingController acUnitController = TextEditingController();
+
+  TextEditingController topsController = TextEditingController();
+  TextEditingController bottomsController = TextEditingController();
+  TextEditingController jacketsController = TextEditingController();
+
+  TextEditingController trashWeightController = TextEditingController();
 
   String _selectedUnit = "";
 
@@ -105,7 +127,7 @@ class _CalculateCarbonStep3ContentState
             shrinkWrap: true,
             children: [
               Text(
-                "Lama Perjalanan",
+                "Jarak Perjalanan",
                 style: Theme.of(context).textTheme.subtitle2?.copyWith(
                       color: ColorPalettes.dark,
                       fontWeight: FontWeight.w700,
@@ -168,6 +190,146 @@ class _CalculateCarbonStep3ContentState
                   ),
                 ],
               ),
+              TextFieldInputBackground(
+                labelText: "Jarak",
+                hintText: "Masukkan jarak",
+                maxLength: null,
+                controller: distanceController,
+                callback: (value) => print(
+                  "==> jarak: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "km",
+              ),
+              Text(
+                "Jumlah Pembelian",
+                style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                      color: ColorPalettes.dark,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              TextFieldInputBackground(
+                labelText: "Gandum",
+                hintText: "Masukkan berat gandum",
+                maxLength: null,
+                controller: wheatController,
+                callback: (value) => print(
+                  "==> gandum: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "kg",
+              ),
+              TextFieldInputBackground(
+                labelText: "Sayuran",
+                hintText: "Masukkan berat sayuran",
+                maxLength: null,
+                controller: vegetableController,
+                callback: (value) => print(
+                  "==> sayuran: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "kg",
+              ),
+              TextFieldInputBackground(
+                labelText: "Susu",
+                hintText: "Masukkan berat susu",
+                maxLength: null,
+                controller: milkController,
+                callback: (value) => print(
+                  "==> sus: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "kg",
+              ),
+              Text(
+                "Lama Penggunaan (3 bulan)",
+                style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                      color: ColorPalettes.dark,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              TextFieldInputBackground(
+                labelText: "Kulkas",
+                hintText: "Masukkan jumlah kulkas",
+                maxLength: null,
+                controller: refrigeratorAmountController,
+                callback: (value) => print(
+                  "==> jumlah kulkas: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "buah",
+              ),
+              TextFieldInputBackground(
+                labelText: "Kipas Angin",
+                hintText: "Masukkan jumlah kipas angin",
+                maxLength: null,
+                controller: fanAmountController,
+                callback: (value) => print(
+                  "==> jumlah kipas angin: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "buah",
+              ),
+              TextFieldInputBackground(
+                labelText: "AC",
+                hintText: "Masukkan jumlah ac",
+                maxLength: null,
+                controller: acAmountController,
+                callback: (value) => print(
+                  "==> jumlah ac: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "buah",
+              ),
+              Text(
+                "Jumlah Pembelian",
+                style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                      color: ColorPalettes.dark,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              TextFieldInputBackground(
+                labelText: "Atasan",
+                hintText: "Masukkan jumlah atasan",
+                maxLength: null,
+                controller: topsController,
+                callback: (value) => print(
+                  "==> atasan: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "buah",
+              ),
+              TextFieldInputBackground(
+                labelText: "Bawahan",
+                hintText: "Masukkan jumlah bawahan",
+                maxLength: null,
+                controller: bottomsController,
+                callback: (value) => print(
+                  "==> bawahan: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "buah",
+              ),
+              TextFieldInputBackground(
+                labelText: "Jaket",
+                hintText: "Masukkan jumlah jaket",
+                maxLength: null,
+                controller: jacketsController,
+                callback: (value) => print(
+                  "==> jaket: $value",
+                ),
+                keyboardType: TextInputType.number,
+                suffixLabel: "buah",
+              ),
               const SizedBox(
                 height: 50.0,
               ),
@@ -223,6 +385,20 @@ class _CalculateCarbonStep3ContentState
   @override
   void dispose() {
     timeController.dispose();
+    distanceController.dispose();
+    wheatController.dispose();
+    vegetableController.dispose();
+    milkController.dispose();
+    refrigeratorAmountController.dispose();
+    refrigeratorUnitController.dispose();
+    fanAmountController.dispose();
+    fanUnitController.dispose();
+    acAmountController.dispose();
+    acUnitController.dispose();
+    topsController.dispose();
+    bottomsController.dispose();
+    jacketsController.dispose();
+    trashWeightController.dispose();
     super.dispose();
   }
 

@@ -75,9 +75,11 @@ class _CalculateCarbonStep1ContentState
         elevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 40.0,
-          horizontal: 30.0,
+        padding: const EdgeInsets.fromLTRB(
+          30.0,
+          40.0,
+          30.0,
+          20.0,
         ),
         child: PullToRefresh(
           controller: _scrollController,
@@ -113,6 +115,7 @@ class _CalculateCarbonStep1ContentState
                         var data = state.emisiCategory;
 
                         return GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: data.length,
                           shrinkWrap: true,
                           gridDelegate:

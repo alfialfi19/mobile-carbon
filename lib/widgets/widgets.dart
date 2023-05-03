@@ -8,6 +8,7 @@ export 'carbon_error_state.dart';
 export 'carbon_loading_state.dart';
 export 'carbon_rounded_button.dart';
 export 'category_item.dart';
+export 'chip_item.dart';
 export 'eco_update/eco_update.dart';
 export 'error_toast.dart';
 export 'form_field/form_field.dart';

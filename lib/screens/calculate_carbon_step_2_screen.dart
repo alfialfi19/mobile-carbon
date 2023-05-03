@@ -100,9 +100,11 @@ class _CalculateCarbonStep2ContentState
         elevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 40.0,
-          horizontal: 30.0,
+        padding: const EdgeInsets.fromLTRB(
+          30.0,
+          40.0,
+          30.0,
+          20.0,
         ),
         child: PullToRefresh(
           controller: _scrollController,
@@ -137,37 +139,19 @@ class _CalculateCarbonStep2ContentState
                       if (state is MasterSubCategoryLoaded) {
                         var data = state.emisiCategory;
 
-                        return GridView.builder(
-                          itemCount: data.length,
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return CategoryItem(
-                              label: data[index].opt ?? "-",
-                              callback: () => onSelectedSubCategory(
-                                data[index].opt ?? "-",
-                                int.parse(data[index].id ?? "0"),
-                                data[index].unit ?? "",
-                              ),
-                              value: selectedLabel == data[index].opt,
-                              imageActive: Image.asset(
-                                width: 32.0,
-                                height: 32.0,
-                                CarbonUtil.getCategoryIcon(data[index].opt),
-                                color: ColorPalettes.white,
-                              ),
-                              imageInactive: Image.asset(
-                                width: 32.0,
-                                height: 32.0,
-                                CarbonUtil.getCategoryIcon(data[index].opt),
-                              ),
-                            );
-                          },
-                        );
+                        return Wrap(
+                            direction: Axis.horizontal,
+                            children: data.map((e) {
+                              return ChipItem(
+                                label: e.opt ?? "-",
+                                callback: () => onSelectedSubCategory(
+                                  e.opt ?? "-",
+                                  int.parse(e.id ?? "0"),
+                                  e.unit ?? "",
+                                ),
+                                value: selectedLabel == e.opt,
+                              );
+                            }).toList());
                       }
 
                       return const CarbonLoadingState();
@@ -209,6 +193,7 @@ class _CalculateCarbonStep2ContentState
                                   idCategory: widget.argument?.idCategory,
                                   idSubCategory: selectedId.toString(),
                                   unit: selectedUnit,
+                                  source: widget.label,
                                 ),
                               ),
                             ),
