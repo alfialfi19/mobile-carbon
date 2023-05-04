@@ -79,7 +79,7 @@ class _CalculateCarbonStep1ContentState
           30.0,
           40.0,
           30.0,
-          20.0,
+          0.0,
         ),
         child: PullToRefresh(
           controller: _scrollController,
@@ -153,8 +153,11 @@ class _CalculateCarbonStep1ContentState
                     height: 50.0,
                   ),
                   if (selectedId != 0)
-                    SizedBox(
+                    Container(
                       width: double.maxFinite,
+                      margin: const EdgeInsets.only(
+                        bottom: 20.0,
+                      ),
                       child: CarbonRoundedButton(
                         label: "Selanjutnya",
                         backgroundColor: ColorPalettes.primary,

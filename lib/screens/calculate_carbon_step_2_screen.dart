@@ -104,7 +104,7 @@ class _CalculateCarbonStep2ContentState
           30.0,
           40.0,
           30.0,
-          20.0,
+          0.0,
         ),
         child: PullToRefresh(
           controller: _scrollController,
@@ -164,6 +164,9 @@ class _CalculateCarbonStep2ContentState
                     width: double.maxFinite,
                     padding: const EdgeInsets.only(
                       left: 15.0,
+                    ),
+                    margin: const EdgeInsets.only(
+                      bottom: 20.0,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

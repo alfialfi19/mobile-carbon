@@ -83,6 +83,8 @@ class _CalculateCarbonStep3ContentState
 
   String _selectedUnit = "";
 
+  String? trashIngredient;
+
   @override
   void initState() {
     if (widget.argument?.unit != null) {
@@ -117,9 +119,11 @@ class _CalculateCarbonStep3ContentState
         elevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 40.0,
-          horizontal: 30.0,
+        padding: const EdgeInsets.fromLTRB(
+          40.0,
+          30.0,
+          40.0,
+          0.0,
         ),
         child: BlocListener<EmisiLogBloc, EmisiLogState>(
           listener: _actionBlocListener,
@@ -146,50 +150,50 @@ class _CalculateCarbonStep3ContentState
                   Images.humans,
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFieldInput(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                      ),
-                      contentPadding: const EdgeInsets.all(
-                        16.0,
-                      ),
-                      prefix: Container(
-                        padding: const EdgeInsets.only(
-                          right: 12.0,
-                          left: 16.0,
-                        ),
-                        child: Icon(
-                          Icons.access_time_rounded,
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      width: MediaQuery.of(context).size.width,
-                      maxLength: null,
-                      source: DropdownSource.calculateCarbon,
-                      controller: timeController,
-                      callback: (value) => print(
-                        "==> time: $value",
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: CategoryInput(
-                      width: MediaQuery.of(context).size.width,
-                      label: null,
-                      source: DropdownSource.calculateCarbon,
-                      categoryItem: unit,
-                      callback: (value) {
-                        print("===> selectedTimeCategory: $value");
-                        _selectedUnit = value;
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: TextFieldInput(
+              //         padding: const EdgeInsets.only(
+              //           left: 15.0,
+              //         ),
+              //         contentPadding: const EdgeInsets.all(
+              //           16.0,
+              //         ),
+              //         prefix: Container(
+              //           padding: const EdgeInsets.only(
+              //             right: 12.0,
+              //             left: 16.0,
+              //           ),
+              //           child: Icon(
+              //             Icons.access_time_rounded,
+              //             color: Colors.black.withOpacity(0.3),
+              //           ),
+              //         ),
+              //         keyboardType: TextInputType.number,
+              //         width: MediaQuery.of(context).size.width,
+              //         maxLength: null,
+              //         source: DropdownSource.calculateCarbon,
+              //         controller: timeController,
+              //         callback: (value) => print(
+              //           "==> time: $value",
+              //         ),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: CategoryInput(
+              //         width: MediaQuery.of(context).size.width,
+              //         label: null,
+              //         source: DropdownSource.calculateCarbon,
+              //         categoryItem: unit,
+              //         callback: (value) {
+              //           print("===> selectedTimeCategory: $value");
+              //           _selectedUnit = value;
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
               TextFieldInputBackground(
                 labelText: "Jarak",
                 hintText: "Masukkan jarak",
@@ -264,6 +268,12 @@ class _CalculateCarbonStep3ContentState
                 ),
                 keyboardType: TextInputType.number,
                 suffixLabel: "buah",
+                secondaryHintText: "Masukkan penggunaan",
+                secondaryController: refrigeratorUnitController,
+                secondaryCallback: (value) => print(
+                  "==> jumlah penggunaan kulkas: $value",
+                ),
+                secondarySuffixLabel: "jam/hari",
               ),
               TextFieldInputBackground(
                 labelText: "Kipas Angin",
@@ -275,6 +285,12 @@ class _CalculateCarbonStep3ContentState
                 ),
                 keyboardType: TextInputType.number,
                 suffixLabel: "buah",
+                secondaryHintText: "Masukkan penggunaan",
+                secondaryController: fanUnitController,
+                secondaryCallback: (value) => print(
+                  "==> jumlah penggunaan kipas angin: $value",
+                ),
+                secondarySuffixLabel: "jam/hari",
               ),
               TextFieldInputBackground(
                 labelText: "AC",
@@ -286,6 +302,12 @@ class _CalculateCarbonStep3ContentState
                 ),
                 keyboardType: TextInputType.number,
                 suffixLabel: "buah",
+                secondaryHintText: "Masukkan penggunaan",
+                secondaryController: acUnitController,
+                secondaryCallback: (value) => print(
+                  "==> jumlah penggunaan ac: $value",
+                ),
+                secondarySuffixLabel: "jam/hari",
               ),
               Text(
                 "Jumlah Pembelian",
@@ -330,6 +352,83 @@ class _CalculateCarbonStep3ContentState
                 keyboardType: TextInputType.number,
                 suffixLabel: "buah",
               ),
+              Text(
+                "Emisi Sampah",
+                style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                      color: ColorPalettes.dark,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  bottom: 24.0,
+                ),
+                height: 212.0,
+                width: 288.0,
+                child: Image.asset(
+                  Images.humans,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  0.0,
+                  6.0,
+                  0.0,
+                  6.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Kandungan Sampah",
+                      style: Theme.of(context).textTheme.caption?.copyWith(
+                            color: ColorPalettes.dark,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: ColorPalettes.grayTextField2,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Column(
+                        children: [
+                          RadioListTile(
+                            contentPadding: EdgeInsets.zero,
+                            activeColor: ColorPalettes.primary,
+                            title: const Text("Anorganik"),
+                            value: "anorganik",
+                            groupValue: trashIngredient,
+                            onChanged: (value) {
+                              setState(() {
+                                trashIngredient = value.toString();
+                              });
+                            },
+                          ),
+                          RadioListTile(
+                            contentPadding: EdgeInsets.zero,
+                            activeColor: ColorPalettes.primary,
+                            title: const Text("Organik"),
+                            value: "organik",
+                            groupValue: trashIngredient,
+                            onChanged: (value) {
+                              setState(() {
+                                trashIngredient = value.toString();
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: 50.0,
               ),
@@ -337,6 +436,9 @@ class _CalculateCarbonStep3ContentState
                 width: double.maxFinite,
                 padding: const EdgeInsets.only(
                   left: 15.0,
+                ),
+                margin: const EdgeInsets.only(
+                  bottom: 20.0,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
