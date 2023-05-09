@@ -29,4 +29,14 @@ class EmisiLogRepository {
       unit: unit,
     );
   }
+
+  Future<void> storeEmisiLogMultiple({
+    List<EmisiCategory>? listEmisi,
+    List<String>? listVal,
+  }) async {
+    await _emisiLogApi.storeEmisiLogMultiple(
+      listEmisi: listEmisi,
+      listVal: listVal,
+    );
+  }
 }

@@ -39,3 +39,19 @@ class StoreEmisiLog extends EmisiLogEvent {
         unit,
       ];
 }
+
+class StoreEmisiLogMultiple extends EmisiLogEvent {
+  final List<EmisiCategory>? listEmisi;
+  final List<String>? listVal;
+
+  StoreEmisiLogMultiple({
+    this.listEmisi,
+    this.listVal,
+  });
+
+  @override
+  List<Object?> get props => [
+        listEmisi,
+        listVal,
+      ];
+}

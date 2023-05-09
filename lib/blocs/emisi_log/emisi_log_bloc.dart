@@ -17,6 +17,7 @@ class EmisiLogBloc extends Bloc<EmisiLogEvent, EmisiLogState> {
   EmisiLogBloc(this.emisiLogRepository) : super(EmisiLogInitial()) {
     on<LoadEmisiLog>(_loadEmisiLogHandler);
     on<StoreEmisiLog>(_storeEmisiLogHandler);
+    on<StoreEmisiLogMultiple>(_storeEmisiLogMultipleHandler);
   }
 
   Future<void> _loadEmisiLogHandler(
@@ -71,6 +72,35 @@ class EmisiLogBloc extends Bloc<EmisiLogEvent, EmisiLogState> {
         idSubCategory: event.idSubCategory,
         val: event.val,
         unit: event.unit,
+      );
+
+      emit(StoreEmisiLogSuccess());
+    } on DioError catch (error) {
+      final errorResponse = error.toGenericError();
+
+      return emit(StoreEmisiLogError(errorResponse));
+    } catch (error) {
+      debugPrint("error: $error");
+      const errorResponse = GenericErrorResponse(
+        errors: 'Something wrong',
+        status: false,
+        statusCode: 409,
+      );
+
+      return emit(const StoreEmisiLogError(errorResponse));
+    }
+  }
+
+  Future<void> _storeEmisiLogMultipleHandler(
+    StoreEmisiLogMultiple event,
+    Emitter<EmisiLogState> emit,
+  ) async {
+    emit(StoreEmisiLogLoading());
+
+    try {
+      await emisiLogRepository.storeEmisiLogMultiple(
+        listEmisi: event.listEmisi,
+        listVal: event.listVal,
       );
 
       emit(StoreEmisiLogSuccess());

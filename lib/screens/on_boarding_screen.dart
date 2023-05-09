@@ -20,7 +20,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   void _onIntroEnd(context) {
     PrefHelper().setAlreadyOnBoard(value: true);
 
-    Navigator.pushNamed(
+    Navigator.pushReplacementNamed(
       context,
       Routes.signIn,
     );

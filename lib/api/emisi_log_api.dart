@@ -6,6 +6,7 @@ class EmisiLogApi {
   static const emisiLogPath = '/emisi-log';
   static const emisiLogListPath = '$emisiLogPath/list';
   static const emisiLogStorePath = '$emisiLogPath/store';
+  static const emisiLogStoreMultiplePath = '$emisiLogPath/store-multiple';
 
   final Dio _dio;
 
@@ -55,6 +56,44 @@ class EmisiLogApi {
 
     await _dio.post(
       emisiLogStorePath,
+      data: formData,
+    );
+  }
+
+  Future<void> storeEmisiLogMultiple({
+    List<EmisiCategory>? listEmisi,
+    List<String>? listVal,
+  }) async {
+    var formData = FormData();
+
+    if (listEmisi != null) {
+      int i = 0;
+
+      for (var emisi in listEmisi) {
+        formData.fields.addAll([
+          MapEntry("id_category[$i]", emisi.idCategory ?? "0"),
+          MapEntry("id_category_sub[$i]", emisi.id ?? "0"),
+          MapEntry("unit[$i]", emisi.unit ?? "0"),
+        ]);
+        i++;
+      }
+    }
+
+    if (listVal != null) {
+      int j = 0;
+
+      for (String? value in listVal) {
+        formData.fields.addAll([
+          MapEntry("val[$j]", value ?? "0"),
+        ]);
+        j++;
+      }
+    }
+
+    print("===> formData: ${formData.fields}");
+
+    await _dio.post(
+      emisiLogStoreMultiplePath,
       data: formData,
     );
   }

@@ -1,5 +1,6 @@
 export 'add_article_screen.dart';
 export 'badge_screen.dart';
+export 'calculate_carbon_final_step.dart';
 export 'calculate_carbon_step_1_screen.dart';
 export 'calculate_carbon_step_2_screen.dart';
 export 'calculate_carbon_step_3_screen.dart';

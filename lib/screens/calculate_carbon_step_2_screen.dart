@@ -4,6 +4,7 @@ import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/routes.dart';
 
 import '../commons/commons.dart';
+import '../models/models.dart';
 import '../repositories/repositories.dart';
 import '../widgets/widgets.dart';
 
@@ -69,6 +70,8 @@ class _CalculateCarbonStep2ContentState
   String selectedLabel = "";
   int selectedId = 0;
   String selectedUnit = "";
+
+  List<EmisiCategory> _selectedSubCategory = [];
 
   @override
   void initState() {
@@ -140,18 +143,31 @@ class _CalculateCarbonStep2ContentState
                         var data = state.emisiCategory;
 
                         return Wrap(
-                            direction: Axis.horizontal,
-                            children: data.map((e) {
+                          direction: Axis.horizontal,
+                          children: List<Widget>.generate(
+                            data.length,
+                            (index) {
                               return ChipItem(
-                                label: e.opt ?? "-",
-                                callback: () => onSelectedSubCategory(
-                                  e.opt ?? "-",
-                                  int.parse(e.id ?? "0"),
-                                  e.unit ?? "",
-                                ),
-                                value: selectedLabel == e.opt,
+                                label: data[index].opt ?? "-",
+                                callback: () {
+                                  setState(() {
+                                    data[index] = data[index].copyWith(
+                                      value: !data[index].value,
+                                    );
+                                  });
+
+                                  onSelectedSubCategory(
+                                    data[index].opt ?? "-",
+                                    int.parse(data[index].id ?? "0"),
+                                    data[index].unit ?? "",
+                                    subCategory: data[index],
+                                  );
+                                },
+                                value: data[index].value,
                               );
-                            }).toList());
+                            },
+                          ),
+                        );
                       }
 
                       return const CarbonLoadingState();
@@ -191,13 +207,13 @@ class _CalculateCarbonStep2ContentState
                               borderColor: ColorPalettes.primary,
                               action: () => Navigator.pushNamed(
                                 context,
-                                Routes.calculateCarbonStep3,
+                                Routes.calculateCarbonFinalStep,
                                 arguments: EmisiArgument(
-                                  idCategory: widget.argument?.idCategory,
-                                  idSubCategory: selectedId.toString(),
-                                  unit: selectedUnit,
-                                  source: widget.label,
-                                ),
+                                    idCategory: widget.argument?.idCategory,
+                                    idSubCategory: selectedId.toString(),
+                                    unit: selectedUnit,
+                                    source: widget.label,
+                                    selectedCategory: _selectedSubCategory),
                               ),
                             ),
                           ),
@@ -216,13 +232,30 @@ class _CalculateCarbonStep2ContentState
   void onSelectedSubCategory(
     String value,
     int id,
-    String unit,
-  ) {
+    String unit, {
+    EmisiCategory? subCategory,
+  }) {
     setState(() {
       selectedLabel = value;
       selectedId = id;
       selectedUnit = unit;
     });
+
+    print("===> _selectedSubCategory before: $_selectedSubCategory");
+    if (_selectedSubCategory.isNotEmpty) {
+      if (subCategory != null) {
+        if (!_selectedSubCategory.contains(subCategory)) {
+          _selectedSubCategory.add(subCategory);
+        } else {
+          _selectedSubCategory.remove(subCategory);
+        }
+      }
+    } else {
+      if (subCategory != null) {
+        print("===> enter if on else");
+        _selectedSubCategory.add(subCategory);
+      }
+    }
   }
 
   @override
