@@ -5,6 +5,7 @@ class CarbonIcons {
   static const String badge = "$iconsDir/ic-badge.png";
   static const String badgeElite = "$iconsDir/ic-badge-elite.png";
   static const String badgeLegend = "$iconsDir/ic-badge-legend.png";
+  static const String badgeNewbie = "$iconsDir/ic-badge-newbie.png";
   static const String biogas = "$iconsDir/ic-biogas.png";
   static const String car = "$iconsDir/ic-car.png";
   static const String car2 = "$iconsDir/ic-car-2.png";

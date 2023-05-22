@@ -142,7 +142,10 @@ class _TextFieldInputBackgroundState extends State<TextFieldInputBackground>
                   ),
                 ),
                 hintText: widget.hintText,
-                hintStyle: const TextStyle(height: 1.2),
+                hintStyle: const TextStyle(
+                  height: 1.2,
+                  fontSize: 14.0,
+                ),
                 // helperText: widget.required ? null : LocaleKeys.optional.tr(),
                 // helperStyle: Theme.of(context).textTheme.overline?.copyWith(
                 //       color: ColorPalettes.gray600,

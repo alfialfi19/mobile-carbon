@@ -44,9 +44,13 @@ class BadgeLevelItemFlat extends StatelessWidget {
               ? Image.asset(
                   CarbonIcons.badgeLegend,
                 )
-              : Image.asset(
-                  CarbonIcons.badgeElite,
-                ),
+              : badgeLabel == "Eco-Elite"
+                  ? Image.asset(
+                      CarbonIcons.badgeElite,
+                    )
+                  : Image.asset(
+                      CarbonIcons.badgeNewbie,
+                    ),
           const SizedBox(
             height: 8.0,
           ),

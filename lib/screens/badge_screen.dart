@@ -65,7 +65,9 @@ class _BadgeContentState extends State<BadgeContent> {
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is DetailAccountLoaded) {
+            print("===> userBadge Level: $userBadgeLevel");
             userBadgeLevel = state.accountDetail.level ?? "-";
+            print("===> userBadge Level after: $userBadgeLevel");
           }
 
           return Container(
@@ -210,7 +212,7 @@ class _BadgeContentState extends State<BadgeContent> {
                     scrollDirection: Axis.horizontal,
                     physics: const ClampingScrollPhysics(),
                     children: [
-                      if (userBadgeLevel.contains("newbie")) ...[
+                      if (userBadgeLevel.toLowerCase().contains("newbie")) ...[
                         const BadgeLevelItemGradient(
                           badgeLabel: "Eco-Newbie",
                         ),
@@ -222,7 +224,7 @@ class _BadgeContentState extends State<BadgeContent> {
                       const SizedBox(
                         width: 12.0,
                       ),
-                      if (userBadgeLevel.contains("elit")) ...[
+                      if (userBadgeLevel.toLowerCase().contains("elit")) ...[
                         const BadgeLevelItemGradient(
                           badgeLabel: "Eco-Elite",
                         ),
@@ -234,7 +236,7 @@ class _BadgeContentState extends State<BadgeContent> {
                       const SizedBox(
                         width: 12.0,
                       ),
-                      if (userBadgeLevel.contains("legen")) ...[
+                      if (userBadgeLevel.toLowerCase().contains("legen")) ...[
                         const BadgeLevelItemGradient(
                           badgeLabel: "Eco-Legend",
                         ),

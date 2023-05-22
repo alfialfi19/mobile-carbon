@@ -92,7 +92,7 @@ class _AddArticleContentState extends State<AddArticleContent> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Tambah Artikel",
+          widget.currentArticle != null ? "Ubah Artikel" : "Tambah Artikel",
           style: Theme.of(context).textTheme.subtitle1?.copyWith(
                 fontSize: 18.0,
                 color: ColorPalettes.dark,
@@ -153,12 +153,12 @@ class _AddArticleContentState extends State<AddArticleContent> {
                       height: 24.0,
                     ),
                     TextFieldInput(
-                      labelText: "Jenis Tanaman",
-                      hintText: "Masukkan jenis tanaman",
+                      labelText: "Judul",
+                      hintText: "Masukkan judul artikel",
                       maxLength: null,
                       controller: plantTypeController,
                       callback: (value) => print(
-                        "==> plant type: $value",
+                        "==> article title: $value",
                       ),
                     ),
                     const SizedBox(
@@ -181,13 +181,13 @@ class _AddArticleContentState extends State<AddArticleContent> {
                       height: 24.0,
                     ),
                     TextFieldInput(
-                      labelText: "Deskripsi Tanaman",
-                      hintText: "Masukkan deskripsi tanaman",
+                      labelText: "Isi Artikel",
+                      hintText: "Masukkan isi artikel",
                       maxLength: null,
                       minLines: 5,
                       controller: plantDescriptionController,
                       callback: (value) => print(
-                        "==> plant description: $value",
+                        "==> description article: $value",
                       ),
                     ),
                     const SizedBox(
@@ -274,6 +274,11 @@ class _AddArticleContentState extends State<AddArticleContent> {
       // close progress dialog
       Navigator.of(context).pop();
 
+      ToastUtil.info(
+        context,
+        "Berhasil menambahkan artikel.",
+      );
+
       // navigate to other screen
       Navigator.of(context).pushNamedAndRemoveUntil(
         Routes.main,
@@ -282,6 +287,11 @@ class _AddArticleContentState extends State<AddArticleContent> {
     } else if (state is UpdateArticleSuccess) {
       // close progress dialog
       Navigator.of(context).pop();
+
+      ToastUtil.info(
+        context,
+        "Berhasil mengupdate artikel.",
+      );
 
       // navigate to other screen
       Navigator.of(context).pushNamedAndRemoveUntil(

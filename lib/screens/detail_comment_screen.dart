@@ -366,8 +366,18 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
       // close progress dialog
       Navigator.of(context).pop();
 
+      ToastUtil.info(
+        context,
+        "Berhasil memperbarui komentar.",
+      );
+
       _refresh();
     } else if (state is DeleteCommentSuccess) {
+      ToastUtil.info(
+        context,
+        "Berhasil menghapus komentar.",
+      );
+
       _refresh();
     } else if (state is StoreCommentError) {
       // close progress dialog

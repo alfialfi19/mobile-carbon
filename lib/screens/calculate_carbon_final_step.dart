@@ -122,8 +122,9 @@ class _CalculateCarbonFinalStepContentState
                 itemBuilder: (context, index) {
                   return TextFieldInputBackground(
                     labelText: widget.selectedCategory[index].opt,
-                    hintText:
-                        "Masukkan berat ${widget.selectedCategory[index].opt}",
+                    hintText: "Masukkan data jejak karbon",
+                    // hintText:
+                    //     "Masukkan berat ${widget.selectedCategory[index].opt}",
                     maxLength: null,
                     controller: _controllers[index],
                     callback: (value) => print(

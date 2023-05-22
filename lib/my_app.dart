@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         navigatorKey: navigatorKey,
         initialRoute: Routes.splash,
-        title: "Carbon App",
+        title: "Daur Karbon",
         debugShowCheckedModeBanner: false,
         theme: appTheme,
         onGenerateRoute: (settings) {

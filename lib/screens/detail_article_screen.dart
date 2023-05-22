@@ -382,6 +382,11 @@ class DetailArticleContent extends StatelessWidget {
       // close progress dialog
       Navigator.of(context).pop();
 
+      ToastUtil.info(
+        context,
+        "Berhasil menghapus artikel.",
+      );
+
       // navigate to other screen
       Navigator.of(context).pushNamedAndRemoveUntil(
         Routes.main,
