@@ -21,7 +21,7 @@ extension StringExtension on String {
     if (this == "1") {
       return "Tanamanku";
     } else if (this == "2") {
-      return "Manggot";
+      return "Maggot";
     } else if (this == "3") {
       return "Biogas";
     } else if (this == "4") {

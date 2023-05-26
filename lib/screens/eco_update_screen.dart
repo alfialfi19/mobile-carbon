@@ -138,7 +138,7 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
               Tab(
                 text: 'Tanamanku',
               ),
-              Tab(text: 'Manggot'),
+              Tab(text: 'Maggot'),
               Tab(
                 text: 'Biogas',
               ),

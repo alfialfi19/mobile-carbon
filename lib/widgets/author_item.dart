@@ -24,28 +24,35 @@ class AuthorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          margin: const EdgeInsets.only(right: 8.0),
-          height: 24.0,
-          width: 24.0,
-          child: imageUrl != null
-              ? CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    imageUrl!,
+        Expanded(
+          flex: 1,
+          child: Container(
+            margin: const EdgeInsets.only(right: 8.0),
+            height: 24.0,
+            width: 24.0,
+            child: imageUrl != null
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      imageUrl!,
+                    ),
+                  )
+                : const CircleAvatar(
+                    backgroundImage: AssetImage(
+                      Images.dummyProfile,
+                    ),
                   ),
-                )
-              : const CircleAvatar(
-                  backgroundImage: AssetImage(
-                    Images.dummyProfile,
-                  ),
-                ),
+          ),
         ),
-        Text(
-          author ?? "-",
-          style: Theme.of(context).textTheme.caption?.copyWith(
-                color: authorTextColor ?? ColorPalettes.white,
-                fontWeight: FontWeight.w700,
-              ),
+        Expanded(
+          flex: 3,
+          child: Text(
+            author ?? "-",
+            style: Theme.of(context).textTheme.caption?.copyWith(
+                  color: authorTextColor ?? ColorPalettes.white,
+                  fontWeight: FontWeight.w700,
+                ),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -56,12 +63,15 @@ class AuthorItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.0),
           ),
         ),
-        Text(
-          dateCreated ?? "-",
-          style: Theme.of(context).textTheme.caption?.copyWith(
-                color: dateTextColor ?? ColorPalettes.white,
-                fontWeight: FontWeight.w400,
-              ),
+        Expanded(
+          flex: 2,
+          child: Text(
+            dateCreated ?? "-",
+            style: Theme.of(context).textTheme.caption?.copyWith(
+                  color: dateTextColor ?? ColorPalettes.white,
+                  fontWeight: FontWeight.w400,
+                ),
+          ),
         ),
       ],
     );

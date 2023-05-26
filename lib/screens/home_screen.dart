@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_carbon/blocs/article/article_bloc.dart';
 import 'package:mobile_carbon/blocs/blocs.dart';
 import 'package:mobile_carbon/commons/commons.dart';
 import 'package:mobile_carbon/routes.dart';
@@ -782,16 +781,25 @@ class _HomeContentState extends State<HomeContent> {
                                         ),
                                   ),
                                   InkWell(
-                                    onTap: () {},
-                                    child: Text(
-                                      "Lihat Semua",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption
-                                          ?.copyWith(
-                                            color: ColorPalettes.primary,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                    onTap: () {
+                                      BlocProvider.of<MainBloc>(context).add(
+                                        MainScreenChange(index: 1),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 20.0,
+                                      ),
+                                      child: Text(
+                                        "Lihat Semua",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            ?.copyWith(
+                                              color: ColorPalettes.primary,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
                                     ),
                                   )
                                 ],
@@ -819,6 +827,13 @@ class _HomeContentState extends State<HomeContent> {
                                       dateCreated: DateUtil.sanitizeDateTime(
                                           data[index].createdAt!),
                                       imageUrl: data[index].file?.first,
+                                      onTap: () => Navigator.pushNamed(
+                                        context,
+                                        Routes.detailArticle,
+                                        arguments: DataArgument(
+                                          id: data[index].id ?? "0",
+                                        ),
+                                      ),
                                     );
                                   },
                                 ),

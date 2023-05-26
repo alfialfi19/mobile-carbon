@@ -59,7 +59,7 @@ class AddArticleContent extends StatefulWidget {
 class _AddArticleContentState extends State<AddArticleContent> {
   final List<String> _categoryItem = [
     "Tanamanku",
-    "Manggot",
+    "Maggot",
     "Biogas",
     "Listrik Ramah Lingkungan",
   ];
