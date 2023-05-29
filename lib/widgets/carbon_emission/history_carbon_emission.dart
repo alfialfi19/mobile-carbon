@@ -91,12 +91,28 @@ class HistoryCarbonEmission extends StatelessWidget {
             child: Container(
               width: double.maxFinite,
               alignment: Alignment.centerRight,
-              child: Text(
-                pointValue ?? "- poin",
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      color: ColorPalettes.primary,
-                      fontWeight: FontWeight.w700,
-                    ),
+              child: RichText(
+                text: TextSpan(
+                  text: pointValue ?? "- kg",
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: ColorPalettes.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                  children: [
+                    if (showWidgetSpan)
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.top,
+                        child: Text(
+                          ' CO2',
+                          style: Theme.of(context).textTheme.caption?.copyWith(
+                                fontSize: 10.0,
+                                color: ColorPalettes.primary,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

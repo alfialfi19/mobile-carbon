@@ -4,7 +4,7 @@ import 'package:mobile_carbon/commons/commons.dart';
 class CarbonUtil {
   static String getEmisiIcon(String category) {
     if (category == 'Makanan') {
-      return CarbonIcons.food;
+      return CarbonIcons.food2;
     } else if (category == 'Alat Elektronik') {
       return CarbonIcons.tv;
     } else if (category == 'Listrik Ramah Lingkungan') {
@@ -12,9 +12,9 @@ class CarbonUtil {
     } else if (category == 'Sampah') {
       return CarbonIcons.trash;
     } else if (category == 'Transportasi') {
-      return CarbonIcons.train;
+      return CarbonIcons.car3;
     } else {
-      return CarbonIcons.food2;
+      return CarbonIcons.cloth2;
     }
   }
 
@@ -28,6 +28,8 @@ class CarbonUtil {
     } else if (category == 'Sampah') {
       return ColorPalettes.green.withOpacity(0.15);
     } else if (category == 'Transportasi') {
+      return ColorPalettes.blue.withOpacity(0.15);
+    } else if (category == 'Pakaian') {
       return ColorPalettes.blue.withOpacity(0.15);
     } else {
       return ColorPalettes.orange.withOpacity(0.1);

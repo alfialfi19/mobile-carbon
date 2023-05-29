@@ -460,8 +460,7 @@ class _CarbonFootprintContentState extends State<CarbonFootprintContent> {
                                           "${dataLog[index].categoryName} ${dataLog[index].categorySubName}",
                                       caption:
                                           "${dataLog[index].val} ${dataLog[index].unit}",
-                                      pointValue:
-                                          "${dataLog[index].totalPoint} poin",
+                                      pointValue: "${dataLog[index].result} kg",
                                       leadingIcon: Image.asset(
                                         CarbonUtil.getEmisiIcon(
                                             dataLog[index].categoryName ?? "-"),

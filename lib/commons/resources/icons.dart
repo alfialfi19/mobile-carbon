@@ -9,9 +9,11 @@ class CarbonIcons {
   static const String biogas = "$iconsDir/ic-biogas.png";
   static const String car = "$iconsDir/ic-car.png";
   static const String car2 = "$iconsDir/ic-car-2.png";
+  static const String car3 = "$iconsDir/ic-car-3.png";
   static const String carbon = "$iconsDir/ic-carbon.png";
   static const String carbonFootprint = "$iconsDir/ic-carbon-footprint.png";
   static const String cloth = "$iconsDir/ic-cloth.png";
+  static const String cloth2 = "$iconsDir/ic-cloth-2.png";
   static const String coin = "$iconsDir/ic-coin.png";
   static const String comment = "$iconsDir/ic-comment.png";
   static const String donation = "$iconsDir/ic-donation.png";
