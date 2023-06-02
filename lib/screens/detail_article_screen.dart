@@ -33,6 +33,7 @@ class DetailArticleScreen extends StatelessWidget {
       ],
       child: DetailArticleContent(
         id: argument.id,
+        source: argument.source,
       ),
     );
   }
@@ -40,9 +41,11 @@ class DetailArticleScreen extends StatelessWidget {
 
 class DetailArticleContent extends StatelessWidget {
   final String id;
+  final String? source;
 
   const DetailArticleContent({
     required this.id,
+    this.source,
     Key? key,
   }) : super(key: key);
 
@@ -174,28 +177,29 @@ class DetailArticleContent extends StatelessWidget {
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () => _showActionOptions(
-                          context,
-                          currentArticle: data,
+                      if (source == null)
+                        InkWell(
+                          onTap: () => _showActionOptions(
+                            context,
+                            currentArticle: data,
+                          ),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              right: 20.0,
+                              top: 10.0,
+                            ),
+                            padding: const EdgeInsets.all(6.0),
+                            decoration: BoxDecoration(
+                              color: ColorPalettes.white,
+                              borderRadius: BorderRadius.circular(100.0),
+                            ),
+                            child: const Icon(
+                              Icons.more_vert_rounded,
+                              size: 32.0,
+                              color: ColorPalettes.dark,
+                            ),
+                          ),
                         ),
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                            right: 20.0,
-                            top: 10.0,
-                          ),
-                          padding: const EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                            color: ColorPalettes.white,
-                            borderRadius: BorderRadius.circular(100.0),
-                          ),
-                          child: const Icon(
-                            Icons.more_vert_rounded,
-                            size: 32.0,
-                            color: ColorPalettes.dark,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   expandedHeight: 300.0,

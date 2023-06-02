@@ -185,60 +185,67 @@ class _HomeContentState extends State<HomeContent> {
                                   const SizedBox(
                                     width: 20.0,
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          text: "Halo, ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle1
-                                              ?.copyWith(
-                                                color: ColorPalettes.black,
-                                                fontWeight: FontWeight.w400,
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "Halo, ",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1
+                                                ?.copyWith(
+                                                  color: ColorPalettes.black,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                            children: [
+                                              TextSpan(
+                                                text: data.fullName ?? "",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1
+                                                    ?.copyWith(
+                                                      color:
+                                                          ColorPalettes.black,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
                                               ),
-                                          children: [
-                                            TextSpan(
-                                              text: data.fullName ?? "",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle1
-                                                  ?.copyWith(
-                                                    color: ColorPalettes.black,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 6.0,
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12.0,
-                                          vertical: 4.0,
+                                        const SizedBox(
+                                          height: 6.0,
                                         ),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(100.0),
-                                          color: ColorPalettes.primary
-                                              .withOpacity(0.2),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0,
+                                            vertical: 4.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100.0),
+                                            color: ColorPalettes.primary
+                                                .withOpacity(0.2),
+                                          ),
+                                          child: Text(
+                                            data.levelDetail?.level ?? "-",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption
+                                                ?.copyWith(
+                                                  color: ColorPalettes.primary,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          ),
                                         ),
-                                        child: Text(
-                                          data.levelDetail?.level ?? "-",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .caption
-                                              ?.copyWith(
-                                                color: ColorPalettes.primary,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   Expanded(
                                     child: Container(
@@ -832,6 +839,7 @@ class _HomeContentState extends State<HomeContent> {
                                         Routes.detailArticle,
                                         arguments: DataArgument(
                                           id: data[index].id ?? "0",
+                                          source: "ecoUpdate",
                                         ),
                                       ),
                                     );

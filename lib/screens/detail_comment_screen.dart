@@ -144,6 +144,7 @@ class _DetailCommentContentState extends State<DetailCommentContent> {
           slivers: [
             SliverToBoxAdapter(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Semua Komentar",

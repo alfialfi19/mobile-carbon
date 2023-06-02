@@ -15,16 +15,31 @@ class EcoUpdateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<EcoActivityBloc>(
+        // BlocProvider<EcoActivityBloc>(
+        //   create: (context) {
+        //     final repository =
+        //         RepositoryProvider.of<EcoActivityRepository>(context);
+        //
+        //     return EcoActivityBloc(repository)
+        //       ..add(
+        //         LoadEcoActivity(
+        //           page: 1,
+        //           category: 1,
+        //         ),
+        //       );
+        //   },
+        // ),
+        BlocProvider<ArticleBloc>(
           create: (context) {
             final repository =
-                RepositoryProvider.of<EcoActivityRepository>(context);
+                RepositoryProvider.of<ArticleRepository>(context);
 
-            return EcoActivityBloc(repository)
+            return ArticleBloc(repository)
               ..add(
-                LoadEcoActivity(
+                LoadArticle(
                   page: 1,
                   category: 1,
+                  me: 0,
                 ),
               );
           },
@@ -71,12 +86,20 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
                     color: ColorPalettes.dark,
                     fontWeight: FontWeight.w400,
                   ),
-              onSubmitted: (value) =>
-                  BlocProvider.of<EcoActivityBloc>(context).add(
-                LoadEcoActivity(
+              // onSubmitted: (value) =>
+              //     BlocProvider.of<EcoActivityBloc>(context).add(
+              //   LoadEcoActivity(
+              //     page: 1,
+              //     category: _selectedTab + 1,
+              //     keyword: value,
+              //   ),
+              // ),
+              onSubmitted: (value) => BlocProvider.of<ArticleBloc>(context).add(
+                LoadArticle(
                   page: 1,
                   category: _selectedTab + 1,
                   keyword: value,
+                  me: 0,
                 ),
               ),
               decoration: InputDecoration(
@@ -127,10 +150,17 @@ class _EcoUpdateContentState extends State<EcoUpdateContent> {
               _selectedTab = index;
               searchController.clear();
 
-              BlocProvider.of<EcoActivityBloc>(context).add(
-                LoadEcoActivity(
+              // BlocProvider.of<EcoActivityBloc>(context).add(
+              //   LoadEcoActivity(
+              //     page: 1,
+              //     category: _selectedTab + 1,
+              //   ),
+              // );
+              BlocProvider.of<ArticleBloc>(context).add(
+                LoadArticle(
                   page: 1,
                   category: _selectedTab + 1,
+                  me: 0,
                 ),
               );
             },
@@ -230,10 +260,18 @@ class _EcoTabContentState extends State<EcoTabContent>
     if (_scrollController.position.extentAfter <= 0 && !_isLoading) {
       _isLoading = true;
 
-      BlocProvider.of<EcoActivityBloc>(context).add(
-        LoadEcoActivity(
+      // BlocProvider.of<EcoActivityBloc>(context).add(
+      //   LoadEcoActivity(
+      //     page: _page,
+      //     category: widget.categoryId,
+      //     currentData: data,
+      //   ),
+      // );
+      BlocProvider.of<ArticleBloc>(context).add(
+        LoadArticle(
           page: _page,
           category: widget.categoryId,
+          me: 0,
           currentData: data,
         ),
       );
@@ -245,17 +283,17 @@ class _EcoTabContentState extends State<EcoTabContent>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return BlocBuilder<EcoActivityBloc, EcoActivityState>(
+    return BlocBuilder<ArticleBloc, ArticleState>(
       builder: (context, state) {
-        if (state is ListEcoActivityError) {
+        if (state is ListArticleError) {
           return const CarbonErrorState();
         }
 
-        if (state is ListEcoActivityEmpty) {
+        if (state is ListArticleEmpty) {
           return const CarbonEmptyState();
         }
 
-        if (state is ListEcoActivityLoadingPaging) {
+        if (state is ListArticleLoadingPaging) {
           var currentData = data;
 
           return Padding(
@@ -271,9 +309,16 @@ class _EcoTabContentState extends State<EcoTabContent>
                   authorImg: currentData.first.writerImg,
                   dateCreated: DateUtil.sanitizeDateTime(
                       currentData.first.createdAt ?? "-"),
+                  // onTap: () => Navigator.pushNamed(
+                  //   context,
+                  //   Routes.detailEcoUpdate,
+                  //   arguments: DataArgument(
+                  //     id: currentData.first.id ?? "0",
+                  //   ),
+                  // ),
                   onTap: () => Navigator.pushNamed(
                     context,
-                    Routes.detailEcoUpdate,
+                    Routes.detailArticle,
                     arguments: DataArgument(
                       id: currentData.first.id ?? "0",
                     ),
@@ -307,9 +352,16 @@ class _EcoTabContentState extends State<EcoTabContent>
                       imageUrl: currentData[index].file?.first,
                       createdAt: DateUtil.sanitizeDateTime(
                           currentData[index].createdAt ?? "-"),
+                      // action: () => Navigator.pushNamed(
+                      //   context,
+                      //   Routes.detailEcoUpdate,
+                      //   arguments: DataArgument(
+                      //     id: currentData[index].id ?? "0",
+                      //   ),
+                      // ),
                       action: () => Navigator.pushNamed(
                         context,
-                        Routes.detailEcoUpdate,
+                        Routes.detailArticle,
                         arguments: DataArgument(
                           id: currentData[index].id ?? "0",
                         ),
@@ -330,8 +382,8 @@ class _EcoTabContentState extends State<EcoTabContent>
           );
         }
 
-        if (state is ListEcoActivityLoaded) {
-          data = state.ecoActivityList;
+        if (state is ListArticleLoaded) {
+          data = state.articleList;
           _isLoading = false;
 
           return Padding(
@@ -347,9 +399,16 @@ class _EcoTabContentState extends State<EcoTabContent>
                   authorImg: data.first.writerImg,
                   dateCreated:
                       DateUtil.sanitizeDateTime(data.first.createdAt ?? "-"),
+                  // onTap: () => Navigator.pushNamed(
+                  //   context,
+                  //   Routes.detailEcoUpdate,
+                  //   arguments: DataArgument(
+                  //     id: data.first.id ?? "0",
+                  //   ),
+                  // ),
                   onTap: () => Navigator.pushNamed(
                     context,
-                    Routes.detailEcoUpdate,
+                    Routes.detailArticle,
                     arguments: DataArgument(
                       id: data.first.id ?? "0",
                     ),
@@ -383,11 +442,19 @@ class _EcoTabContentState extends State<EcoTabContent>
                       imageUrl: data[index].file?.first,
                       createdAt: DateUtil.sanitizeDateTime(
                           data[index].createdAt ?? "-"),
+                      // action: () => Navigator.pushNamed(
+                      //   context,
+                      //   Routes.detailEcoUpdate,
+                      //   arguments: DataArgument(
+                      //     id: data[index].id ?? "0",
+                      //   ),
+                      // ),
                       action: () => Navigator.pushNamed(
                         context,
-                        Routes.detailEcoUpdate,
+                        Routes.detailArticle,
                         arguments: DataArgument(
                           id: data[index].id ?? "0",
+                          source: "ecoUpdate",
                         ),
                       ),
                     );

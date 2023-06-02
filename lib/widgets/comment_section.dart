@@ -139,7 +139,7 @@ class CommentItem extends StatelessWidget {
       children: [
         Row(
           children: [
-            AuthorItem(
+            AuthorItemComment(
               imageUrl: imgUrl,
               author: author,
               dateCreated: createdAt,
