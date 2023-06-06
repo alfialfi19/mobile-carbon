@@ -564,10 +564,10 @@ class _HomeContentState extends State<HomeContent> {
                                                               ?.participantList
                                                               .isNotNullOrEmpty ??
                                                           false) &&
-                                                      data.levelDetail
-                                                                  ?.participantList[
-                                                              0] !=
-                                                          null)
+                                                      data
+                                                          .levelDetail!
+                                                          .participantList
+                                                          .isNotEmpty)
                                                     Container(
                                                       margin:
                                                           const EdgeInsets.only(
@@ -613,10 +613,11 @@ class _HomeContentState extends State<HomeContent> {
                                                               ?.participantList
                                                               .isNotNullOrEmpty ??
                                                           false) &&
-                                                      data.levelDetail
-                                                                  ?.participantList[
-                                                              1] !=
-                                                          null)
+                                                      data
+                                                              .levelDetail!
+                                                              .participantList
+                                                              .length >
+                                                          1)
                                                     Container(
                                                       margin:
                                                           const EdgeInsets.only(
@@ -663,10 +664,11 @@ class _HomeContentState extends State<HomeContent> {
                                                               ?.participantList
                                                               .isNotNullOrEmpty ??
                                                           false) &&
-                                                      data.levelDetail
-                                                                  ?.participantList[
-                                                              2] !=
-                                                          null)
+                                                      data
+                                                              .levelDetail!
+                                                              .participantList
+                                                              .length >
+                                                          2)
                                                     Container(
                                                       margin:
                                                           const EdgeInsets.only(
