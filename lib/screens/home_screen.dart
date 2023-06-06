@@ -559,125 +559,155 @@ class _HomeContentState extends State<HomeContent> {
                                             children: [
                                               Stack(
                                                 children: [
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                      right: 6.0,
-                                                    ),
-                                                    height: 16.0,
-                                                    width: 16.0,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color:
-                                                            ColorPalettes.white,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100.0),
-                                                    ),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100),
-                                                      child: data
-                                                                  .levelDetail
+                                                  if ((data
+                                                              .levelDetail
+                                                              ?.participantList
+                                                              .isNotNullOrEmpty ??
+                                                          false) &&
+                                                      data.levelDetail
                                                                   ?.participantList[
-                                                                      0]
-                                                                  .file !=
-                                                              null
-                                                          ? Image.network(
-                                                              data
-                                                                  .levelDetail!
-                                                                  .participantList[
-                                                                      0]
-                                                                  .file!,
-                                                            )
-                                                          : Image.asset(
-                                                              Images
-                                                                  .dummyProfile,
-                                                            ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                      right: 6.0,
-                                                      left: 8.0,
-                                                    ),
-                                                    height: 16.0,
-                                                    width: 16.0,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color:
-                                                            ColorPalettes.white,
+                                                              0] !=
+                                                          null)
+                                                    Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                        right: 6.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100.0),
-                                                    ),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100),
-                                                      child: data
-                                                                  .levelDetail
-                                                                  ?.participantList[
-                                                                      1]
-                                                                  .file !=
-                                                              null
-                                                          ? Image.network(
-                                                              data
-                                                                  .levelDetail!
-                                                                  .participantList[
-                                                                      1]
-                                                                  .file!,
-                                                            )
-                                                          : Image.asset(
-                                                              Images
-                                                                  .dummyProfile,
-                                                            ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                      right: 6.0,
-                                                      left: 16.0,
-                                                    ),
-                                                    height: 16.0,
-                                                    width: 16.0,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color:
-                                                            ColorPalettes.white,
+                                                      height: 16.0,
+                                                      width: 16.0,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: ColorPalettes
+                                                              .white,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    100.0),
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100.0),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                        child: data
+                                                                    .levelDetail
+                                                                    ?.participantList[
+                                                                        0]
+                                                                    .file !=
+                                                                null
+                                                            ? Image.network(
+                                                                data
+                                                                    .levelDetail!
+                                                                    .participantList[
+                                                                        0]
+                                                                    .file!,
+                                                              )
+                                                            : Image.asset(
+                                                                Images
+                                                                    .dummyProfile,
+                                                              ),
+                                                      ),
                                                     ),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              100),
-                                                      child: data
-                                                                  .levelDetail
+                                                  if ((data
+                                                              .levelDetail
+                                                              ?.participantList
+                                                              .isNotNullOrEmpty ??
+                                                          false) &&
+                                                      data.levelDetail
                                                                   ?.participantList[
-                                                                      2]
-                                                                  .file !=
-                                                              null
-                                                          ? Image.network(
-                                                              data
-                                                                  .levelDetail!
-                                                                  .participantList[
-                                                                      2]
-                                                                  .file!,
-                                                            )
-                                                          : Image.asset(
-                                                              Images
-                                                                  .dummyProfile,
-                                                            ),
+                                                              1] !=
+                                                          null)
+                                                    Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                        right: 6.0,
+                                                        left: 8.0,
+                                                      ),
+                                                      height: 16.0,
+                                                      width: 16.0,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: ColorPalettes
+                                                              .white,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    100.0),
+                                                      ),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                        child: data
+                                                                    .levelDetail
+                                                                    ?.participantList[
+                                                                        1]
+                                                                    .file !=
+                                                                null
+                                                            ? Image.network(
+                                                                data
+                                                                    .levelDetail!
+                                                                    .participantList[
+                                                                        1]
+                                                                    .file!,
+                                                              )
+                                                            : Image.asset(
+                                                                Images
+                                                                    .dummyProfile,
+                                                              ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                  if ((data
+                                                              .levelDetail
+                                                              ?.participantList
+                                                              .isNotNullOrEmpty ??
+                                                          false) &&
+                                                      data.levelDetail
+                                                                  ?.participantList[
+                                                              2] !=
+                                                          null)
+                                                    Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                        right: 6.0,
+                                                        left: 16.0,
+                                                      ),
+                                                      height: 16.0,
+                                                      width: 16.0,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: ColorPalettes
+                                                              .white,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    100.0),
+                                                      ),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100),
+                                                        child: data
+                                                                    .levelDetail
+                                                                    ?.participantList[
+                                                                        2]
+                                                                    .file !=
+                                                                null
+                                                            ? Image.network(
+                                                                data
+                                                                    .levelDetail!
+                                                                    .participantList[
+                                                                        2]
+                                                                    .file!,
+                                                              )
+                                                            : Image.asset(
+                                                                Images
+                                                                    .dummyProfile,
+                                                              ),
+                                                      ),
+                                                    ),
                                                 ],
                                               ),
                                               Text(
